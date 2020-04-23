@@ -21,5 +21,5 @@ for line in file0:
     data = json.loads(line)
     db = db_util.cdb(serverURL)
     db.connectDB(dbname)
-    db.put(data)
+    db.twput(data)
 file0.close()

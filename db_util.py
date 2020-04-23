@@ -1,10 +1,13 @@
 import couchdb
 
 class cdb:
-    def __init__(self, serverURL='http://admin:admin1234@localhost:5984'):
-        self.db = None
+    def __init__(self, serverURL='http://admin:admin1234@localhost:5984',dbname=None):
         self.serverURL = serverURL
         self.couchserver = couchdb.Server(self.serverURL)
+        if dbname is not None:
+            self.db=self.couchserver[dbname]
+        else:
+            self.db = None
     
     def createDB(self, dbname):
         if dbname in self.couchserver:
@@ -29,7 +32,7 @@ class cdb:
         keys = [id in self.db]
         return keys
 
-    def put(self, data):
+    def twput(self, data):
         _id = data["id_str"]
         data["_id"] = _id
         try:
@@ -41,6 +44,13 @@ class cdb:
             self.db.save(data)
             print(f'...update twitter {_id}')
     
+    def put(self, data):
+        try:
+            self.db.save(data)
+        except couchdb.http.ResourceConflict:
+            print(f'Resource conflict, unable to write {data}')
+            pass
+
     def get(self, key):
         try:
             return self.db[key]
