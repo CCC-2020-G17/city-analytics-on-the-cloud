@@ -42,3 +42,7 @@ for d in all_data:
 one_data = db.get('1252949121519906816')
 print('**** one data****')
 print(one_data)
+
+"""how to use json_to_db"""
+#python3 json_to_db.py -f [json file name] -s [serverURL] -db [dbname]
+## python3 json_to_db.py -f tinyData.json -s http://admin:admin1234@172.26.130.149:5984/ -db twitters
