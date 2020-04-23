@@ -45,4 +45,5 @@ print(one_data)
 
 """how to use json_to_db"""
 #python3 json_to_db.py -f [json file name] -s [serverURL] -db [dbname]
+#below command can be run when VPN connected, from local machine
 ## python3 json_to_db.py -f tinyData.json -s http://admin:admin1234@172.26.130.149:5984/ -db twitters
