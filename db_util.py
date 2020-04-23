@@ -44,12 +44,17 @@ class cdb:
             self.db.save(data)
             print(f'...update twitter {_id}')
     
-    def put(self, data):
+    def put(self, data, key=None):
+        if key is not None:
+            data["_id"] = key
+
         try:
             self.db.save(data)
         except couchdb.http.ResourceConflict:
-            print(f'Resource conflict, unable to write {data}')
-            pass
+            _rev = self.db[key]["_rev"]
+            data["_rev"] = _rev
+            self.db.save(data)
+            print(f'...update data {key}')
 
     def get(self, key):
         try:
@@ -70,15 +75,19 @@ class cdb:
 
     
 if __name__ == '__main__':
-    db = cdb()
-    db.connectDB('twitters')
 
-    data = db.get("1252962307690262529")
-    print(data)
+    import json
+    twitterdata = json.loads('{"id_str":"1252949121519906816","type":"twitter", "text":"I#newthingfortheday"}')
+    normaldata = json.loads('{"type":"AURIN", "purpose":"sample", "version":"2"}')
 
+    db = cdb('http://admin:admin1234@localhost:5984', 'testdb')
+    db.put(normaldata)
+
+"""
     map_fun = '''function(doc) {
         if (doc.lang == 'en')
         emit(doc.id_str, 1);
         }'''
     for row in db.query(map_fun):
         print(row)
+"""

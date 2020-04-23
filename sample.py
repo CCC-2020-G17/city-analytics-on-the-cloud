@@ -27,7 +27,8 @@ normaldata = json.loads('{"type":"AURIN", "purpose":"sample"}')
 db.twput(twitterdata)
 
 #write AURIN data, cannot distinguish duplicate data
-db.put(normaldata)
+db.put(normaldata)  #without key, system will generate random key in couchdb
+db.put(normaldata, 'key1')  #insert/update with key value
 
 
 """sample3 fecth all data in a database"""
