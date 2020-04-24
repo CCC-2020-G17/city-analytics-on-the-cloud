@@ -6,9 +6,9 @@ from shapely.geometry import Point
 from shapely.geometry.polygon import Polygon
 
 
-def _couchdb_get_connection(section='DEFAULT', verbose=False):
+def _couchdb_get_url(section='DEFAULT', verbose=False):
     config = ConfigParser()
-    url_file = 'server.url.cfg'
+    url_file = 'config/server.url.cfg'
     if verbose:
         print('url_file %s' % url_file)
     config.read(url_file)
@@ -19,7 +19,7 @@ def _couchdb_get_connection(section='DEFAULT', verbose=False):
 class dataLoader():
 
     def __init__(self):
-        self.serverURL = _couchdb_get_connection()
+        self.serverURL = _couchdb_get_url()
 
     def load_tweet_data(self):
         db = db_util.cdb(self.serverURL, "twitters")
@@ -128,7 +128,7 @@ class tweetAnalyzer():
 class analysisResultSaver():
 
     def __init__(self):
-        self.serverURL = _couchdb_get_connection()
+        self.serverURL = _couchdb_get_url()
 
     def save_analysis(self, analysis_result, analysis_id):
         db = db_util.cdb(self.serverURL, "analysis_results")
