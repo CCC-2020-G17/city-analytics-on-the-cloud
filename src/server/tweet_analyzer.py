@@ -1,3 +1,4 @@
+import json
 import db_util
 from collections import defaultdict, Counter
 # from geotext import GeoText
@@ -7,6 +8,7 @@ from shapely.geometry.polygon import Polygon
 
 
 def _couchdb_get_url(section='DEFAULT', verbose=False):
+    global config
     config = ConfigParser()
     url_file = 'config/server.url.cfg'
     if verbose:
@@ -18,28 +20,35 @@ def _couchdb_get_url(section='DEFAULT', verbose=False):
 
 class dataLoader():
 
-    def __init__(self):
+    def __init__(self, city):
         self.serverURL = _couchdb_get_url()
+        self.city = city
 
     def load_tweet_data(self):
+        # TODO: MapReduce to get data only from the specified city and specified queries
         db = db_util.cdb(self.serverURL, "twitters")
         return db.getAll()
 
-    def load_suburb_coordinates(self, city_key=None):
-        if city_key is None:
-            city_key = 'melbourne'
+    def load_suburb_coordinates(self):
+        city_key = "{}_suburbs".format(self.city.lower())
         db = db_util.cdb(self.serverURL, "aurin")
         return db.get(city_key)
 
     def load_analysis(self):
         db = db_util.cdb(self.serverURL, "analysis_results")
-        return db.getAll()
+        city_key = "{}_analysis_result".format(self.city.lower())
+        try:
+            return db.get(city_key)
+        except:
+            return None
 
 
 class tweetAnalyzer():
 
     def __init__(self):
-        self.analysis_result = defaultdict(int)
+        self.structure_file = 'config/result.structure.cfg'
+        config.read(self.structure_file )
+        self.analysis_result = json.loads(config.get('FIRST-LAYER', 'DICT'))
 
     def create_suburb_polygons(self, suburb_coordinates):
         polygon_dict = {'suburbs': [], 'polygons': []}
@@ -54,28 +63,17 @@ class tweetAnalyzer():
         city = None
         # places = GeoText(tweet_json['place']['name']) # Drysdale - Clifton Springs doesn't work
         try:
-            city = tweet_json['place']['full_name'].split(",")[0]
+            if tweet_json["place"]["place_type"] == "city":
+                city = tweet_json["place"]["name"]
         except:
             pass
         return city
 
-    def add_update_city_to_analysis(self, city):
-        if city not in self.analysis_result.keys():
-            self.analysis_result[city] = {
-                'total_count': 0,
-                'COVID-19': {
-                    'count': 0,
-                    'positive': 0,
-                    'negative': 0,
-                    'neutral': 0
-                },
-                'suburb': {
+    def add_suburb_to_analysis(self, suburb):
+        config.read(self.structure_file)
+        self.analysis_result['suburbs'][suburb] = json.loads(config.get('SECOND-LAYER', 'SUBURBS'))
 
-                }
-            }
-        self.analysis_result[city]['total_count'] += 1
-
-    def extract_topic_from_text(self, city, tweet_json):
+    def extract_topic_from_text(self, tweet_json, suburb):
         # if 'covid' in str(tweet_json).lower():
         try:
             text = tweet_json['text'] + tweet_json['extended_tweet']['full_text']
@@ -83,31 +81,34 @@ class tweetAnalyzer():
             text = tweet_json['text']
         if 'covid' in text.lower():
             # TODO: Should also include extended_tweets etc.
-            self.analysis_result[city]['COVID-19']['count'] += 1
+            self.analysis_result['suburbs'][suburb]['covid-19']['count'] += 1
         if 'sports' in text.lower():
             pass
 
-    def extract_topic_from_hashtag(self, city, tweet_json):
+    def extract_topic_from_hashtag(self, tweet_json, suburb):
         hashtags = [dict['text'] for dict in tweet_json["entities"]["hashtags"]]
         hashtags_contain_topic = [hashtag for hashtag in hashtags if 'covid' in hashtag.lower()]
         if len(hashtags_contain_topic) > 0:
-            self.analysis_result[city]['COVID-19']['count'] += 1
+            self.analysis_result['suburbs'][suburb]['covid-19']['count'] += 1
 
-    def process_topic(self, city, tweet_json):
-        self.extract_topic_from_text(city, tweet_json)
-        self.extract_topic_from_hashtag(city, tweet_json)
+    def process_topic(self, tweet_json, suburb):
+        self.extract_topic_from_text(tweet_json, suburb)
+        self.extract_topic_from_hashtag(tweet_json, suburb)
 
-    def match_suburb(self, city, tweet_json, polygon_dict):
+    def match_suburb(self, tweet_json, polygon_dict):
         if tweet_json['geo'] is not None:
             if tweet_json['geo']['type'] == 'Point':
                 coordinates = tweet_json['geo']['coordinates']
-                point = Point(coordinates[1], coordinates[0])  # AURIN coordinates are reversed
+                point = Point(coordinates[1], coordinates[0])  # AURIN data coordinates are reversed
                 for index, polygon in enumerate(polygon_dict['polygons']):
                     if polygon.contains(point):
-                        try:
-                            self.analysis_result[city]['suburb'][polygon_dict['suburbs'][index]] += 1
-                        except:
-                            self.analysis_result[city]['suburb'][polygon_dict['suburbs'][index]] = 1
+                        suburb = polygon_dict['suburbs'][index]
+                        # TODO: Find out suburb "null".
+                        if suburb not in self.analysis_result['suburbs'].keys():
+                            self.add_suburb_to_analysis(suburb)
+                        else:
+                            self.analysis_result['suburbs'][suburb]['count'] += 1
+                        self.process_topic(tweet_json, suburb)
 
     def count_precise_geo(self, tweet_json):
         global geo_count
@@ -117,40 +118,38 @@ class tweetAnalyzer():
 
     def parse_json(self, all_data, polygon_dict):
         for tweet_json in all_data:
-            city = self.get_city(tweet_json)
-            if city is not None:
-                self.add_update_city_to_analysis(city)
-                self.process_topic(city, tweet_json)
-                self.match_suburb(city, tweet_json, polygon_dict)
+            # city = self.get_city(tweet_json)
+            # if city is not None:
+            #     self.add_update_city_to_analysis(city)
+            self.match_suburb(tweet_json, polygon_dict)
         return self.analysis_result
 
 
 class analysisResultSaver():
 
-    def __init__(self):
+    def __init__(self, city):
         self.serverURL = _couchdb_get_url()
+        self.city = city
 
-    def save_analysis(self, analysis_result, analysis_id):
+    def save_analysis(self, analysis_result):
         db = db_util.cdb(self.serverURL, "analysis_results")
-        db.put(analysis_result, analysis_id)
+        analysis_city_id = "{}_analysis_result".format(self.city.lower())
+        db.put(analysis_result, analysis_city_id)
 
 
 if __name__ == '__main__':
-    data_loader = dataLoader()
+    cities = ["Melbourne", "Sydney", "Brisbane", "Adelaide", "Perth"]
+    city = cities[0]
+    data_loader = dataLoader(city)
     tweet_analyzer = tweetAnalyzer()
-    analysis_result_saver = analysisResultSaver()
+    analysis_result_saver = analysisResultSaver(city)
 
-    all_data = data_loader.load_tweet_data()
+    city_data = data_loader.load_tweet_data()
+    suburb_coordinates = data_loader.load_suburb_coordinates()
     old_analysis = data_loader.load_analysis()
-    if old_analysis is not None:
-        analysis_id = old_analysis[0]['_id']
-    else:
-        analysis_id = None
-    city_key = None
-    suburb_coordinates = data_loader.load_suburb_coordinates(city_key)
 
     polygon_dict = tweet_analyzer.create_suburb_polygons(suburb_coordinates)
-    analysis_result = tweet_analyzer.parse_json(all_data, polygon_dict)
+    analysis_result = tweet_analyzer.parse_json(city_data, polygon_dict)
 
-    analysis_result_saver.save_analysis(analysis_result, analysis_id)
+    analysis_result_saver.save_analysis(analysis_result)
 
