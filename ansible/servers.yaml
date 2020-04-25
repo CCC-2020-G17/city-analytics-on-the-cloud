@@ -3,4 +3,6 @@
 - hosts: servers
   gather_facts: true
   roles:
-    - role: servers-common
+    - role: servers-proxy
+      tags: init
+    - role: servers-environment
