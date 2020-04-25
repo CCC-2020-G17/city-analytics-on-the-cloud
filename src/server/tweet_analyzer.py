@@ -10,7 +10,7 @@ def _couchdb_get_url(section='DEFAULT', verbose=False):
     config = ConfigParser()
     url_file = 'config/server.url.cfg'
     if verbose:
-        print('url_file %s' % url_file)
+        print('url_file {}'.format(url_file))
     config.read(url_file)
     server_url = config.get(section, 'server_url')
     return server_url
@@ -27,7 +27,7 @@ class dataLoader():
 
     def load_suburb_coordinates(self, city_key=None):
         if city_key is None:
-            city_key = 'f07df51500193e9947a3a84d1e016048'
+            city_key = 'melbourne'
         db = db_util.cdb(self.serverURL, "aurin")
         return db.get(city_key)
 
