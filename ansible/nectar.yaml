@@ -1,3 +1,5 @@
+# Use for instances generation in nectar
+
 - hosts: localhost
   vars_files:
     - variables/nectar.yaml
@@ -7,11 +9,3 @@
     - role: openstack-volume
     - role: openstack-security-group
     - role: openstack-instance
-
-- host: ManagedNotes
-    var_files:
-      - variables/couchdb.yaml
-    gather_facts: true
-    roles:
-      - role: ManagedNotes-couchdb
-    

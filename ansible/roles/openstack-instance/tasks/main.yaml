@@ -8,6 +8,7 @@
     availability_zone: '{{ availability_zone }}'
     security_groups: '{{ sg_names }}'
     volumes: '{{ item.volumes }}'
+    network: '{{ instance_network }}'
     auto_floating_ip: yes
     wait: yes
     timeout: 600
@@ -33,6 +34,14 @@
 - name: Add host
   add_host:
     name: '{{ item.openstack.public_v4 }}'
-    groups: ManagedNotes
+    groups: servers
   loop: '{{ os_instance.results }}'
   when: item.openstack is defined
+
+- name: Ensure hosts info is in inventory/inventory.ini
+  lineinfile:
+    path: inventory/inventory.ini
+    line: '{{ item.openstack.name }} ansible_host={{ item.openstack.public_v4 }}'
+    state: present
+    insertafter: '\[servers\]'
+  loop: '{{ os_instance.results }}'

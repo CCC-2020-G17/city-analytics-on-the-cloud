@@ -1,4 +1,6 @@
 # Install dependencies on the host
+
+# sudo apt-get update; sudo apt-get install python-pip
 - name: Install pip
   become: yes
   apt:
@@ -6,18 +8,17 @@
     state: latest
     update_cache: yes
   when: ansible_distribution == "Ubuntu"
-# sudo apt-get update; sudo apt-get install python-pip
 
+# pip install --upgrade pip
 - name: Update pip
   become: yes
   pip:
     name: ['pip']
     state: latest
-# pip install --upgrade pip
 
+# pip install openstacksdk
 - name: Install openstacksdk
   become: yes
   pip:
     name: ['openstacksdk']
     state: latest
-# pip install openstacksdk
