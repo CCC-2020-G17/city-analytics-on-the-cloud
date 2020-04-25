@@ -1,3 +1,11 @@
+""" sample usage on db_util.py
+Unimelb vpn required to run the code
+Couchdb UI can be accessed through:   http://172.26.130.149:5984/_utils/
+username/password: admin/admin1234
+
+to access the CouchDB instance, download couchDB.pem from Slack and run:
+ssh -i couchDB.pem ubuntu@172.26.130.149
+"""
 import db_util
 import json
 import argparse
