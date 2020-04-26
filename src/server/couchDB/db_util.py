@@ -1,4 +1,5 @@
 import couchdb
+from datetime import datetime
 
 class cdb:
     def __init__(self, serverURL='http://admin:admin1234@localhost:5984',dbname=None):
@@ -33,21 +34,32 @@ class cdb:
         return keys
 
     def twput(self, data):
+        """save a twitter json document to couchdb
+
+        Arguments:
+            data {json} -- twitter file, containing "id_str"
+        """
         _id = data["id_str"]
         data["_id"] = _id
+        #data["ref_timestamp"] = datetime.now().strftime('%Y%m%d%H%M%S.%f')[:-7]
         try:
             self.db.save(data)
             print(f"...save twitter {_id}")
         except couchdb.http.ResourceConflict:
-            _rev = self.db[_id]["_rev"]
-            data["_rev"] = _rev
-            self.db.save(data)
-            print(f'...update twitter {_id}')
+            pass
     
     def put(self, data, key=None):
+        """save data of any format to couchdb
+
+        Arguments:
+            data {json} -- data to save to couchdb
+
+        Keyword Arguments:
+            key {string} -- user specified key for couchdb (default: {None})
+        """
         if key is not None:
             data["_id"] = key
-
+            #data["ref_timestamp"] = datetime.now().strftime('%Y%m%d%H%M%S.%f')[:-7]
         try:
             self.db.save(data)
         except couchdb.http.ResourceConflict:
@@ -69,25 +81,27 @@ class cdb:
             data.append(item['doc'])
         return data
 
+    
+
     def query(self, mapfunc, reducefunc=None):
         return self.db.query(mapfunc, reducefunc)
 
 
     
 if __name__ == '__main__':
-
+    
     import json
     twitterdata = json.loads('{"id_str":"1252949121519906816","type":"twitter", "text":"I#newthingfortheday"}')
     normaldata = json.loads('{"type":"AURIN", "purpose":"sample", "version":"2"}')
 
     db = cdb('http://admin:admin1234@localhost:5984', 'testdb')
-    db.put(normaldata)
+    db.twput(twitterdata)
 
-"""
+    """
     map_fun = '''function(doc) {
         if (doc.lang == 'en')
         emit(doc.id_str, 1);
         }'''
     for row in db.query(map_fun):
         print(row)
-"""
+    """

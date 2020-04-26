@@ -1,3 +1,7 @@
+"""
+Write from a twitter json file to couchdb
+json file should contain a json each line.
+"""
 import db_util
 import json
 import argparse
