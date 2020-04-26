@@ -82,9 +82,9 @@ def get_streaming_twitters():
 
 
 if __name__ == '__main__':
-    api_access = 'DEFAULT'
-    save_to_db = 'tweets'
-    geo_only = True
+    api_access = 'SECTION2'
+    save_to_db = 'tweets_mixed'
+    geo_only = False
     get_streaming_twitters()
 
 
