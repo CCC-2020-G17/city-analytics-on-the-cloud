@@ -2,8 +2,8 @@ import tweepy
 from tweepy import API
 from tweepy import OAuthHandler
 from configparser import ConfigParser
-from db_util import cdb
 import time
+from couchDB.db_util import cdb
 import json
 
 

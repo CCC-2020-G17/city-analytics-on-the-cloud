@@ -1,4 +1,4 @@
-from db_util import cdb
+from couchDB.db_util import cdb
 from tweepy import Stream
 from tweepy.streaming import StreamListener
 from tweepy import API
