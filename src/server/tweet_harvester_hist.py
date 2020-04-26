@@ -46,8 +46,7 @@ def get_historical_twitters(since_time, until_time):
 
     places = api.geo_search(query="AU", granularity="country")
     place_id = places[0].id
-    tweets = tweepy.Cursor(api.search, q="place:%s" % place_id, since=since_time, until=until_time,
-                               tweet_mode='extended').items()
+    tweets = tweepy.Cursor(api.search, q="place:%s" % place_id, since=since_time, until=until_time).items()
     while True:
         try:
             tweet = tweets.next()
@@ -66,11 +65,11 @@ def get_historical_twitters(since_time, until_time):
 
 
 if __name__ == '__main__':
-    api_access = 'DEFAULT'
-    save_to_db = 'tweets'
-    geo_only = True
+    api_access = 'SECTION2'
+    save_to_db = 'tweets_mixed'
+    geo_only = False
     since_time = '2020-04-19'
-    until_time = '2020-04-23'
+    until_time = '2020-04-26'
     get_historical_twitters(since_time, until_time)
 
 
