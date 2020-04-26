@@ -17,7 +17,7 @@ def _couchdb_get_url(section='DEFAULT', verbose=False):
     return server_url
 
 
-def get_twitter_auth(section='DEFAULT', verbose=False):
+def _get_twitter_auth(section='DEFAULT', verbose=False):
     #set up twitter authentication
     # Return: tweepy.OAuthHandler object
 
@@ -38,11 +38,11 @@ def get_twitter_auth(section='DEFAULT', verbose=False):
 
 """TwitterAPI can only search tweets posted in the last 7 days."""
 def get_historical_twitters(since_time, until_time):
-    auth = get_twitter_auth()
+    auth = _get_twitter_auth(api_access)
     api = API(auth, wait_on_rate_limit=True, wait_on_rate_limit_notify=True)
 
     server_url = _couchdb_get_url()
-    db = cdb(server_url, 'test')
+    db = cdb(server_url, save_to_db)
 
     places = api.geo_search(query="AU", granularity="country")
     place_id = places[0].id
@@ -51,10 +51,11 @@ def get_historical_twitters(since_time, until_time):
     while True:
         try:
             tweet = tweets.next()
-            print(tweet._json)
-            # if tweet._json['geo'] is not None:
-            with open('historical_data.json', 'a') as f:
-                json.dump(tweet._json, f, indent=2)
+            if geo_only:
+                if tweet._json['geo'] is not None:
+                    # print(tweet._json)
+                    db.twput(tweet._json)
+            else:
                 db.twput(tweet._json)
         except tweepy.TweepError:
             print("Rate limit reached. Sleeping for: 60 * 15")
@@ -65,7 +66,10 @@ def get_historical_twitters(since_time, until_time):
 
 
 if __name__ == '__main__':
-    since_time = '2020-04-22'
+    api_access = 'DEFAULT'
+    save_to_db = 'tweets'
+    geo_only = True
+    since_time = '2020-04-19'
     until_time = '2020-04-23'
     get_historical_twitters(since_time, until_time)
 

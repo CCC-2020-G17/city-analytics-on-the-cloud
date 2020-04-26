@@ -41,16 +41,18 @@ class MyListener(StreamListener):
 
     def on_data(self, raw_data):
         server_url = _couchdb_get_url()
-        db = cdb(server_url, 'test')
+        db = cdb(server_url, save_to_db)
         raw_data = json.loads(raw_data)
         try:
-            # if raw_data['geo'] is not None:
-            print(raw_data)
-            with open('streaming_twitters.json', 'a') as f:
-                json.dump(raw_data, f, indent=2)
+            if geo_only:
+                if raw_data['geo'] is not None:
+                # with open('melb_geo_streaming.json', 'a') as f:
+                #     json.dump(raw_data, f, indent=2)
+                    db.twput(raw_data)
+            else:
                 db.twput(raw_data)
-                # f.write(str(raw_data))
-                return True
+            return True
+
         except BaseException as e:
             print("Error on_data:%s" % str(e))
             time.sleep(5)
@@ -68,7 +70,7 @@ class MyListener(StreamListener):
 
 
 def get_streaming_twitters():
-    auth = _twitter_get_auth()
+    auth = _twitter_get_auth(api_access)
     twitter_stream = Stream(auth, MyListener())
     # use filter to collect twitter information based on Australia field
     while True:
@@ -80,6 +82,9 @@ def get_streaming_twitters():
 
 
 if __name__ == '__main__':
+    api_access = 'DEFAULT'
+    save_to_db = 'tweets'
+    geo_only = True
     get_streaming_twitters()
 
 
