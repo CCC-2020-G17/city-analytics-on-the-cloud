@@ -1,6 +1,6 @@
 from flask import Flask, request, url_for
 import json
-from back_end import analysis_loader
+from backend import analysis_loader
 
 app = Flask(__name__)
 
