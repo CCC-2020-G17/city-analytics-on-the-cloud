@@ -1,10 +1,11 @@
+import os
 from couchDB import db_util
 from configparser import ConfigParser
 
 def _couchdb_get_url(section='DEFAULT', verbose=False):
     global config
     config = ConfigParser()
-    url_file = 'config/server.url.cfg'
+    url_file = '{}/config/server.url.cfg'.format(os.path.pardir)
     if verbose:
         print('url_file {}'.format(url_file))
     config.read(url_file)
