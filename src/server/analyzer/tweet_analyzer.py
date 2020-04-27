@@ -1,3 +1,4 @@
+import os
 import json
 from nltk.corpus import twitter_samples
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
@@ -12,7 +13,7 @@ from shapely.geometry.polygon import Polygon
 def _couchdb_get_url(section='DEFAULT', verbose=False):
     global config
     config = ConfigParser()
-    url_file = 'config/server.url.cfg'
+    url_file = '{}/config/server.url.cfg'.format(os.path.pardir)
     if verbose:
         print('url_file {}'.format(url_file))
     config.read(url_file)
@@ -63,7 +64,7 @@ class analysisResultSaver():
 class tweetAnalyzer():
 
     def __init__(self, city=None):
-        self.structure_file = 'config/result.structure.cfg'
+        self.structure_file = '{}/config/result.structure.cfg'.format(os.path.pardir)
         config.read(self.structure_file)
         self.analysis_result = json.loads(config.get('FIRST-LAYER', 'CITY'))
         self.polygon_dict = None

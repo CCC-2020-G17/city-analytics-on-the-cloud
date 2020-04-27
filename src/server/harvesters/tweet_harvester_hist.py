@@ -2,16 +2,18 @@ import tweepy
 from tweepy import API
 from tweepy import OAuthHandler
 from configparser import ConfigParser
-import time
 from couchDB.db_util import cdb
+import time
 import json
+import os
 
 
 def _couchdb_get_url(section='DEFAULT', verbose=False):
+    global config
     config = ConfigParser()
-    url_file = 'config/server.url.cfg'
+    url_file = '{}/config/server.url.cfg'.format(os.path.pardir)
     if verbose:
-        print('url_file %s' % url_file)
+        print('url_file {}'.format(url_file))
     config.read(url_file)
     server_url = config.get(section, 'server_url')
     return server_url
@@ -22,10 +24,11 @@ def _get_twitter_auth(section='DEFAULT', verbose=False):
     # Return: tweepy.OAuthHandler object
 
     config = ConfigParser()
-    key_file = 'config/twitter.key.cfg'
+    key_file = '{}/config/twitter.key.cfg'.format(os.path.pardir)
     if verbose:
         print('key_file %s' % key_file)
     config.read(key_file)
+    print(config.keys())
     CONSUMER_KEY = config.get(section, 'CONSUMER_KEY')
     CONSUMER_SECRET = config.get(section, 'CONSUMER_SECRET')
     ACCESS_TOKEN = config.get(section, 'ACCESS_TOKEN')
