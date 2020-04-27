@@ -97,12 +97,12 @@ class tweetAnalyzer():
 
     def judge_attitude(self, text, suburb=None):
         analyser = SentimentIntensityAnalyzer()
-        attitude = Counter(analyser.polarity_scores(text)).most_common(1)[0][0]
-        if attitude == 'pos':
+        attitude_score = analyser.polarity_scores(text)['compound']
+        if attitude_score > 0.25:
             if suburb:
                 self.analysis_result['suburbs'][suburb]['covid-19']['positive'] += 1
             self.analysis_result['covid-19']['positive'] += 1
-        elif attitude == 'neg':
+        elif attitude_score < -0.25:
             if suburb:
                 self.analysis_result['suburbs'][suburb]['covid-19']['negative'] += 1
             self.analysis_result['covid-19']['negative'] += 1
@@ -110,6 +110,20 @@ class tweetAnalyzer():
             if suburb:
                 self.analysis_result['suburbs'][suburb]['covid-19']['neutral'] += 1
             self.analysis_result['covid-19']['neutral'] += 1
+
+        # attitude = Counter(analyser.polarity_scores(text)).most_common(1)[0][0]
+        # if attitude == 'pos':
+        #     if suburb:
+        #         self.analysis_result['suburbs'][suburb]['covid-19']['positive'] += 1
+        #     self.analysis_result['covid-19']['positive'] += 1
+        # elif attitude == 'neg':
+        #     if suburb:
+        #         self.analysis_result['suburbs'][suburb]['covid-19']['negative'] += 1
+        #     self.analysis_result['covid-19']['negative'] += 1
+        # else:
+        #     if suburb:
+        #         self.analysis_result['suburbs'][suburb]['covid-19']['neutral'] += 1
+        #     self.analysis_result['covid-19']['neutral'] += 1
 
     def extract_topic_from_text(self, tweet_json, suburb):
         text = tweet_json['text']
