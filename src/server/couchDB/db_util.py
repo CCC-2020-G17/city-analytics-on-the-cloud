@@ -42,15 +42,21 @@ class cdb:
         Arguments:
             data {json} -- twitter file, containing "id_str"
         """
-        _id = data["id_str"]
-        data["_id"] = _id
-        #data["ref_timestamp"] = datetime.now().strftime('%Y%m%d%H%M%S.%f')[:-7]
-        try:
-            self.db.save(data)
-            print(f'...save twitter {_id}')
-        except couchdb.http.ResourceConflict:
-            print(f'...twitter {_id} already in db')
-            pass
+        if "id_str" not in data:
+            print("function [twput] require input data contain field 'id_str'")
+        else:
+            if "_rev" in data:
+                del data["_rev"]
+            _id = data["id_str"]
+            data["_id"] = _id
+            #data["ref_timestamp"] = datetime.now().strftime('%Y%m%d%H%M%S.%f')[:-7]
+            try:
+                self.db.save(data)
+                print(f'...save twitter {_id}')
+            except couchdb.http.ResourceConflict:
+                print(f'...twitter {_id} already in db')
+                pass
+
     
     def put(self, data, key=None):
         """save data of any format to couchdb
@@ -95,17 +101,15 @@ class cdb:
 if __name__ == '__main__':
     
     import json
-    twitterdata = json.loads('{"id_str":"1252949121519906816","type":"twitter", "text":"I#newthingfortheday"}')
-    normaldata = json.loads('{"type":"AURIN", "purpose":"sample", "version":"2"}')
+    serverURL = 'http://admin:admin1234@172.26.130.149:5984/'
+    dbname = 'tweets_for_test2'
+    db = cdb(serverURL, dbname)
 
-    db = cdb('http://admin:admin1234@localhost:5984', 'testdb')
-    db.twput(twitterdata)
+    db.showcurrentDB()
 
-    """
-    map_fun = '''function(doc) {
-        if (doc.lang == 'en')
-        emit(doc.id_str, 1);
-        }'''
-    for row in db.query(map_fun):
-        print(row)
-    """
+    with open('data/tweets_with_geo.json') as file:
+        for index, json_obj in enumerate(file):
+            data = json.loads(json_obj)
+            db.twput(data)
+            if(index > 20):
+                break;
