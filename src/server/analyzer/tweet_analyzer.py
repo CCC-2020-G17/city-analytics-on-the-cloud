@@ -2,71 +2,22 @@ import os
 import json
 from nltk.corpus import twitter_samples
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
-from couchDB import db_util
 from collections import defaultdict, Counter
 from configparser import ConfigParser
 from shapely.geometry import Point
 from shapely.geometry.polygon import Polygon
-# from geotext import GeoText
-
-
-def _couchdb_get_url(section='DEFAULT', verbose=False):
-    global config
-    config = ConfigParser()
-    url_file = '{}/config/server.url.cfg'.format(os.path.pardir)
-    if verbose:
-        print('url_file {}'.format(url_file))
-    config.read(url_file)
-    server_url = config.get(section, 'server_url')
-    return server_url
-
-
-class dataLoader():
-
-    def __init__(self, city=None):
-        self.serverURL = _couchdb_get_url()
-        self.city = city
-
-    def load_tweet_data(self):
-        # TODO: MapReduce to get data only from the specified city and specified queries.
-        db = db_util.cdb(self.serverURL, "tweets_with_geo")
-        return db.getAll()
-
-    def load_city_suburb_coordinates(self):
-        if self.city:
-            city_key = "{}_suburbs".format(self.city.lower())
-            db = db_util.cdb(self.serverURL, "aurin")
-            return db.get(city_key)
-        else:
-            return None
-
-    def load_analysis(self):
-        if self.city:
-            db = db_util.cdb(self.serverURL, "analysis_results")
-            city_key = "{}_analysis_result".format(self.city.lower())
-            return db.get(city_key)
-        else:
-            return None
-
-
-class analysisResultSaver():
-
-    def __init__(self, city):
-        self.serverURL = _couchdb_get_url()
-        self.city = city
-
-    def save_analysis(self, analysis_result):
-        db = db_util.cdb(self.serverURL, "analysis_results")  # TODO: Change back to analysis_results
-        analysis_city_id = "{}_analysis_result".format(self.city.lower())
-        db.put(analysis_result, analysis_city_id)
+from couchDB import db_util
+from analyzer import db_connecter
+from profanityfilter import ProfanityFilter
 
 
 class tweetAnalyzer():
 
     def __init__(self, city=None):
         self.structure_file = '{}/config/result.structure.cfg'.format(os.path.pardir)
-        config.read(self.structure_file)
-        self.analysis_result = json.loads(config.get('FIRST-LAYER', 'CITY'))
+        self.config = ConfigParser()
+        self.config.read(self.structure_file)
+        self.analysis_result = json.loads(self.config.get('FIRST-LAYER', 'CITY'))
         self.polygon_dict = None
         self.city = city
 
@@ -90,10 +41,10 @@ class tweetAnalyzer():
         return city
 
     def add_suburb_to_analysis(self, suburb):
-        config.read(self.structure_file)
-        self.analysis_result['suburbs'][suburb] = json.loads(config.get('SECOND-LAYER', 'SUBURB'))
-        self.analysis_result['suburbs'][suburb]['covid-19'] = json.loads(config.get('THIRD-LAYER', 'COVID-19'))
-        self.analysis_result['suburbs'][suburb]['crime'] = json.loads(config.get('THIRD-LAYER', 'CRIME'))
+        self.config.read(self.structure_file)
+        self.analysis_result['suburbs'][suburb] = json.loads(self.config.get('SECOND-LAYER', 'SUBURB'))
+        self.analysis_result['suburbs'][suburb]['covid-19'] = json.loads(self.config.get('THIRD-LAYER', 'COVID-19'))
+        self.analysis_result['suburbs'][suburb]['crime'] = json.loads(self.config.get('THIRD-LAYER', 'CRIME'))
 
     def judge_attitude(self, text, suburb=None):
         analyser = SentimentIntensityAnalyzer()
@@ -134,8 +85,10 @@ class tweetAnalyzer():
                 self.analysis_result['suburbs'][suburb]['covid-19']['count'] += 1
             self.analysis_result['covid-19']['count'] += 1
             self.judge_attitude(text, suburb)
-        if 'crime' in text.lower():
-            pass
+        if ProfanityFilter().is_profane(text):
+            if suburb is not None:
+                self.analysis_result['suburbs'][suburb]['crime']['contains_vulgar_count'] += 1
+            self.analysis_result['crime']['contains_vulgar_count'] += 1
 
     def extract_topic_from_hashtag(self, tweet_json, suburb):
         hashtags = [dict['text'] for dict in tweet_json["entities"]["hashtags"]]
@@ -184,8 +137,8 @@ if __name__ == '__main__':
     city = cities[0].split(" ")[0]
 
     # TODO: Solve extended form. (By other offline functions. Formalize all data.)
-    data_loader = dataLoader(city)
-    analysis_result_saver = analysisResultSaver(city)
+    data_loader = db_connecter.dataLoader(city)
+    analysis_result_saver = db_connecter.analysisResultSaver(city)
     tweet_analyzer = tweetAnalyzer(city)
 
     city_data = data_loader.load_tweet_data()
