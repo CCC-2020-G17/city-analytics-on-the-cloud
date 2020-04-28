@@ -29,6 +29,9 @@ class cdb:
     def connectDB(self, dbname):
         self.db=self.couchserver[dbname]
     
+    def showcurrentDB(self):
+        print(self.db)
+
     def getkeys(self):
         keys = [id in self.db]
         return keys
@@ -44,8 +47,9 @@ class cdb:
         #data["ref_timestamp"] = datetime.now().strftime('%Y%m%d%H%M%S.%f')[:-7]
         try:
             self.db.save(data)
-            print(f"...save twitter {_id}")
+            print(f'...save twitter {_id}')
         except couchdb.http.ResourceConflict:
+            print(f'...twitter {_id} already in db')
             pass
     
     def put(self, data, key=None):
