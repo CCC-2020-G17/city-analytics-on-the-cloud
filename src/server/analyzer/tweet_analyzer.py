@@ -9,24 +9,37 @@ from shapely.geometry.polygon import Polygon
 from couchDB import db_util
 from analyzer import db_connecter
 from profanityfilter import ProfanityFilter
+from ast import literal_eval
+from better_profanity import profanity
+
+
+class scenarioCOVIDProcessor():
+    pass
+
+
+class scenarioCrimeProcessor():
+    pass
 
 
 class tweetAnalyzer():
 
     def __init__(self, city=None):
         self.city = city
+        self.structure_file = '{}/config/result.structure.cfg'.format(os.path.pardir)
         self.config = ConfigParser()
+        self.scenarios = ['covid-19', 'crime', 'econ', 'offence']
         self.load_city_structure()
         self.load_suburbs_structure()
+        self.sentiment_analyser = SentimentIntensityAnalyzer()
+        profanity.load_censor_words()
 
 
     def load_city_structure(self):
-        self.structure_file = '{}/config/result.structure.cfg'.format(os.path.pardir)
         self.config.read(self.structure_file)
         self.analysis_result = json.loads(self.config.get('FIRST-LAYER', 'CITY'))
         self.analysis_result['city_name'] = self.city
-        self.analysis_result['covid-19'] = json.loads(self.config.get('THIRD-LAYER', 'COVID-19'))
-        self.analysis_result['crime'] = json.loads(self.config.get('THIRD-LAYER', 'CRIME'))
+        for scenario in self.scenarios:
+            self.analysis_result[scenario] = json.loads(self.config.get('SECOND-LAYER', scenario.upper()))
         self.polygon_dict = None
 
     def load_suburbs_structure(self):
@@ -36,11 +49,12 @@ class tweetAnalyzer():
         for feature in suburb_info_json['features']:
             suburb = feature['properties']['name']
             self.analysis_result['suburbs'][suburb] = json.loads(self.config.get('SECOND-LAYER', 'SUBURB'))
-            self.analysis_result['suburbs'][suburb]['econ'] = json.loads(self.config.get('THIRD-LAYER', 'ECON'))
-            self.analysis_result['suburbs'][suburb]['offence'] = json.loads(self.config.get('THIRD-LAYER', 'OFFENCE'))
+            for scenario in self.scenarios:
+                self.analysis_result['suburbs'][suburb][scenario] = json.loads(self.config.get('THIRD-LAYER', scenario.upper()))
 
     def create_suburb_polygon_dict(self):
         polygon_dict = {'suburbs': [], 'polygons': []}
+        # TODO: Can also load from db.
         suburb_json_file = '{}/suburbs/{}_suburbs.json'.format(os.path.pardir, self.city)
         with open(suburb_json_file) as f:
             suburb_info_json = json.load(f)
@@ -68,34 +82,11 @@ class tweetAnalyzer():
         self.analysis_result['suburbs'][suburb]['crime'] = json.loads(self.config.get('THIRD-LAYER', 'CRIME'))
 
     def judge_attitude(self, text, suburb=None):
-        analyser = SentimentIntensityAnalyzer()
-        attitude_score = analyser.polarity_scores(text)['compound']
-        if attitude_score > 0.25:
-            if suburb:
-                self.analysis_result['suburbs'][suburb]['covid-19']['positive'] += 1
-            self.analysis_result['covid-19']['positive'] += 1
-        elif attitude_score < -0.25:
-            if suburb:
-                self.analysis_result['suburbs'][suburb]['covid-19']['negative'] += 1
-            self.analysis_result['covid-19']['negative'] += 1
-        else:
-            if suburb:
-                self.analysis_result['suburbs'][suburb]['covid-19']['neutral'] += 1
-            self.analysis_result['covid-19']['neutral'] += 1
-
-        # attitude = Counter(analyser.polarity_scores(text)).most_common(1)[0][0]
-        # if attitude == 'pos':
-        #     if suburb:
-        #         self.analysis_result['suburbs'][suburb]['covid-19']['positive'] += 1
-        #     self.analysis_result['covid-19']['positive'] += 1
-        # elif attitude == 'neg':
-        #     if suburb:
-        #         self.analysis_result['suburbs'][suburb]['covid-19']['negative'] += 1
-        #     self.analysis_result['covid-19']['negative'] += 1
-        # else:
-        #     if suburb:
-        #         self.analysis_result['suburbs'][suburb]['covid-19']['neutral'] += 1
-        #     self.analysis_result['covid-19']['neutral'] += 1
+        attitude_score = self.sentiment_analyser.polarity_scores(text)['compound']
+        attitude = 'positive' if attitude_score > 0.25 else 'negative' if attitude_score < -0.25 else 'neutral'
+        if suburb:
+            self.analysis_result['suburbs'][suburb]['covid-19'][attitude] += 1
+        self.analysis_result['covid-19'][attitude] += 1
 
     def process_covid_19(self, tweet_json, suburb):
         text = tweet_json['text']
@@ -114,8 +105,9 @@ class tweetAnalyzer():
     #         self.analysis_result['suburbs'][suburb]['covid-19']['tweet_count'] += 1
 
     def process_crime(self, tweet_json, suburb):
+        # TODO: It's better to use full-text instead
         text = tweet_json['text']
-        if ProfanityFilter().is_profane(text):
+        if profanity.contains_profanity(text):
             if suburb is not None:
                 self.analysis_result['suburbs'][suburb]['crime']['vulgar_tweet_count'] += 1
             self.analysis_result['crime']['vulgar_tweet_count'] += 1
@@ -135,29 +127,28 @@ class tweetAnalyzer():
             self.analysis_result['city_tweet_count'] += 1
             if tweet_json['geo']:
                 if tweet_json['geo']['type'] == 'Point':
+                    self.analysis_result['city_tweet_with_geo_count'] += 1
                     coordinates = tweet_json['geo']['coordinates']
                     point = Point(coordinates[1], coordinates[0])  # AURIN data coordinates are reversed
                     for index, polygon in enumerate(polygon_dict['polygons']):
                         if polygon.contains(point):
                             suburb = polygon_dict['suburbs'][index]
-                            # TODO: Find out suburb "null".
-                            if suburb not in self.analysis_result['suburbs'].keys():
-                                self.add_suburb_to_analysis(suburb)
-                            else:
-                                self.analysis_result['suburbs'][suburb]['suburb_tweet_count'] += 1
-                            self.process_scenarios(tweet_json, suburb)
+                            # TODO: Decide pre-structure all suburb keys or update if only exists.
+                            # if suburb not in self.analysis_result['suburbs'].keys():
+                            #     self.add_suburb_to_analysis(suburb)
+                            #     self.analysis_result['suburbs'][suburb]['suburb_tweet_count'] += 1
+                            # else:
+                            #     self.analysis_result['suburbs'][suburb]['suburb_tweet_count'] += 1
+                            self.analysis_result['suburbs'][suburb]['suburb_tweet_count'] += 1
+                            return suburb
             else:
-                self.process_scenarios(tweet_json)
+                return None
 
-    def count_precise_geo(self, tweet_json):
-        global geo_count
-        if tweet_json['geo'] is not None:
-            if tweet_json['geo']['type'] == 'Point':
-                geo_count += 1
-
-    def analyze(self, all_data, polygon_dict):
+    def analyze(self, all_data):
+        polygon_dict = self.create_suburb_polygon_dict()
         for tweet_json in all_data:
-            self.match_suburb(tweet_json, polygon_dict)
+            suburb = self.match_suburb(tweet_json, polygon_dict)
+            self.process_scenarios(tweet_json, suburb)
         return self.analysis_result
 
 
@@ -173,11 +164,10 @@ if __name__ == '__main__':
 
     city_data = data_loader.load_tweet_data()
     # suburb_coordinates = data_loader.load_city_suburb_coordinates()
-    old_analysis = data_loader.load_analysis()
+    # old_analysis = data_loader.load_analysis()
 
     # polygon_dict = tweet_analyzer.create_suburb_polygon_dict(suburb_coordinates)
-    polygon_dict = tweet_analyzer.create_suburb_polygon_dict()
-    analysis_result = tweet_analyzer.analyze(city_data, polygon_dict)
+    analysis_result = tweet_analyzer.analyze(city_data)
 
     analysis_result_saver.save_analysis(analysis_result)
 
