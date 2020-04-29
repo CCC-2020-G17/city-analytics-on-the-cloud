@@ -101,15 +101,14 @@ class cdb:
             {list} -- a list of twitter documents
         """
         data = []
-        for item in self.db.view('cities/get_doc'):
-            if(item.key == cityname):
-                data.append(item.value)
+        for item in self.db.view('cities/get_id',include_docs=True, key=cityname):
+            data.append(item.doc)
         return data
 
     def query(self, mapfunc, reducefunc=None):
         return self.db.query(mapfunc, reducefunc)
-    def view(self, viewname):
-        return self.db.view(viewname)
+    def testview(self, viewname):
+        return self.db.view(viewname,include_docs=True, key="Sydney")
     def info(self, target):
         print(self.db.info(target))
 
@@ -118,12 +117,15 @@ if __name__ == '__main__':
     
     import json
     serverURL = 'http://admin:admin1234@172.26.130.149:5984/'
-    dbname = 'tweets_for_test'
+    dbname = 'tweets_mixed'
     db = cdb(serverURL, dbname)
 
     db.showcurrentDB()
 
-    cityData = db.getByCity("Sydney")
-    print(len(cityData))
+    #for item in db.testview("cities/get_id"):
+    #    print(item.doc["place"])
+    #    break
 
+    sydtweets = db.getByCity("Sydney")
+    print(len(sydtweets))
     
