@@ -33,7 +33,7 @@ def get_twitter_auth(section='DEFAULT', verbose=False):
 
 
 def write_to_db(db, tweet):
-    db.twput(tweet)
+    db.save_data(tweet)
 
 
 def get_all_tweets(api, db, userId, startId):

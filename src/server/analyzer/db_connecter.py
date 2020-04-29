@@ -21,8 +21,9 @@ class dataLoader():
 
     def load_tweet_data(self, city):
         # TODO: MapReduce to get data only from the specified city and specified queries.
-        db = db_util.cdb(self.serverURL, "tweets_for_test")
-        return db.getAll()
+        db = db_util.cdb(self.serverURL, "tweets_with_geo")
+        city_key = city
+        return  db.getByCity(city_key)
 
     def load_city_suburb_coordinates(self):
         if self.city:
@@ -34,7 +35,7 @@ class dataLoader():
 
     def load_analysis(self):
         if self.city:
-            db = db_util.cdb(self.serverURL, "analysis_results_for_test")
+            db = db_util.cdb(self.serverURL, "analysis_results")
             city_key = "{}_analysis_result".format(self.city.lower())
             return db.getByKey(city_key)
         else:
@@ -48,7 +49,7 @@ class analysisResultSaver():
         self.city = city
 
     def save_analysis(self, analysis_result):
-        db = db_util.cdb(self.serverURL, "analysis_results_for_test")  # TODO: Change back to analysis_results
+        db = db_util.cdb(self.serverURL, "analysis_results")  # TODO: Change back to analysis_results
         analysis_city_id = "{}_analysis_result".format(self.city.lower())
         db.put(analysis_result, analysis_city_id)
 

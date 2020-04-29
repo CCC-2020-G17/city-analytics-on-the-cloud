@@ -79,6 +79,7 @@ class tweetAnalyzer():
         """
         polygon_dict = {'suburbs': [], 'polygons': []}
         # TODO: Can also load from db.
+        # suburb_json_file = '{}/backend/suburbs/{}.json'.format(os.path.pardir, self.city)
         suburb_json_file = '{}/suburbs/{}_suburbs.json'.format(os.path.pardir, self.city)
         with open(suburb_json_file) as f:
             suburb_info_json = json.load(f)
@@ -196,9 +197,9 @@ class tweetAnalyzer():
 
 
 if __name__ == '__main__':
-    # TODO: Receive city parameter from back end. Load (MapRedude) according to city, Save according to city.
+    # TODO: Receive city parameter from back end.
     cities = ["Melbourne", "Sydney", "Brisbane", "Adelaide", "Perth (WA)"]
-    city = cities[0].split(" ")[0]
+    city = cities[4].split(" ")[0]
 
     # TODO: Solve extended form. (By other offline functions. Formalize all data.)
     data_loader = db_connecter.dataLoader(city)
@@ -210,13 +211,6 @@ if __name__ == '__main__':
     analysis_result = tweet_analyzer.analyze(city_data)
     analysis_result_saver.save_analysis(analysis_result)
 
-
-    # TODO: Decide pre-structure all suburb keys or update if only exists.
-    # if suburb not in self.analysis_result['suburbs'].keys():
-    #     self.add_suburb_to_analysis(suburb)
-    #     self.analysis_result['suburbs'][suburb]['suburb_tweet_count'] += 1
-    # else:
-    #     self.analysis_result['suburbs'][suburb]['suburb_tweet_count'] += 1
     # TODO: Add functionality that makes it able to update result based on the old one.
 
 
