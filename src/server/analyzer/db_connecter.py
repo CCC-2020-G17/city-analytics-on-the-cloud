@@ -19,16 +19,16 @@ class dataLoader():
         self.serverURL = _couchdb_get_url()
         self.city = city
 
-    def load_tweet_data(self):
+    def load_tweet_data(self, city):
         # TODO: MapReduce to get data only from the specified city and specified queries.
-        db = db_util.cdb(self.serverURL, "tweets_with_geo")
+        db = db_util.cdb(self.serverURL, "tweets_for_test")
         return db.getAll()
 
     def load_city_suburb_coordinates(self):
         if self.city:
             city_key = "{}_suburbs".format(self.city.lower())
             db = db_util.cdb(self.serverURL, "aurin")
-            return db.get(city_key)
+            return db.getByKey(city_key)
         else:
             return None
 
@@ -36,7 +36,7 @@ class dataLoader():
         if self.city:
             db = db_util.cdb(self.serverURL, "analysis_results_for_test")
             city_key = "{}_analysis_result".format(self.city.lower())
-            return db.get(city_key)
+            return db.getByKey(city_key)
         else:
             return None
 
@@ -48,7 +48,7 @@ class analysisResultSaver():
         self.city = city
 
     def save_analysis(self, analysis_result):
-        db = db_util.cdb(self.serverURL, "analysis_results")  # TODO: Change back to analysis_results
+        db = db_util.cdb(self.serverURL, "analysis_results_for_test")  # TODO: Change back to analysis_results
         analysis_city_id = "{}_analysis_result".format(self.city.lower())
         db.put(analysis_result, analysis_city_id)
 

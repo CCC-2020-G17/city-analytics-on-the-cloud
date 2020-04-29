@@ -22,6 +22,6 @@ def load_city_analysis(city):
     city_key = "{}_analysis_result".format(city.lower())
     try:
         db = db_util.cdb(server_url, "analysis_results")
-        return db.get(city_key)
+        return db.getByKey(city_key)
     except Exception as e:
         raise e

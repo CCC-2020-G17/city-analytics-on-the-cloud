@@ -45,6 +45,9 @@ class tweetAnalyzer():
 
 
     def load_city_structure(self):
+        """
+        Load result structure for city level analysis
+        """
         self.config.read(self.structure_file)
         self.analysis_result = json.loads(self.config.get('FIRST-LAYER', 'CITY'))
         self.analysis_result['city_name'] = self.city
@@ -52,7 +55,12 @@ class tweetAnalyzer():
             self.analysis_result[scenario] = json.loads(self.config.get('SECOND-LAYER', scenario.upper()))
         self.polygon_dict = None
 
+
     def load_suburbs_structure(self):
+        """
+        Load result structure for suburb level analysis
+        :return:
+        """
         suburb_json_file = '{}/suburbs/{}_suburbs.json'.format(os.path.pardir, self.city)
         with open(suburb_json_file) as f:
             suburb_info_json = json.load(f)
@@ -62,7 +70,13 @@ class tweetAnalyzer():
             for scenario in self.scenarios:
                 self.analysis_result['suburbs'][suburb][scenario] = json.loads(self.config.get('THIRD-LAYER', scenario.upper()))
 
+
     def create_suburb_polygon_dict(self):
+        """
+        Create suburb polygon by using coordinates, and save it as a read-easy form.
+        :return: dictionary. value of key 'suburbs' is a list of suburb names.
+                             value of key 'polygons' is a list of polygons.
+        """
         polygon_dict = {'suburbs': [], 'polygons': []}
         # TODO: Can also load from db.
         suburb_json_file = '{}/suburbs/{}_suburbs.json'.format(os.path.pardir, self.city)
@@ -75,7 +89,11 @@ class tweetAnalyzer():
             polygon_dict['polygons'].append(polygon)
         return polygon_dict
 
+
     def get_city(self, tweet_json):
+        """
+        :return: city of the tweet being tweeted.
+        """
         city = None
         try:
             if tweet_json["place"]["place_type"] == "city":
@@ -84,19 +102,31 @@ class tweetAnalyzer():
             pass
         return city
 
+
     def add_suburb_to_analysis(self, suburb):
+        """
+        Add suburb level structure for given suburb.
+        """
         self.analysis_result['suburbs'][suburb] = json.loads(self.config.get('SECOND-LAYER', 'SUBURB'))
         for scenario in self.scenarios:
             self.analysis_result['suburbs'][suburb][scenario] = json.loads(self.config.get('THIRD-LAYER', scenario.upper()))
 
+
     def judge_attitude(self, text, suburb=None):
+        """
+        Judge the attitude of the covid-19 related tweet.
+        """
         attitude_score = self.sentiment_analyser.polarity_scores(text)['compound']
         attitude = 'positive' if attitude_score > 0.25 else 'negative' if attitude_score < -0.25 else 'neutral'
         if suburb:
             self.analysis_result['suburbs'][suburb]['covid-19'][attitude] += 1
         self.analysis_result['covid-19'][attitude] += 1
 
+
     def process_covid_19(self, tweet_json, suburb=None):
+        """
+        Process COVID-19 scenario analysis on the tweet.
+        """
         text = tweet_json['text']
         # TODO: Should also include extended_tweets etc.
         # TODO: Extract from hashtag
@@ -114,6 +144,9 @@ class tweetAnalyzer():
     #         self.analysis_result['suburbs'][suburb]['covid-19']['tweet_count'] += 1
 
     def process_crime(self, tweet_json, suburb=None):
+        """
+        Process CRIME scenario analysis on the tweet.
+        """
         # TODO: It's better to use full-text instead
         text = tweet_json['text']
         if profanity.contains_profanity(text):
@@ -121,17 +154,22 @@ class tweetAnalyzer():
                 self.analysis_result['suburbs'][suburb]['crime']['vulgar_tweet_count'] += 1
             self.analysis_result['crime']['vulgar_tweet_count'] += 1
 
+
     def process_scenarios(self, tweet_json, suburb=None):
         """
-        Process scenarios for the tweet
-        :param tweet_json:
-        :param suburb: if suburb is not none, further analyze at suburb level.
-        :return:
+        Process scenarios for the tweet.
         """
         self.process_covid_19(tweet_json, suburb)
         self.process_crime(tweet_json, suburb)
 
+
     def match_suburb(self, tweet_json, polygon_dict):
+        """
+        Find the suburb where the tweet was tweeted.
+        :param tweet_json:
+        :param polygon_dict:
+        :return:
+        """
         if self.get_city(tweet_json) == self.city:
             self.analysis_result['city_tweet_count'] += 1
             if tweet_json['geo']:
@@ -147,12 +185,14 @@ class tweetAnalyzer():
             else:
                 return None
 
+
     def analyze(self, city_data):
         polygon_dict = self.create_suburb_polygon_dict()
         for tweet_json in city_data:
             suburb = self.match_suburb(tweet_json, polygon_dict)
             self.process_scenarios(tweet_json, suburb)
         return self.analysis_result
+
 
 
 if __name__ == '__main__':
@@ -163,7 +203,7 @@ if __name__ == '__main__':
     # TODO: Solve extended form. (By other offline functions. Formalize all data.)
     data_loader = db_connecter.dataLoader(city)
     analysis_result_saver = db_connecter.analysisResultSaver(city)
-    city_data = data_loader.load_tweet_data()
+    city_data = data_loader.load_tweet_data(city)
     # old_analysis = data_loader.load_analysis()
 
     tweet_analyzer = tweetAnalyzer(city)
@@ -177,5 +217,6 @@ if __name__ == '__main__':
     #     self.analysis_result['suburbs'][suburb]['suburb_tweet_count'] += 1
     # else:
     #     self.analysis_result['suburbs'][suburb]['suburb_tweet_count'] += 1
+    # TODO: Add functionality that makes it able to update result based on the old one.
 
 
