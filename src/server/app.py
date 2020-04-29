@@ -8,7 +8,7 @@ app = Flask(__name__)
 def get_statistic_api():
     # Use For Debug
     def _load(city):
-        data_path = "../../data/{}.json".format(city)
+        data_path = "suburbs/{}_suburbs.json".format(city)
         with open(data_path, 'r') as f:
             data = json.load(f)
             return data
