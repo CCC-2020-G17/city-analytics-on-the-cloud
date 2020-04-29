@@ -25,3 +25,14 @@ No connection with the couchDB currently.
    http://0.0.0.0:3000/api/statistic?city=adelaide
 
    http://0.0.0.0:3000/api/statistic?city=perth
+
+4. Or get data from couchDB server
+    http://172.26.130.149:3000/api/statistic?city=melbourne
+
+    http://172.26.130.149:3000/api/statistic?city=sydney
+
+    http://172.26.130.149:3000/api/statistic?city=brisbane
+
+    http://172.26.130.149:3000/api/statistic?city=adelaide
+
+    http://172.26.130.149:3000/api/statistic?city=perth
