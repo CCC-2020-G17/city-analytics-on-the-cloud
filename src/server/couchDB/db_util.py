@@ -78,7 +78,7 @@ class cdb:
             self.db.save(data)
             print(f'...update data {key}')
 
-    def get(self, key):
+    def getByKey(self, key):
         try:
             return self.db[key]
         except couchdb.http.ResourceNotFound:
@@ -91,25 +91,39 @@ class cdb:
             data.append(item['doc'])
         return data
 
-    
+    def getByCity(self, cityname):
+        """return all documents by city
+
+        Arguments:
+            cityname {string} -- city name to look at
+
+        Returns:
+            {list} -- a list of twitter documents
+        """
+        data = []
+        for item in self.db.view('cities/get_doc'):
+            if(item.key == cityname):
+                data.append(item.value)
+        return data
 
     def query(self, mapfunc, reducefunc=None):
         return self.db.query(mapfunc, reducefunc)
-
+    def view(self, viewname):
+        return self.db.view(viewname)
+    def info(self, target):
+        print(self.db.info(target))
 
     
 if __name__ == '__main__':
     
     import json
     serverURL = 'http://admin:admin1234@172.26.130.149:5984/'
-    dbname = 'tweets_for_test2'
+    dbname = 'tweets_for_test'
     db = cdb(serverURL, dbname)
 
     db.showcurrentDB()
 
-    with open('data/tweets_with_geo.json') as file:
-        for index, json_obj in enumerate(file):
-            data = json.loads(json_obj)
-            db.twput(data)
-            if(index > 20):
-                break;
+    cityData = db.getByCity("Sydney")
+    print(len(cityData))
+
+    

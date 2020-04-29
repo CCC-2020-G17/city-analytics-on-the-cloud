@@ -48,9 +48,15 @@ for d in all_data:
 
 """sample4 fetch data by key (for twitters only)"""
 # data returned is a json document
-one_data = db.get('1252949121519906816')
+one_data = db.getByKey('1252949121519906816')
 print('**** one data****')
 print(one_data)
+
+"""sample5 fetch twitters of a city"""
+# required views to be created in the database in advance.
+# returns all twitters of this city in a [list]
+cityData = db.getByCity("Sydney")
+
 
 """how to use json_to_db"""
 #python3 json_to_db.py -f [json file name] -s [serverURL] -db [dbname]
