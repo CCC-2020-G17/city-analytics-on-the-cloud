@@ -1,4 +1,5 @@
 import os
+import functools
 from couchDB import db_util
 from configparser import ConfigParser
 
@@ -21,7 +22,7 @@ class dataLoader():
 
     def load_tweet_data(self, city):
         # TODO: MapReduce to get data only from the specified city and specified queries.
-        db = db_util.cdb(self.serverURL, "tweets_with_geo")
+        db = db_util.cdb(self.serverURL, "tweets_for_test")
         city_key = city
         return  db.getByCity(city_key)
 
@@ -35,7 +36,7 @@ class dataLoader():
 
     def load_analysis(self):
         if self.city:
-            db = db_util.cdb(self.serverURL, "analysis_results")
+            db = db_util.cdb(self.serverURL, "analysis_results_for_test")
             city_key = "{}_analysis_result".format(self.city.lower())
             return db.getByKey(city_key)
         else:
@@ -44,19 +45,41 @@ class dataLoader():
 
 class analysisResultSaver():
 
-    def __init__(self, city):
+    def __init__(self, city=None):
         self.serverURL = _couchdb_get_url()
         self.city = city
 
     def save_analysis(self, analysis_result):
-        db = db_util.cdb(self.serverURL, "analysis_results")  # TODO: Change back to analysis_results
+        db = db_util.cdb(self.serverURL, "analysis_results_for_test")  # TODO: Change back to analysis_results
         analysis_city_id = "{}_analysis_result".format(self.city.lower())
         db.put(analysis_result, analysis_city_id)
 
-    def update_analysis(self, analysis_result):
+    def update_helper(self, renewal, existing):
+        if not isinstance(renewal, dict) or not isinstance(existing, dict):
+            if isinstance(renewal, str) and isinstance(existing, str):
+                return existing
+            elif isinstance(renewal, int) and isinstance(existing, int):
+                return renewal + existing
+        for key in existing:
+            if key in renewal:
+                renewal[key] = self.update_analysis(renewal[key], existing[key])
+            else:
+                renewal[key] = existing[key]
+        return renewal
+
+    def update_analysis(self, renewal, existing):
         """
         Add the new result to the existing result. May update only some scenarios.
-        :param analysis_result:
+        :param renewal:
         :return:
         """
-        pass
+        new_result = self.update_helper(renewal, existing)
+        self.save_analysis(new_result)
+
+
+if __name__ == '__main__':
+    data_loader = dataLoader('melbourne')
+    analysis_result = data_loader.load_analysis()
+    result_saver = analysisResultSaver('melbourne')
+    result_saver.update_analysis(analysis_result, analysis_result)
+

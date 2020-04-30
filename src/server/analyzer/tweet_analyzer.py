@@ -37,6 +37,7 @@ class tweetAnalyzer():
         self.city = city
         self.structure_file = '{}/config/result.structure.cfg'.format(os.path.pardir)
         self.config = ConfigParser()
+        self.suburb_info_json = db_connecter.dataLoader(self.city).load_city_suburb_coordinates()
         self.scenarios = ['covid-19', 'crime', 'econ', 'offence']
         self.load_city_structure()
         self.load_suburbs_structure()
@@ -61,10 +62,10 @@ class tweetAnalyzer():
         Load result structure for suburb level analysis
         :return:
         """
-        suburb_json_file = '{}/suburbs/{}_suburbs.json'.format(os.path.pardir, self.city)
-        with open(suburb_json_file) as f:
-            suburb_info_json = json.load(f)
-        for feature in suburb_info_json['features']:
+        # suburb_json_file = '{}/suburbs/{}_suburbs.json'.format(os.path.pardir, self.city)
+        # with open(suburb_json_file) as f:
+        #     suburb_info_json = json.load(f)
+        for feature in self.suburb_info_json['features']:
             suburb = feature['properties']['name']
             self.analysis_result['suburbs'][suburb] = json.loads(self.config.get('SECOND-LAYER', 'SUBURB'))
             for scenario in self.scenarios:
@@ -78,12 +79,10 @@ class tweetAnalyzer():
                              value of key 'polygons' is a list of polygons.
         """
         polygon_dict = {'suburbs': [], 'polygons': []}
-        # TODO: Can also load from db.
-        # suburb_json_file = '{}/backend/suburbs/{}.json'.format(os.path.pardir, self.city)
-        suburb_json_file = '{}/suburbs/{}_suburbs.json'.format(os.path.pardir, self.city)
-        with open(suburb_json_file) as f:
-            suburb_info_json = json.load(f)
-        for feature in suburb_info_json['features']:
+        # suburb_json_file = '{}/suburbs/{}_suburbs.json'.format(os.path.pardir, self.city)
+        # with open(suburb_json_file) as f:
+        #     suburb_info_json = json.load(f)
+        for feature in self.suburb_info_json['features']:
             lat_lon_list = feature['geometry']['coordinates'][0][0]
             polygon = Polygon(lat_lon_list)
             polygon_dict['suburbs'].append(feature['properties']['name'])
@@ -199,7 +198,7 @@ class tweetAnalyzer():
 if __name__ == '__main__':
     # TODO: Receive city parameter from back end.
     cities = ["Melbourne", "Sydney", "Brisbane", "Adelaide", "Perth (WA)"]
-    city = cities[4].split(" ")[0]
+    city = cities[0].split(" ")[0]
 
     # TODO: Solve extended form. (By other offline functions. Formalize all data.)
     data_loader = db_connecter.dataLoader(city)
