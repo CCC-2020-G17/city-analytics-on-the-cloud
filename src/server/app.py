@@ -1,8 +1,10 @@
 from flask import Flask, request, url_for
 import json
 from backend import analysis_loader
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app, resources=r'/*')
 
 @app.route('/api/statistic', methods=['GET'])
 def get_statistic_api():
