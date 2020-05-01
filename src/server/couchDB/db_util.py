@@ -1,5 +1,5 @@
 import couchdb
-from datetime import datetime
+import time
 
 class cdb:
     def __init__(self, serverURL='http://admin:admin1234@localhost:5984',dbname=None):
@@ -49,7 +49,7 @@ class cdb:
                 del data["_rev"]
             _id = data["id_str"]
             data["_id"] = _id
-            #data["ref_timestamp"] = datetime.now().strftime('%Y%m%d%H%M%S.%f')[:-7]
+            data["db_timestamp"] = str(int(time.time()/100)) +'00'
             try:
                 self.db.save(data)
                 print(f'...save twitter {_id}')
@@ -69,7 +69,7 @@ class cdb:
         """
         if key is not None:
             data["_id"] = key
-            #data["ref_timestamp"] = datetime.now().strftime('%Y%m%d%H%M%S.%f')[:-7]
+            data["db_timestamp"] = str(int(time.time()/100)) +'00'
         try:
             self.db.save(data)
         except couchdb.http.ResourceConflict:
@@ -85,10 +85,14 @@ class cdb:
             print(f'Error: No item found with key{key}')
             return None
 
-    def getAll(self):
+    def getAll(self, include_docs=True,skipnum=0):
         data = []
-        for item in self.db.view('_all_docs',include_docs=True):
-            data.append(item['doc'])
+        if include_docs:
+            for item in self.db.view('_all_docs',include_docs=True,skip=skipnum):
+                data.append(item['doc'])
+        else:
+            for item in self.db.view('_all_docs',include_docs=False, skip=skipnum):
+                data.append(item.key)
         return data
 
     def getByCity(self, cityname):
@@ -104,11 +108,38 @@ class cdb:
         for item in self.db.view('cities/get_id',include_docs=True, key=cityname):
             data.append(item.doc)
         return data
+    def getByBlock(self,start_ts, end_ts, cityname=None, only_id=False):
+        """return documents between start and end timestamp for a specific city
 
-    def query(self, mapfunc, reducefunc=None):
-        return self.db.query(mapfunc, reducefunc)
-    def testview(self, viewname):
-        return self.db.view(viewname,include_docs=True, key="Sydney")
+        Arguments:
+           start_ts {int} -- search start timestamp
+          end_ts {int} -- search end timestamp
+          cityname {string} -- city to search, default search for all cities
+        """
+        data = []
+
+        # define start and end key for search
+        if cityname is None:
+            startkey = [start_ts]
+            endkey = [end_ts,{}]
+        else:
+            startkey = [start_ts,cityname]
+            endkey = [end_ts,cityname]
+        # whether to include doc or just get id
+        if only_id:
+            for item in self.db.view('cities/get_timestamp',\
+            reduce=False,include_docs=False,startkey=startkey,endkey=endkey):
+                data.append(item.id)
+        else:
+            for item in self.db.view('cities/get_timestamp',\
+            reduce=False,include_docs=True,startkey=startkey,endkey=endkey):
+                data.append(item.doc)
+        # return results
+        return data
+
+    def getview(self, viewname, key=None, include_docs=False, skip=0, reduce=True,group_level=1):
+        return self.db.view(viewname, reduce=True,group_level=1)
+
     def info(self, target):
         print(self.db.info(target))
 
@@ -117,15 +148,22 @@ if __name__ == '__main__':
     
     import json
     serverURL = 'http://admin:admin1234@172.26.130.149:5984/'
-    dbname = 'tweets_mixed'
+    dbname = 'tweets_for_test'
     db = cdb(serverURL, dbname)
 
-    db.showcurrentDB()
+    #db.showcurrentDB()
+
+    ts0 = int(time.time())
+    ts = str(int(time.time()/100)) +'00'
+
+    print("1588261100")
+    print(ts0)
+    print(ts)
 
     #for item in db.testview("cities/get_id"):
     #    print(item.doc["place"])
     #    break
 
-    sydtweets = db.getByCity("Sydney")
-    print(len(sydtweets))
+    #sydtweets = db.getByCity("Sydney")
+    #print(len(sydtweets))
     
