@@ -148,22 +148,15 @@ if __name__ == '__main__':
     
     import json
     serverURL = 'http://admin:admin1234@172.26.130.149:5984/'
-    dbname = 'tweets_for_test'
+    dbname = 'tweets_with_geo'
     db = cdb(serverURL, dbname)
 
     #db.showcurrentDB()
 
-    ts0 = int(time.time())
-    ts = str(int(time.time()/100)) +'00'
+    #search for city is London
+    data = db.getByBlock("1588256300","1588256300","London",only_id=True)
+    # only_id set true to get only the document id without full document
 
-    print("1588261100")
-    print(ts0)
-    print(ts)
+    for item in data:
+        print(item)
 
-    #for item in db.testview("cities/get_id"):
-    #    print(item.doc["place"])
-    #    break
-
-    #sydtweets = db.getByCity("Sydney")
-    #print(len(sydtweets))
-    
