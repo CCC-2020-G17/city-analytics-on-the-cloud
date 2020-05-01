@@ -36,7 +36,7 @@ def write_to_db(db, tweet):
     db.save_data(tweet)
 
 
-def get_all_tweets(api, db, userId, startId):
+def get_all_tweets(api, db1, db2, userId, startId):
     # initialize a list to hold all the Tweets
     alltweets = []
     # make initial request for most recent tweets
@@ -60,9 +60,13 @@ def get_all_tweets(api, db, userId, startId):
             oldest = alltweets[-1].id - 1
             print("...%s tweets downloaded so far" % (len(alltweets)))
         for tweet in alltweets:
+            if tweet._json["place"] is not None:
+                if tweet._json["place"]["country_code"] == "AU":
+                    write_to_db(db1, tweet._json)
+                    if tweet._json['geo'] is not None:
+                        write_to_db(db2, tweet._json)
             # with open('alltweets.json', 'a') as f:
             #     json.dump(tweet._json, f, indent=2)
-            write_to_db(db, tweet._json)
             # print(tweet._json)
         return userId, endId
     else:
@@ -71,7 +75,8 @@ def get_all_tweets(api, db, userId, startId):
 
 def get_twitters_by_userIDs():
     server_url = _couchdb_get_url()
-    db = cdb(server_url, save_to_db)
+    db1 = cdb(server_url, save_to_db1)
+    db2 = cdb(server_url, save_to_db2)
 
     auth = get_twitter_auth()
     api = tweepy.API(auth, wait_on_rate_limit=True, wait_on_rate_limit_notify=True)
@@ -82,7 +87,7 @@ def get_twitters_by_userIDs():
             userId_search_record = json.loads(line)
             new_userId_search_record = {}
             for user_id, startId in userId_search_record.items():
-                userId, endId = get_all_tweets(api, db, user_id, startId)
+                userId, endId = get_all_tweets(api, db1, db2, user_id, startId)
                 new_userId_search_record[userId] = endId
                 with open("userId_search_record2.json", 'a') as f:
                     json.dump(new_userId_search_record, f)
@@ -90,5 +95,6 @@ def get_twitters_by_userIDs():
 
 
 if __name__ == '__main__':
-    save_to_db = 'tweets_mixed'
+    save_to_db1 = 'tweets_mixed'
+    save_to_db2 = 'tweets_with_geo'
     get_twitters_by_userIDs()
