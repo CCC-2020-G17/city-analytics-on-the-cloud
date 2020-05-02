@@ -3,6 +3,12 @@ import time
 
 class cdb:
     def __init__(self, serverURL='http://admin:admin1234@localhost:5984',dbname=None):
+        """initialize a CouchDB connection
+
+        Keyword Arguments:
+            serverURL {string} -- the server URL (default: {'http://admin:admin1234@localhost:5984'})
+            dbname {string} -- the db to connect to (default: {None})
+        """
         self.serverURL = serverURL
         self.couchserver = couchdb.Server(self.serverURL)
         if dbname is not None:
@@ -11,30 +17,45 @@ class cdb:
             self.db = None
     
     def createDB(self, dbname):
+        """create a database in couchdb server
+
+        Arguments:
+            dbname {string} -- database name to create
+        """
         if dbname in self.couchserver:
             print(f"Database {dbname} already exists ")
         else:
             self.couchserver.create(dbname)
     
     def deleteDB(self, dbname):
+        """delete a database from couchdb server
+
+        Arguments:
+            dbname {string} -- database name to delete
+        """
         try:
             del couchserver[dbname]
         except NameError:
             print(f"Database {dbname} does not exists")
 
     def showDBs(self):
+        """show all available databases in couch server connected
+        """
         dbs = [dbname for dbname in self.couchserver]
         print(dbs)
 
     def connectDB(self, dbname):
+        """connect to specific database for document operations
+
+        Arguments:
+            dbname {string} -- database name to connect
+        """
         self.db=self.couchserver[dbname]
     
     def showcurrentDB(self):
+        """show the database name that is connected
+        """
         print(self.db)
-
-    def getkeys(self):
-        keys = [id in self.db]
-        return keys
 
     def twput(self, data):
         """save a twitter json document to couchdb
@@ -108,6 +129,7 @@ class cdb:
         for item in self.db.view('cities/get_id',include_docs=True, key=cityname):
             data.append(item.doc)
         return data
+        
     def getByBlock(self,start_ts, end_ts, cityname=None, only_id=False):
         """return documents between start and end timestamp for a specific city
 
@@ -137,26 +159,23 @@ class cdb:
         # return results
         return data
 
+    """
+    def getkeys(self):
+        keys = [id in self.db]
+        return keys
+
     def getview(self, viewname, key=None, include_docs=False, skip=0, reduce=True,group_level=1):
         return self.db.view(viewname, reduce=True,group_level=1)
 
     def info(self, target):
         print(self.db.info(target))
-
+    """
     
 if __name__ == '__main__':
     
-    import json
     serverURL = 'http://admin:admin1234@172.26.130.149:5984/'
-    dbname = 'tweets_with_geo'
+    dbname = 'aurin'
     db = cdb(serverURL, dbname)
 
-    #db.showcurrentDB()
-
-    #search for city is London
-    data = db.getByBlock("1588256300","1588256300","London",only_id=True)
-    # only_id set true to get only the document id without full document
-
-    for item in data:
-        print(item)
+    db.showcurrentDB()
 
