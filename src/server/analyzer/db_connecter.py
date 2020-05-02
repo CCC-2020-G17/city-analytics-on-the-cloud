@@ -1,5 +1,5 @@
 import os
-import functools
+import numbers
 from couchDB import db_util
 from configparser import ConfigParser
 
@@ -58,28 +58,30 @@ class analysisResultSaver():
         if not isinstance(renewal, dict) or not isinstance(existing, dict):
             if isinstance(renewal, str) and isinstance(existing, str):
                 return existing
-            elif isinstance(renewal, int) and isinstance(existing, int):
-                return renewal + existing
+            elif isinstance(renewal, numbers.Number) and isinstance(existing, numbers.Number):
+                return sum([renewal, existing])
         for key in existing:
             if key in renewal:
-                renewal[key] = self.update_analysis(renewal[key], existing[key])
+                renewal[key] = self.update_helper(renewal[key], existing[key])
             else:
                 renewal[key] = existing[key]
         return renewal
 
-    def update_analysis(self, renewal, existing):
+    def update_analysis(self, renewal):
         """
         Add the new result to the existing result. May update only some scenarios.
         :param renewal:
         :return:
         """
+        existing = dataLoader(self.city).load_analysis()
         new_result = self.update_helper(renewal, existing)
         self.save_analysis(new_result)
 
+    def reset_static_result(self):
+        existing = dataLoader(self.city).load_analysis()
+        new_result = existing
+        # TODO: Generalize it.
+        new_result['crime']['crime_index'] = 0
+        self.save_analysis(new_result)
 
-if __name__ == '__main__':
-    data_loader = dataLoader('melbourne')
-    analysis_result = data_loader.load_analysis()
-    result_saver = analysisResultSaver('melbourne')
-    result_saver.update_analysis(analysis_result, analysis_result)
 

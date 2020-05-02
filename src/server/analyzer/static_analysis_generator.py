@@ -1,6 +1,7 @@
 import os
 import json
 from configparser import ConfigParser
+from analyzer import db_connecter
 
 
 class staticAnalysisGenerator():
@@ -9,6 +10,7 @@ class staticAnalysisGenerator():
         self.city = city
         self.structure_file = '{}/config/result.structure.cfg'.format(os.path.pardir)
         self.config = ConfigParser()
+        self.suburb_info_json = db_connecter.dataLoader(self.city).load_city_suburb_coordinates()
         self.scenarios = ['covid-19', 'crime', 'econ', 'offence']
         self.load_city_structure()
         self.load_suburbs_structure()
@@ -30,21 +32,34 @@ class staticAnalysisGenerator():
         Load result structure for suburb level analysis
         :return:
         """
-        suburb_json_file = '{}/suburbs/{}_suburbs.json'.format(os.path.pardir, self.city)
-        with open(suburb_json_file) as f:
-            suburb_info_json = json.load(f)
-        for feature in suburb_info_json['features']:
+        # suburb_json_file = '{}/suburbs/{}_suburbs.json'.format(os.path.pardir, self.city)
+        # with open(suburb_json_file) as f:
+        #     suburb_info_json = json.load(f)
+        for feature in self.suburb_info_json['features']:
             suburb = feature['properties']['name']
             self.analysis_result['suburbs'][suburb] = json.loads(self.config.get('SECOND-LAYER', 'SUBURB'))
             for scenario in self.scenarios:
                 self.analysis_result['suburbs'][suburb][scenario] = json.loads(self.config.get('THIRD-LAYER', scenario.upper()))
 
+    def load_crime_index(self):
+        with open('{}/config/static_result.json'.format(os.path.pardir)) as f:
+            city_crime_index = json.load(f)
+        self.analysis_result['crime']['crime_index'] = city_crime_index[self.city]['crime_index']
+
+    def reset_crime_index(self):
+        self.analysis_result['crime']['crime_index'] = 0
+
+
 
 if __name__ == '__main__':
     city = 'melbourne'
     generator = staticAnalysisGenerator(city)
-    print(generator.analysis_result)
-    with open('{}_static_result.json'.format(city), 'w') as f:
-        json.dump(generator.analysis_result, f, indent=3)
+    # TODO: Only load once. Or check duplication.
+    generator.load_crime_index()
+    generator.reset_crime_index()
+    db_connecter.analysisResultSaver(city).update_analysis(generator.analysis_result)
+    db_connecter.analysisResultSaver(city).reset_static_result()
+    # with open('{}_static_result.json'.format(city), 'w') as f:
+    #     json.dump(generator.analysis_result, f, indent=3)
 
 
