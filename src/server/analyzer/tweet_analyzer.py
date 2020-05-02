@@ -193,6 +193,21 @@ class tweetAnalyzer():
             self.process_scenarios(tweet_json, suburb)
         return self.analysis_result
 
+def load_timestamp_record():
+    with open('timestamp_record.json', 'r') as f:
+        record = json.load(f)
+        start_ts = record["tweets_with_geo"]
+        end_ts = str(int(start_ts) + 100)
+    return start_ts, end_ts
+
+def update_timestamp_record():
+    with open('timestamp_record.json', 'r') as f:
+        record = json.load(f)
+        start_ts = record["tweets_with_geo"]
+        end_ts = int(start_ts) + 100
+    with open('timestamp_record.json', 'w')  as f:
+        record["tweets_with_geo"] = end_ts
+        json.dump(record, f, indent=1)
 
 
 if __name__ == '__main__':
@@ -203,13 +218,16 @@ if __name__ == '__main__':
     # TODO: Solve extended form. (By other offline functions. Formalize all data.)
     data_loader = db_connecter.dataLoader(city)
     analysis_result_saver = db_connecter.analysisResultSaver(city)
-    city_data = data_loader.load_tweet_data(city)
-    # old_analysis = data_loader.load_analysis()
+    # city_data = data_loader.load_tweet_data()
+    start_ts, end_ts = load_timestamp_record()
+    city_period_data = data_loader.load_period_tweet_data(start_ts, end_ts)
 
     tweet_analyzer = tweetAnalyzer(city)
-    analysis_result = tweet_analyzer.analyze(city_data)
-    analysis_result_saver.save_analysis(analysis_result)
+    analysis_result = tweet_analyzer.analyze(city_period_data)
+    analysis_result_saver.update_analysis(analysis_result)
+    update_timestamp_record()
 
     # TODO: Add functionality that makes it able to update result based on the old one.
+
 
 

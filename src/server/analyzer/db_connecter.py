@@ -20,11 +20,15 @@ class dataLoader():
         self.serverURL = _couchdb_get_url()
         self.city = city
 
-    def load_tweet_data(self, city):
-        # TODO: MapReduce to get data only from the specified city and specified queries.
-        db = db_util.cdb(self.serverURL, "tweets_for_test")
-        city_key = city
+    def load_tweet_data(self):
+        db = db_util.cdb(self.serverURL, "tweets_with_geo")
+        city_key = self.city
         return  db.getByCity(city_key)
+
+    def load_period_tweet_data(self, start_ts, end_ts):
+        db = db_util.cdb(self.serverURL, "tweets_with_geo")
+        cityData = db.getByBlock(start_ts=start_ts, end_ts=end_ts, cityname=self.city)
+        return cityData
 
     def load_city_suburb_coordinates(self):
         if self.city:
@@ -83,5 +87,11 @@ class analysisResultSaver():
         # TODO: Generalize it.
         new_result['crime']['crime_index'] = 0
         self.save_analysis(new_result)
+
+if __name__ == '__main__':
+    start_ts = '1588256300'
+    end_ts = '1588256400'
+    print(dataLoader().load_period_tweet_data(start_ts, end_ts))
+
 
 

@@ -41,21 +41,29 @@ class staticAnalysisGenerator():
             for scenario in self.scenarios:
                 self.analysis_result['suburbs'][suburb][scenario] = json.loads(self.config.get('THIRD-LAYER', scenario.upper()))
 
-    def load_crime_index(self):
-        with open('{}/config/static_result.json'.format(os.path.pardir)) as f:
+    def add_crime_index(self):
+        with open('{}/analyzer/static_result.json'.format(os.path.pardir)) as f:
             city_crime_index = json.load(f)
         self.analysis_result['crime']['crime_index'] = city_crime_index[self.city]['crime_index']
 
     def reset_crime_index(self):
         self.analysis_result['crime']['crime_index'] = 0
 
+    def add_income(self):
+        pass
+
+    def add_migrationn(self):
+        pass
+
+    def add_mental_health(self):
+        pass
 
 
 if __name__ == '__main__':
     city = 'melbourne'
     generator = staticAnalysisGenerator(city)
     # TODO: Only load once. Or check duplication.
-    generator.load_crime_index()
+    generator.add_crime_index()
     generator.reset_crime_index()
     db_connecter.analysisResultSaver(city).update_analysis(generator.analysis_result)
     db_connecter.analysisResultSaver(city).reset_static_result()
