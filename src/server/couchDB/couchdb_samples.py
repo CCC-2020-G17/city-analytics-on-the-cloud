@@ -57,6 +57,12 @@ print(one_data)
 # returns all twitters of this city in a [list]
 cityData = db.getByCity("Sydney")
 
+"""sample6 fetch data by timestamp and city"""
+# required views to be created in db in advance
+# start and end timestamp can be the same, cityname can be empty to search for all twitters,\
+#       even if [doc.place] is empty
+cityData = db.getByBlock(start_ts='1588261100',end_ts='1588261100',cityname='Sydney')
+cityData = db.getByBlock(start_ts='1588261100',end_ts='1588261100') # search for all twitters ignore city information
 
 """how to use json_to_db"""
 #python3 json_to_db.py -f [json file name] -s [serverURL] -db [dbname]
