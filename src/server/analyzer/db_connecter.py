@@ -74,14 +74,16 @@ class analysisResultSaver():
     def update_analysis(self, renewal):
         """
         Add the new result to the existing result. May update only some scenarios.
-        :param renewal:
-        :return:
+        :param renewal: the renewal result
         """
         existing = dataLoader(self.city).load_analysis()
         new_result = self.update_helper(renewal, existing)
         self.save_analysis(new_result)
 
     def reset_static_result(self):
+        """
+        Reset static result in result database. In case static modules are loaded for multiple times.
+        """
         existing = dataLoader(self.city).load_analysis()
         new_result = existing
         # TODO: Generalize it.

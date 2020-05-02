@@ -67,7 +67,5 @@ if __name__ == '__main__':
     generator.reset_crime_index()
     db_connecter.analysisResultSaver(city).update_analysis(generator.analysis_result)
     db_connecter.analysisResultSaver(city).reset_static_result()
-    # with open('{}_static_result.json'.format(city), 'w') as f:
-    #     json.dump(generator.analysis_result, f, indent=3)
 
 
