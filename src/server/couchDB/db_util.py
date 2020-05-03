@@ -93,6 +93,7 @@ class cdb:
             data["db_timestamp"] = str(int(time.time()/100)) +'00'
         try:
             self.db.save(data)
+            print(f'...save data {key}')
         except couchdb.http.ResourceConflict:
             _rev = self.db[key]["_rev"]
             data["_rev"] = _rev
