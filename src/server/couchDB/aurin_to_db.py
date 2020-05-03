@@ -20,15 +20,19 @@ for filename in os.listdir(dirpath):
     _id = filename[:-5]
     if filename.endswith('_suburbs.json'):
         db.put(data,_id)
+        pass
     else:
         data_toload = {}
         data_toload["_id"] = _id
         data_toload["suburbs"] = {}
         i = 1
         for item in data['features']:
-            suburbname = item['properties']['sa2_name16']
+            suburb_oriname = item['properties']['sa2_name16']
+            suburbnamelist = suburb_oriname.replace('Yarra -', 'Yarra').split('-')
             suburbdata = item['properties']
             del suburbdata['sa2_name16']
-
-            data_toload['suburbs'][suburbname] = suburbdata
+            for suburbname in suburbnamelist:
+                suburbname = suburbname.strip()
+                data_toload['suburbs'][suburbname] = suburbdata
+                #print(f'{suburb_oriname} ---> {suburbname}')
         db.put(data_toload,_id)
