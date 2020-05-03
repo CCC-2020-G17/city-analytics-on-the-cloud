@@ -21,7 +21,7 @@ class dataLoader():
         self.city = city
 
     def load_tweet_data(self):
-        db = db_util.cdb(self.serverURL, "tweets_with_geo") #tweets_with_geo
+        db = db_util.cdb(self.serverURL, "tweets_with_geo")
         city_key = self.city
         return  db.getByCity(city_key)
 

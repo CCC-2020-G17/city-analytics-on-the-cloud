@@ -41,6 +41,7 @@ class staticAnalysisGenerator():
         for scenario in self.city_scenarios:
             self.analysis_result[scenario] = json.loads(self.config.get('SECOND-LAYER', scenario.upper()))
         self.polygon_dict = None
+        self.add_crime_index()
 
 
     def load_suburbs_structure(self):
@@ -116,10 +117,6 @@ class staticAnalysisGenerator():
 if __name__ == '__main__':
     city = 'melbourne'
     generator = staticAnalysisGenerator(city)
-    # TODO: Only load once. Or check duplication.
-    generator.reset_income()
-    generator.reset_education()
-    generator.reset_migration()
     generator.add_static_data_to_db()
     # db_connecter.analysisResultSaver(city).reset_static_result()
 
