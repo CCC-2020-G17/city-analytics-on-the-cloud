@@ -64,6 +64,13 @@ cityData = db.getByCity("Sydney")
 cityData = db.getByBlock(start_ts='1588261100',end_ts='1588261100',cityname='Sydney')
 cityData = db.getByBlock(start_ts='1588261100',end_ts='1588261100') # search for all twitters ignore city information
 
+""" sample7, get analysis results"""
+serverURL = 'http://admin:admin1234@172.26.130.149:5984/'
+dbname = 'analysis_results'
+db = db_util.cdb(serverURL, dbname)
+data1 = db.getResult(scenario='income',city='adelaide',suburb='ROYSTON PARK') # get suburb data
+data2 = db.getResult(scenario='crime',city='adelaide')  # get city data
+
 """how to use json_to_db"""
 #python3 json_to_db.py -f [json file name] -s [serverURL] -db [dbname]
 #below command can be run when VPN connected, from local machine

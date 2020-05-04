@@ -160,6 +160,56 @@ class cdb:
         # return results
         return data
 
+    def getResult(self,scenario,city,suburb=None):
+        city = city.lower()
+        cities = ('adelaide','brisbane','melbourne','perth','sydney')
+        scenarios = ('covid-19','crime','income','education','migration')
+        if scenario not in scenarios:
+            print(f'scenarios must be one of {scenarios}')
+            return None
+        if city not in cities:
+            print(f'city must be one of {cities}')
+            return None
+
+        key = city + '_analysis_result'
+        print(f'>>getting data from {key}')
+        doc =  self.db[key]
+        if suburb is not None:
+            suburb = suburb.upper()
+            data = {}
+            if scenario == 'crime' or scenario == 'covid-19':
+                print(f'there is no data of {scenario} in {suburb}')
+                return None
+            else:
+                data["city_name"] = doc["city_name"]
+                data["suburb"] = suburb
+                data["suburb_tweet_count"] = doc["suburbs"][suburb.upper()]["suburb_tweet_count"]
+                data[scenario] = doc["suburbs"][suburb.upper()][scenario]
+                return data
+        else:
+            data = {}
+            data["city_name"] = doc["city_name"]
+            data["city_tweet_count"] = doc["city_tweet_count"]
+            data["city_tweet_with_geo_count"] = doc["city_tweet_with_geo_count"]
+            data["suburb_tweet_count"] = 0
+
+            if scenario == 'crime' or scenario == 'covid-19':
+                data[scenario] = doc[scenario]
+                return data
+            else:
+                print(f'{scenario} is suburb level, please specify the suburb')
+                return None
+            """
+                for sub in doc["suburbs"]:
+                    data["suburb_tweet_count"] += doc["suburbs"][sub]["suburb_tweet_count"]
+                    for item in doc["suburbs"][sub][scenario]:
+                        if item not in data:
+                            data[item] = doc["suburbs"][sub][scenario][item]
+                        else:
+                            data[item] += doc["suburbs"][sub][scenario][item]
+                return data
+            """
+
     """
     def getkeys(self):
         keys = [id in self.db]
@@ -175,8 +225,9 @@ class cdb:
 if __name__ == '__main__':
     
     serverURL = 'http://admin:admin1234@172.26.130.149:5984/'
-    dbname = 'aurin'
+    dbname = 'analysis_results'
     db = cdb(serverURL, dbname)
 
     db.showcurrentDB()
 
+    print(db.getResult('income','adelaide','rOYSTON PARK'))
