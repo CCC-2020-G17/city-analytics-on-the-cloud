@@ -10,27 +10,6 @@ from analyzer import db_connecter
 from better_profanity import profanity
 
 
-class scenarioCOVIDProcessor():
-
-    def identify_covid_related(self):
-        pass
-
-    def check_text(self):
-        pass
-
-    def check_hashtag(self):
-        pass
-
-    def identify_covid_attitude(self):
-        pass
-
-
-class scenarioCrimeProcessor():
-
-    def identify_profanity(self):
-        pass
-
-
 class tweetAnalyzer():
 
     def __init__(self, city=None):
@@ -38,12 +17,12 @@ class tweetAnalyzer():
         self.structure_file = '{}/config/result.structure.cfg'.format(os.path.pardir)
         self.config = ConfigParser()
         self.suburb_info_json = db_connecter.dataLoader(self.city).load_city_suburb_coordinates()
-        self.scenarios = ['covid-19', 'crime', 'econ', 'offence']
+        self.city_scenarios = ['covid-19', 'crime']
+        self.suburb_scenarios = ['income', 'education', 'migration']
         self.load_city_structure()
         self.load_suburbs_structure()
         self.sentiment_analyser = SentimentIntensityAnalyzer()
         profanity.load_censor_words()
-
 
     def load_city_structure(self):
         """
@@ -52,10 +31,9 @@ class tweetAnalyzer():
         self.config.read(self.structure_file)
         self.analysis_result = json.loads(self.config.get('FIRST-LAYER', 'CITY'))
         self.analysis_result['city_name'] = self.city
-        for scenario in self.scenarios:
+        for scenario in self.city_scenarios:
             self.analysis_result[scenario] = json.loads(self.config.get('SECOND-LAYER', scenario.upper()))
         self.polygon_dict = None
-
 
     def load_suburbs_structure(self):
         """
@@ -68,9 +46,8 @@ class tweetAnalyzer():
         for feature in self.suburb_info_json['features']:
             suburb = feature['properties']['name']
             self.analysis_result['suburbs'][suburb] = json.loads(self.config.get('SECOND-LAYER', 'SUBURB'))
-            for scenario in self.scenarios:
+            for scenario in self.suburb_scenarios:
                 self.analysis_result['suburbs'][suburb][scenario] = json.loads(self.config.get('THIRD-LAYER', scenario.upper()))
-
 
     def create_suburb_polygon_dict(self):
         """
@@ -89,7 +66,6 @@ class tweetAnalyzer():
             polygon_dict['polygons'].append(polygon)
         return polygon_dict
 
-
     def get_city(self, tweet_json):
         """
         :return: city of the tweet being tweeted.
@@ -102,28 +78,26 @@ class tweetAnalyzer():
             pass
         return city
 
-
     def add_suburb_to_analysis(self, suburb):
         """
         Add suburb level structure for given suburb.
         """
         self.analysis_result['suburbs'][suburb] = json.loads(self.config.get('SECOND-LAYER', 'SUBURB'))
-        for scenario in self.scenarios:
+        for scenario in self.city_scenarios:
             self.analysis_result['suburbs'][suburb][scenario] = json.loads(self.config.get('THIRD-LAYER', scenario.upper()))
-
 
     def judge_attitude(self, text, suburb=None):
         """
         Judge the attitude of the covid-19 related tweet.
         """
         attitude_score = self.sentiment_analyser.polarity_scores(text)['compound']
-        attitude = 'positive' if attitude_score > 0.25 else 'negative' if attitude_score < -0.25 else 'neutral'
+        attitude = 'tweet_positive_count' if attitude_score > 0.25 else 'tweet_negative_count' \
+            if attitude_score < -0.25 else 'tweet_neutral_count'
         if suburb:
             self.analysis_result['suburbs'][suburb]['covid-19'][attitude] += 1
         self.analysis_result['covid-19'][attitude] += 1
 
-
-    def process_covid_19(self, tweet_json, suburb=None):
+    def process_covid_19(self, tweet_json):
         """
         Process COVID-19 scenario analysis on the tweet.
         """
@@ -132,10 +106,17 @@ class tweetAnalyzer():
         # TODO: Extract from hashtag
         if 'covid' in str(tweet_json).lower():
         # if 'covid' in text.lower():
-            if suburb is not None:
-                self.analysis_result['suburbs'][suburb]['covid-19']['tweet_count'] += 1
             self.analysis_result['covid-19']['tweet_count'] += 1
-            self.judge_attitude(text, suburb)
+            # self.judge_attitude(text, suburb)
+            if tweet_json['lang'] == 'en':
+                self.analysis_result['covid-19']['english_count'] += 1
+            if tweet_json['lang'] == 'zh-cn' or 'zh-tw':
+                self.analysis_result['covid-19']['chinese_count'] += 1
+            if tweet_json['lang'] == 'es':
+                self.analysis_result['covid-19']['spanish_count'] += 1
+            if tweet_json['lang'] != 'en' and tweet_json['lang'] != 'zh-cn' \
+                    and tweet_json['lang'] != 'zh-tw' and tweet_json['lang'] != 'es':
+                self.analysis_result['covid-19']['others_count'] += 1
 
     # def extract_topic_from_hashtag(self, tweet_json, suburb):
     #     hashtags = [dict['text'] for dict in tweet_json["entities"]["hashtags"]]
@@ -143,25 +124,43 @@ class tweetAnalyzer():
     #     if len(hashtags_contain_topic) > 0:
     #         self.analysis_result['suburbs'][suburb]['covid-19']['tweet_count'] += 1
 
-    def process_crime(self, tweet_json, suburb=None):
+    def process_crime(self, tweet_json):
         """
         Process CRIME scenario analysis on the tweet.
         """
         # TODO: It's better to use full-text instead
         text = tweet_json['text']
         if profanity.contains_profanity(text):
-            if suburb is not None:
-                self.analysis_result['suburbs'][suburb]['crime']['vulgar_tweet_count'] += 1
             self.analysis_result['crime']['vulgar_tweet_count'] += 1
 
+    def process_income(self, tweet_json, suburb):
+        text = tweet_json['text']
+        attitude_score = self.sentiment_analyser.polarity_scores(text)['compound']
+        attitude = 'tweet_positive_count' if attitude_score > 0.25 else 'tweet_negative_count' \
+            if attitude_score < -0.25 else 'tweet_neutral_count'
+        if suburb:
+            self.analysis_result['suburbs'][suburb]['income'][attitude] += 1
+
+    def process_education(self, tweet_json, suburb):
+        text = tweet_json['text']
+        if profanity.contains_profanity(text):
+            if suburb:
+                self.analysis_result['suburbs'][suburb]['education']['vulgar_tweet_count'] += 1
+
+    def process_migration(self, tweet_json, suburb):
+        if tweet_json['lang'] != 'en':
+            if suburb:
+                self.analysis_result['suburbs'][suburb]['migration']['non_english_tweet_count'] += 1
 
     def process_scenarios(self, tweet_json, suburb=None):
         """
         Process scenarios for the tweet.
         """
-        self.process_covid_19(tweet_json, suburb)
-        self.process_crime(tweet_json, suburb)
-
+        self.process_covid_19(tweet_json)
+        self.process_crime(tweet_json)
+        self.process_income(tweet_json, suburb)
+        self.process_education(tweet_json, suburb)
+        self.process_migration(tweet_json, suburb)
 
     def match_suburb(self, tweet_json, polygon_dict):
         """
@@ -185,7 +184,6 @@ class tweetAnalyzer():
             else:
                 return None
 
-
     def analyze(self, city_data):
         polygon_dict = self.create_suburb_polygon_dict()
         for tweet_json in city_data:
@@ -193,12 +191,14 @@ class tweetAnalyzer():
             self.process_scenarios(tweet_json, suburb)
         return self.analysis_result
 
+
 def load_timestamp_record():
     with open('timestamp_record.json', 'r') as f:
         record = json.load(f)
         start_ts = record["tweets_with_geo"]
         end_ts = str(int(start_ts) + 100)
     return start_ts, end_ts
+
 
 def update_timestamp_record():
     with open('timestamp_record.json', 'r') as f:
@@ -220,12 +220,12 @@ if __name__ == '__main__':
     analysis_result_saver = db_connecter.analysisResultSaver(city)
     tweet_analyzer = tweetAnalyzer(city)
 
-    # city_data = data_loader.load_tweet_data()
     start_ts, end_ts = load_timestamp_record()
     city_period_data = data_loader.load_period_tweet_data(start_ts, end_ts)
     analysis_result = tweet_analyzer.analyze(city_period_data)
     analysis_result_saver.update_analysis(analysis_result)
     update_timestamp_record()
 
-
-
+    # city_data = data_loader.load_tweet_data()
+    # analysis_result = tweet_analyzer.analyze(city_data)
+    # analysis_result_saver.save_analysis(analysis_result)

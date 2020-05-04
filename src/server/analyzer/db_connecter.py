@@ -38,9 +38,33 @@ class dataLoader():
         else:
             return None
 
+    def load_city_income(self):
+        if self.city:
+            city_key = "{}_income".format(self.city.lower())
+            db = db_util.cdb(self.serverURL, "aurin")
+            return db.getByKey(city_key)
+        else:
+            return None
+
+    def load_city_migration(self):
+        if self.city:
+            city_key = "{}_migration".format(self.city.lower())
+            db = db_util.cdb(self.serverURL, "aurin")
+            return db.getByKey(city_key)
+        else:
+            return None
+
+    def load_city_education(self):
+        if self.city:
+            city_key = "{}_education".format(self.city.lower())
+            db = db_util.cdb(self.serverURL, "aurin")
+            return db.getByKey(city_key)
+        else:
+            return None
+
     def load_analysis(self):
         if self.city:
-            db = db_util.cdb(self.serverURL, "analysis_results_for_test")
+            db = db_util.cdb(self.serverURL, "analysis_results")
             city_key = "{}_analysis_result".format(self.city.lower())
             return db.getByKey(city_key)
         else:
@@ -52,9 +76,19 @@ class analysisResultSaver():
     def __init__(self, city=None):
         self.serverURL = _couchdb_get_url()
         self.city = city
+        self.income_key_tuples = [('low_income_proportion', 'tot_p_inc_wk_p_ov_15_yrs_p_earn_nil_inc_pr100',
+                                   'tot_p_inc_wk_p_ov_15_yrs_p_earn_aud1_aud499wk_pr100'),
+                                  ('high_income_proportion', 'tot_p_inc_wk_p_ov_15_yrs_p_earn_aud2000_aud2999wk_pr100',
+                                   'tot_p_inc_wk_p_ov_15_yrs_p_earn_aud3000_plswk_pr100')]
+        self.education_key_pairs = [('complete_yr_12_proportion', 'hi_yr_scl_completed_p15_yrs_ov_completed_yr_12_equivalent_pr100'),
+                                    ('post_school_proportion', 'p_post_scl_qualf_p_post_scl_qualification_pr100'),
+                                    ('youth_in_study_or_work_proportion', 'yth_engagement_wrk_study_engaged_pr100')]
+        self.migration_key_pairs = [('not_english_at_home', 'spks_lang_oth_eng_home_prop_tot_pop_net_mig_pr100'),
+                                    ('born_overseas_proportion', 'ovs_brn_pop_prop_tot_pop_tot_brn_ovs_net_mig_pr100'),
+                                    ('population_density', 'pop_density_pop_density_p_p_km2')]
 
     def save_analysis(self, analysis_result):
-        db = db_util.cdb(self.serverURL, "analysis_results_for_test")  # TODO: Change back to analysis_results
+        db = db_util.cdb(self.serverURL, "analysis_results")  # TODO: Change back to analysis_results
         analysis_city_id = "{}_analysis_result".format(self.city.lower())
         db.put(analysis_result, analysis_city_id)
 
@@ -64,6 +98,8 @@ class analysisResultSaver():
                 return existing
             elif isinstance(renewal, numbers.Number) and isinstance(existing, numbers.Number):
                 return sum([renewal, existing])
+            elif renewal is None or existing is None:
+                return existing
         for key in existing:
             if key in renewal:
                 renewal[key] = self.update_helper(renewal[key], existing[key])
@@ -86,14 +122,22 @@ class analysisResultSaver():
         """
         existing = dataLoader(self.city).load_analysis()
         new_result = existing
-        # TODO: Generalize it.
-        new_result['crime']['crime_index'] = 0
+        print(new_result)
+        for suburb in new_result['suburbs'].keys():
+            for tuple in self.income_key_tuples:
+                new_result['suburbs'][suburb]['income'][tuple[0]] = 0
+            for tuple in self.education_key_pairs:
+                new_result['suburbs'][suburb]['education'][tuple[0]] = 0
+            for tuple in self.migration_key_pairs:
+                new_result['suburbs'][suburb]['migration'][tuple[0]] = 0
         self.save_analysis(new_result)
 
 if __name__ == '__main__':
+    city = 'melbourne'
     start_ts = '1588256300'
     end_ts = '1588256400'
-    print(dataLoader().load_period_tweet_data(start_ts, end_ts))
+    print(dataLoader(city).load_period_tweet_data(start_ts, end_ts))
+    analysisResultSaver(city).reset_static_result()
 
 
 

@@ -93,6 +93,7 @@ class cdb:
             data["db_timestamp"] = str(int(time.time()/100)) +'00'
         try:
             self.db.save(data)
+            print(f'...save data {key}')
         except couchdb.http.ResourceConflict:
             _rev = self.db[key]["_rev"]
             data["_rev"] = _rev
@@ -142,11 +143,11 @@ class cdb:
 
         # define start and end key for search
         if cityname is None:
-            startkey = [start_ts]
-            endkey = [end_ts,{}]
+            startkey = [str(start_ts)]
+            endkey = [str(end_ts),{}]
         else:
-            startkey = [start_ts,cityname]
-            endkey = [end_ts,cityname]
+            startkey = [str(start_ts),cityname]
+            endkey = [str(end_ts),cityname]
         # whether to include doc or just get id
         if only_id:
             for item in self.db.view('cities/get_timestamp',\

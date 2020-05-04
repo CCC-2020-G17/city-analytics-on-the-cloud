@@ -10,8 +10,24 @@ class staticAnalysisGenerator():
         self.city = city
         self.structure_file = '{}/config/result.structure.cfg'.format(os.path.pardir)
         self.config = ConfigParser()
-        self.suburb_info_json = db_connecter.dataLoader(self.city).load_city_suburb_coordinates()
-        self.scenarios = ['covid-19', 'crime', 'econ', 'offence']
+        self.data_loader = db_connecter.dataLoader(self.city)
+        self.suburb_info_json = self.data_loader.load_city_suburb_coordinates()
+        self.city_scenarios = ['covid-19', 'crime']
+        self.suburb_scenarios = ['income', 'education', 'migration']
+        self.scenario_file_income = self.data_loader.load_city_income()
+        self.scenario_file_migration = self.data_loader.load_city_migration()
+        self.scenario_file_education = self.data_loader.load_city_education()
+        self.income_key_tuples = [('low_income_proportion', 'tot_p_inc_wk_p_ov_15_yrs_p_earn_nil_inc_pr100',
+                                   'tot_p_inc_wk_p_ov_15_yrs_p_earn_aud1_aud499wk_pr100'),
+                                  ('high_income_proportion', 'tot_p_inc_wk_p_ov_15_yrs_p_earn_aud2000_aud2999wk_pr100',
+                                   'tot_p_inc_wk_p_ov_15_yrs_p_earn_aud3000_plswk_pr100')]
+        self.education_key_pairs = [('complete_yr_12_proportion', 'hi_yr_scl_completed_p15_yrs_ov_completed_yr_12_equivalent_pr100'),
+                                    ('post_school_proportion', 'p_post_scl_qualf_p_post_scl_qualification_pr100'),
+                                    ('youth_in_study_or_work_proportion', 'yth_engagement_wrk_study_engaged_pr100')]
+        self.migration_key_pairs = [('not_english_at_home', 'spks_lang_oth_eng_home_prop_tot_pop_net_mig_pr100'),
+                                    ('born_overseas_proportion', 'ovs_brn_pop_prop_tot_pop_tot_brn_ovs_net_mig_pr100'),
+                                    ('population_density', 'pop_density_pop_density_p_p_km2')]
+
         self.load_city_structure()
         self.load_suburbs_structure()
 
@@ -22,24 +38,24 @@ class staticAnalysisGenerator():
         self.config.read(self.structure_file)
         self.analysis_result = json.loads(self.config.get('FIRST-LAYER', 'CITY'))
         self.analysis_result['city_name'] = self.city
-        for scenario in self.scenarios:
+        for scenario in self.city_scenarios:
             self.analysis_result[scenario] = json.loads(self.config.get('SECOND-LAYER', scenario.upper()))
         self.polygon_dict = None
+        self.add_crime_index()
 
 
     def load_suburbs_structure(self):
         """
         Load result structure for suburb level analysis
-        :return:
         """
-        # suburb_json_file = '{}/suburbs/{}_suburbs.json'.format(os.path.pardir, self.city)
-        # with open(suburb_json_file) as f:
-        #     suburb_info_json = json.load(f)
         for feature in self.suburb_info_json['features']:
             suburb = feature['properties']['name']
             self.analysis_result['suburbs'][suburb] = json.loads(self.config.get('SECOND-LAYER', 'SUBURB'))
-            for scenario in self.scenarios:
+            for scenario in self.suburb_scenarios:
                 self.analysis_result['suburbs'][suburb][scenario] = json.loads(self.config.get('THIRD-LAYER', scenario.upper()))
+            self.add_income(suburb)
+            self.add_migration(suburb)
+            self.add_education(suburb)
 
     def add_crime_index(self):
         with open('{}/analyzer/static_result.json'.format(os.path.pardir)) as f:
@@ -49,23 +65,59 @@ class staticAnalysisGenerator():
     def reset_crime_index(self):
         self.analysis_result['crime']['crime_index'] = 0
 
-    def add_income(self):
-        pass
+    def add_income(self, suburb):
+        try:
+            suburb_dict = self.scenario_file_income['suburbs'][suburb]
+            for tuple in self.income_key_tuples:
+                self.analysis_result['suburbs'][suburb]['income'][tuple[0]] = suburb_dict[tuple[1]] + suburb_dict[tuple[2]]
+        except:
+            # print('Exception: add_income', suburb)
+            pass
 
-    def add_migrationn(self):
-        pass
+    def reset_income(self):
+        for feature in self.suburb_info_json['features']:
+            suburb = feature['properties']['name']
+            for tuple in self.income_key_tuples:
+                self.analysis_result['suburbs'][suburb]['income'][tuple[0]] = 0
 
-    def add_mental_health(self):
-        pass
+    def add_education(self, suburb):
+        try:
+            suburb_dict = self.scenario_file_education['suburbs'][suburb]
+            for pair in self.education_key_pairs:
+                self.analysis_result['suburbs'][suburb]['education'][pair[0]] = suburb_dict[pair[1]]
+        except:
+            # print('Exception: add_education', suburb)
+            pass
+
+    def reset_education(self):
+        for feature in self.suburb_info_json['features']:
+            suburb = feature['properties']['name']
+            for pair in self.education_key_pairs:
+                self.analysis_result['suburbs'][suburb]['education'][pair[0]] = 0
+
+    def add_migration(self, suburb):
+        try:
+            suburb_dict = self.scenario_file_migration['suburbs'][suburb]
+            for pair in self.migration_key_pairs:
+                self.analysis_result['suburbs'][suburb]['migration'][pair[0]] = suburb_dict[pair[1]]
+        except:
+            # print('Exception: add_migration', suburb)
+            pass
+
+    def reset_migration(self):
+        for feature in self.suburb_info_json['features']:
+            suburb = feature['properties']['name']
+            for pair in self.migration_key_pairs:
+                self.analysis_result['suburbs'][suburb]['migration'][pair[0]] = 0
+
+    def add_static_data_to_db(self):
+        db_connecter.analysisResultSaver(self.city).update_analysis(self.analysis_result)
 
 
 if __name__ == '__main__':
     city = 'melbourne'
     generator = staticAnalysisGenerator(city)
-    # TODO: Only load once. Or check duplication.
-    generator.add_crime_index()
-    generator.reset_crime_index()
-    db_connecter.analysisResultSaver(city).update_analysis(generator.analysis_result)
-    db_connecter.analysisResultSaver(city).reset_static_result()
+    generator.add_static_data_to_db()
+    # db_connecter.analysisResultSaver(city).reset_static_result()
 
 
