@@ -21,6 +21,7 @@ couchserver = db_util.cdb(serverURL)
 #show all databases on server
 couchserver.showDBs()
 
+
 """sample2 connect to server with specific database
     > recommanded way
 """
@@ -46,16 +47,19 @@ print('**** all data****')
 for d in all_data:
     print(d)
 
+
 """sample4 fetch data by key (for twitters only)"""
 # data returned is a json document
 one_data = db.getByKey('1252949121519906816')
 print('**** one data****')
 print(one_data)
 
+
 """sample5 fetch twitters of a city"""
 # required views to be created in the database in advance.
 # returns all twitters of this city in a [list]
 cityData = db.getByCity("Sydney")
+
 
 """sample6 fetch data by timestamp and city"""
 # required views to be created in db in advance
@@ -64,12 +68,18 @@ cityData = db.getByCity("Sydney")
 cityData = db.getByBlock(start_ts='1588261100',end_ts='1588261100',cityname='Sydney')
 cityData = db.getByBlock(start_ts='1588261100',end_ts='1588261100') # search for all twitters ignore city information
 
+
 """ sample7, get analysis results"""
 serverURL = 'http://admin:admin1234@172.26.130.149:5984/'
 dbname = 'analysis_results'
 db = db_util.cdb(serverURL, dbname)
-data1 = db.getResult(scenario='income',city='adelaide',suburb='ROYSTON PARK') # get suburb data
-data2 = db.getResult(scenario='crime',city='adelaide')  # get city data
+data1 = db.getResult(city='adelaide',suburb='ROYSTON PARK') # get suburb data of all scenarios
+data2 = db.getResult(city='adelaide')  # get city data of all scenarios
+data3 = db.getResult(city='adelaide',scenario='crime')  # get city data for specified scenario
+data4 = db.getResult(city='adelaide',suburb='ROYSTON PARK',scenario='income') # get suburb data of specified scenario
+""" sample8, get all suburbs in db under a city"""
+print(db.getResult_listsuburbs('adelaide'))
+
 
 """how to use json_to_db"""
 #python3 json_to_db.py -f [json file name] -s [serverURL] -db [dbname]
