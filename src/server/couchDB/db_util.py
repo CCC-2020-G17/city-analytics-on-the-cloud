@@ -188,7 +188,13 @@ class cdb:
         # prepare data
         data = {}
         doc =  self.db[key]
-        print(scenarios)
+        # city and all suburbs
+        if suburb == 'city&suburb':
+            return doc
+        # only suburbs
+        if suburb == 'all':
+            return doc["suburbs"]
+        #
         if suburb is not None:
             suburb = suburb.upper()
             data["city_name"] = doc["city_name"]
@@ -242,5 +248,5 @@ if __name__ == '__main__':
 
     db.showcurrentDB()
 
-    print(db.getResult(city='adelaide',suburb='PAYNEHAM SOUTH',scenario='income'))
-    print(db.getResult_listsuburbs('adelaide'))
+    print(db.getResult(city='adelaide',suburb='city&suburb'))
+    #print(db.getResult_listsuburbs('adelaide'))

@@ -73,10 +73,16 @@ cityData = db.getByBlock(start_ts='1588261100',end_ts='1588261100') # search for
 serverURL = 'http://admin:admin1234@172.26.130.149:5984/'
 dbname = 'analysis_results'
 db = db_util.cdb(serverURL, dbname)
-data1 = db.getResult(city='adelaide',suburb='ROYSTON PARK') # get suburb data of all scenarios
-data2 = db.getResult(city='adelaide')  # get city data of all scenarios
-data3 = db.getResult(city='adelaide',scenario='crime')  # get city data for specified scenario
-data4 = db.getResult(city='adelaide',suburb='ROYSTON PARK',scenario='income') # get suburb data of specified scenario
+# get data by scenario
+data1 = db.getResult(city='adelaide',scenario='crime')  # get city data for specified scenario
+data2 = db.getResult(city='adelaide',suburb='ROYSTON PARK',scenario='income') # get suburb data of specified scenario
+# get data of all scenario of city or suburb
+data3 = db.getResult(city='adelaide',suburb='ROYSTON PARK') # get suburb data of all scenarios
+data4 = db.getResult(city='adelaide')  # get city data of all scenarios
+# get all data of suburbs under a city - no city data included
+data5 = db.getResult(city='adelaide',suburb='all') # retrive all data of a city
+# get all data of a city, include city data
+data5 = db.getResult(city='adelaide',suburb='city&suburb') # retrive all data of a city
 """ sample8, get all suburbs in db under a city"""
 print(db.getResult_listsuburbs('adelaide'))
 
