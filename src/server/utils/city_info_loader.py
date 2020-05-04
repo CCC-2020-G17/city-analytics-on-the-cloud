@@ -24,7 +24,6 @@ def _load_from_db(db_name, key):
         return {}
         # raise e
 
-
 def _load_city_analysis_from_db(city):
     return _load_from_db("analysis_results", "{}_analysis_result".format(city))
 
@@ -62,6 +61,12 @@ def load_city_info(city):
     return res
 
 def load_suburb_info(city, suburb):
+    """
+    Load city information with both geographic information and analysis
+    :param string City name (Melbourne, Sydney, Brisbane, Adelaide, Perth)
+    :param string Suburb name
+    :return dict Suburb information
+    """
     city = city.lower()
     suburb = suburb.lower()
     city_info = load_city_info(city)
