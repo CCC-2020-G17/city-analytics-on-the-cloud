@@ -6,4 +6,5 @@
     - role: servers-proxy
     - role: servers-environment
     - role: servers-volume
+      tags: test
     # - role: servers-couchdb
