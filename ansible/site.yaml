@@ -1,5 +1,5 @@
 # Use to define the entire infrastructure.
 
-- import_playbook: nectar.yaml
-  tags: init
-- import_playbook: servers.yaml
+- import_playbook: playbooks/nectar.yaml
+  tags: instances-init
+- import_playbook: playbooks/servers.yaml

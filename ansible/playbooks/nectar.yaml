@@ -5,7 +5,7 @@
     - variables/nectar.yaml
   gather_facts: true
   roles:
-    - role: openstack-common
-    - role: openstack-volume
-    - role: openstack-security-group
-    - role: openstack-instance
+    - role: nectar-common
+    - role: nectar-volume
+    - role: nectar-security-group
+    - role: nectar-instance

@@ -35,13 +35,14 @@
   add_host:
     name: '{{ item.openstack.public_v4 }}'
     groups: servers
+    inventory_dir: '{{ inventory_dir }}'
   loop: '{{ os_instance.results }}'
   when: item.openstack is defined
 
-- name: Ensure hosts info is in inventory/inventory.ini
-  lineinfile:
-    path: inventory/inventory.ini
-    line: '{{ item.openstack.name }} ansible_host={{ item.openstack.public_v4 }}'
-    state: present
-    insertafter: '\[servers\]'
-  loop: '{{ os_instance.results }}'
+# - name: Ensure hosts info is in inventory/inventory.ini
+#   lineinfile:
+#     path: inventory/inventory.ini
+#     line: '{{ item.openstack.name }} ansible_host={{ item.openstack.public_v4 }}'
+#     state: present
+#     insertafter: '\[servers\]'
+#   loop: '{{ os_instance.results }}'

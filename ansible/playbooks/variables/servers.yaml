@@ -1,0 +1,4 @@
+# variables/servers
+volumes:
+  - device: /dev/vdb
+    mountpoint: /data

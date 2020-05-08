@@ -4,5 +4,6 @@
   gather_facts: true
   roles:
     - role: servers-proxy
-      tags: init
     - role: servers-environment
+    - role: servers-volume
+    # - role: servers-couchdb
