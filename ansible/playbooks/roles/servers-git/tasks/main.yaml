@@ -1,0 +1,7 @@
+- name: Set proxy to ~/.git_config
+  git_config:
+    name: http.proxy
+    scope: global
+    value: "{{ proxy_address }}"
+
+

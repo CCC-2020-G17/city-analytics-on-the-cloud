@@ -1,4 +1,10 @@
-# variables/servers
+# servers volumes mounting setting
 volumes:
   - device: /dev/vdb
     mountpoint: /data
+
+# servers proxy server address
+proxy_address: http://wwwproxy.unimelb.edu.au:8000/
+
+# Github repo address
+repo_address: https://github.com/CCC-2020-G17/city-analytics-on-the-cloud
