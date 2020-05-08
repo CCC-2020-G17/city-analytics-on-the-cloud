@@ -2,9 +2,12 @@
 
 - hosts: servers
   gather_facts: true
+  vars_files:
+    - variables/servers.yaml
   roles:
     - role: servers-proxy
     - role: servers-environment
     - role: servers-volume
+    - role: servers-docker
       tags: test
     # - role: servers-couchdb
