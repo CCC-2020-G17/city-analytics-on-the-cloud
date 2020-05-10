@@ -6,7 +6,11 @@ volumes:
 # servers proxy server address
 proxy_address: http://wwwproxy.unimelb.edu.au:8000/
 
+# Github account info
+github_account: G17ServerBot
+github_password: adminG17ServerBotadmin
+
 # Github repo address
-# repo_address: https://github.com/CCC-2020-G17/city-analytics-on-the-cloud
-repo_address: https://github.com/mgsweet/TwitterAnalysis.git
+repo_address: "https://{{ github_account }}:{{ github_password }}@github.com/CCC-2020-G17/city-analytics-on-the-cloud.git"
 repo_local_path: ~/COMP90024
+repo_depth: 1

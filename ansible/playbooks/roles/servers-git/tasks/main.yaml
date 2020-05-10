@@ -1,6 +1,12 @@
-- name: Set proxy to ~/.git_config
+- name: Set global git_config http.proxy
   git_config:
     name: http.proxy
+    scope: global
+    value: "{{ proxy_address }}"
+
+- name: Set global git_config https.proxy
+  git_config:
+    name: https.proxy
     scope: global
     value: "{{ proxy_address }}"
 
@@ -10,3 +16,4 @@
     dest: "{{ repo_local_path }}"
     update: yes
     clone: yes
+    depth: "{{ repo_depth }}"
