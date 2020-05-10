@@ -4,4 +4,9 @@
     scope: global
     value: "{{ proxy_address }}"
 
-
+- name: Clone the repo from Github
+  git:
+    repo: "{{ repo_address }}"
+    dest: "{{ repo_local_path }}"
+    update: yes
+    clone: yes
