@@ -6,10 +6,75 @@ from configparser import ConfigParser
 # http://172.26.130.149:5984/_utils/
 # admin:admin1234
 
+# *************** Public ************************************
+def get_valid_cities():
+    """
+    Get all the cities that is available in the database
+    :return cities' names
+    """
+    return _valid_cities
+
+def safe_load_map_of(city):
+    """
+    Load city map info
+    :param string City name
+    :return dict City map info
+    """
+    return _load_with_check(city, _from_db_load_map_of)
+
+
+def safe_load_city_analysis_of(city):
+    """
+    Load city-level analysis
+    :param string City name
+    :return dict city-level analysis
+    """
+    return _load_with_check(city, _from_db_load_city_analysis_of)
+
+
+def safe_load_suburbs_analysis_of(city):
+    """
+    Load Suburb-level analysis of a specific city
+    :param string City name
+    :return dict Suburb-level analysis, contain analysis of all the suburbs in the city.
+    """
+    return _load_with_check(city, _from_db_load_suburbs_analysis_of)
+
+
+def safe_load_all_data_of(city):
+    """
+    Load city information with both geographic information and analysis
+    :param string City name (Melbourne, Sydney, Brisbane, Adelaide, Perth)
+    :return dict City information
+    """
+    return _load_with_check(city, _load_all_data_of)
+
+
+def safe_load_all_cities_analysis():
+    """
+    Load all the cities' analysis without suburbs analysis. (City-level Data)
+    :return dict City information
+    """
+    res = {}
+    for city in _valid_cities:
+        res[city] = _from_db_load_city_analysis_of(city)
+    return res
+
+def safe_load_all_analysis():
+    """
+    Load all the analysis
+    :return dict City information
+    """
+    res = {}
+    for city in _valid_cities:
+        res[city] = _from_db_load_analysis_of(city)
+    return res
+
+
 # ***** Function use to connect with couchdb ***************
 
-
 def _couchdb_get_url(section='DEFAULT', verbose=False):
+    """ Get the url of the couchdb """
     config = ConfigParser()
     url_file = 'config/server.url.cfg'
     if verbose:
@@ -20,6 +85,7 @@ def _couchdb_get_url(section='DEFAULT', verbose=False):
 
 
 def _load_from_db(db_name, key):
+    """ Load data from the couchdb """
     server_url = _couchdb_get_url()
     try:
         db = db_util.cdb(server_url, db_name)
@@ -36,14 +102,18 @@ def _load_from_db(db_name, key):
 #     except Exception as e:
 #         return {}
 
-# **********************************************************
+# ******************** Private *********************************
 
+# The cities that is available in the database
+_valid_cities = {"melbourne", "sydney", "brisbane", "adelaide", "perth"}
 
 def _from_db_load_analysis_of(city):
+    """Load all analysis of a city"""
     return _load_from_db("analysis_results", "{}_analysis_result".format(city))
 
 
 def _from_db_load_city_analysis_of(city):
+    """Load only city-level analysis of a city without suburbs analysis"""
     data = _from_db_load_analysis_of(city)
     if 'suburbs' in data:
         del data['suburbs']
@@ -51,15 +121,18 @@ def _from_db_load_city_analysis_of(city):
 
 
 def _from_db_load_suburbs_analysis_of(city):
+    """ Load analysis of a specific suburbs """
     data = _from_db_load_analysis_of(city)
     return data['suburbs']
 
 
 def _from_db_load_map_of(city):
+    """ Load the map of a specific city """
     return _load_from_db("aurin", "{}_suburbs".format(city))
 
 
 def _load_all_data_of(city):
+    """ Load both the map data and the analysis of a specific """
     # Mearge the map info with analysis data
     data = _from_db_load_map_of(city)
     analysis_data = _from_db_load_analysis_of(city)
@@ -78,37 +151,14 @@ def _load_all_data_of(city):
 
 
 def _is_city_valid(city):
-    # Current available city: "Melbourne", "Sydney", "Brisbane", "Adelaide", "Perth"
-    valid_city = {"melbourne", "sydney", "brisbane", "adelaide", "perth"}
-    return city in valid_city
+    """ Check if the city is available in the database """
+    return city in _valid_cities
 
 
 def _load_with_check(city, func):
+    """ Run with city valid check """
     res = {}
     city = city.lower()
     if _is_city_valid(city):
         res = func(city)
     return res
-
-# *************** Public ************************************
-
-
-def safe_load_map_of(city):
-    return _load_with_check(city, _from_db_load_map_of)
-
-
-def safe_load_city_analysis_of(city):
-    return _load_with_check(city, _from_db_load_city_analysis_of)
-
-
-def safe_load_suburbs_analysis_of(city):
-    return _load_with_check(city, _from_db_load_suburbs_analysis_of)
-
-
-def safe_load_all_data_of(city):
-    """
-    Load city information with both geographic information and analysis
-    :param string City name (Melbourne, Sydney, Brisbane, Adelaide, Perth)
-    :return dict City information
-    """
-    return _load_with_check(city, _load_all_data_of)
