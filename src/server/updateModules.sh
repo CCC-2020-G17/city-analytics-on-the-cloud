@@ -1,0 +1,2 @@
+cp config restful_api_server/config
+cp couchDB restful_api_server/couchDB

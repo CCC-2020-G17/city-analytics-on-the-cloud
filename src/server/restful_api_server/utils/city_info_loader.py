@@ -134,19 +134,22 @@ def _from_db_load_map_of(city):
 def _load_all_data_of(city):
     """ Load both the map data and the analysis of a specific """
     # Mearge the map info with analysis data
-    data = _from_db_load_map_of(city)
-    analysis_data = _from_db_load_analysis_of(city)
-    for suburb in data['features']:
-        try:
-            suburb_name = suburb['properties']['name']
-            suburb_analysis = analysis_data['suburbs'][suburb_name]
-            suburb['properties']['analysis_result'] = suburb_analysis
-        except Exception as e:
-            # Ignore but print the error
-            print('Error from utils/city_info_loader.py: ', e)
-    if 'suburbs' in analysis_data:
-        del analysis_data['suburbs']
-    data['analysis_result'] = analysis_data
+    try:
+        data = _from_db_load_map_of(city)
+        analysis_data = _from_db_load_analysis_of(city)
+        for suburb in data['features']:
+            try:
+                suburb_name = suburb['properties']['name']
+                suburb_analysis = analysis_data['suburbs'][suburb_name]
+                suburb['properties']['analysis_result'] = suburb_analysis
+            except Exception as e:
+                # Ignore but print the error
+                print('Error from utils/city_info_loader.py: ', e)
+        if 'suburbs' in analysis_data:
+            del analysis_data['suburbs']
+        data['analysis_result'] = analysis_data
+    except Exception as e:
+        return {}
     return data
 
 

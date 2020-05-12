@@ -1,0 +1,18 @@
+version: "3.7"
+
+services:
+    restful_api_server:
+        build: ./restful_api_server
+        container_name: restful_api_server
+        restart: always
+        environment:
+            - APP_NAME=MyFlaskApp
+        expose:
+            - 3000
+    
+    nginx:
+        build: ./nginx
+        container_name: nginx
+        restart: always
+        ports:
+            - "8080:80"
