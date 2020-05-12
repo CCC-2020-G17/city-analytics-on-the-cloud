@@ -5,6 +5,11 @@ volumes:
 
 # servers proxy server address
 proxy_address: http://wwwproxy.unimelb.edu.au:8000/
+no_proxy_address: localhost,127.0.0.1,localaddress,172.16.0.0/12,.melbourne.rc.nectar.org.au,.storage.u nimelb.edu.au,.cloud.unimelb.edu.au
+
+# docker proxy config
+docker_proxy_config_path: /etc/systemd/system/docker.service.d
+
 
 # Github account info
 github_account: G17ServerBot

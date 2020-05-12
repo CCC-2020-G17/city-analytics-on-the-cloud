@@ -45,3 +45,32 @@
   pip:
     name: ['docker-compose']
     state: latest
+
+- name: "Create docker config directory {{docker_proxy_config_path}}"
+  tags: 'docker'
+  become: yes
+  file:
+    path: "{{ docker_proxy_config_path }}"
+    recurse: yes
+    state: directory
+
+- name: Copy docker conf, http-proxy.conf to host
+  tags: 'docker'
+  become: yes
+  template:
+    src: http-proxy.conf.j2
+    dest: "{{docker_proxy_config_path}}/http-proxy.conf"
+
+- name: Force systemd to reread docker configs
+  tags: 'docker'
+  become: yes
+  systemd:
+    daemon_reload: yes
+
+- name: Restart docker
+  tags: 'docker'
+  become: yes
+  systemd:
+    name: docker
+    state: restarted
+
