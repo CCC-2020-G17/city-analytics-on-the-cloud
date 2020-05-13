@@ -9,6 +9,7 @@
     - role: servers-environment
     - role: servers-volume
     - role: servers-docker
+    # - role: servers-git
+    - role: servers-restfulapi-server
       tags: test
-    - role: servers-git
     # - role: servers-couchdb

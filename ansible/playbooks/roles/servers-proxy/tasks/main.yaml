@@ -3,6 +3,8 @@
   become: yes
   blockinfile:
     path: /etc/environment
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
     block: |
       HTTP_PROXY={{ proxy_address }} 
       HTTPS_PROXY={{ proxy_address }}

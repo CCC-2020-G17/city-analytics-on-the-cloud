@@ -35,7 +35,6 @@
   add_host:
     hostname: '{{ item.openstack.public_v4 }}'
     groups: servers
-    ansible_host: '{{ item.openstack.name }}'
   loop: '{{ os_instance.results }}'
   when: (groups["servers"]|length == 0) and item.openstack is defined
 

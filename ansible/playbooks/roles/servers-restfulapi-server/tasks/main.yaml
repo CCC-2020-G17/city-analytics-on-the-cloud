@@ -1,0 +1,17 @@
+- name: Create RestfulAPI server directory
+  become: yes
+  file:
+    path: "{{ restful_server_dir }}"
+    recurse: yes
+    state: directory
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+
+
+- name: Create RestfulAPI docker-compose
+  become: yes
+  template:
+    src: docker-compose.yaml.j2
+    dest: "{{ restful_server_dir }}/docker-compose.yaml"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"

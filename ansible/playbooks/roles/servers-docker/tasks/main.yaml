@@ -53,6 +53,8 @@
     path: "{{ docker_proxy_config_path }}"
     recurse: yes
     state: directory
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
 
 - name: Copy docker conf, http-proxy.conf to host
   tags: 'docker'
@@ -60,6 +62,8 @@
   template:
     src: http-proxy.conf.j2
     dest: "{{docker_proxy_config_path}}/http-proxy.conf"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
 
 - name: Force systemd to reread docker configs
   tags: 'docker'

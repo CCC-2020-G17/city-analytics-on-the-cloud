@@ -10,7 +10,6 @@ no_proxy_address: localhost,127.0.0.1,localaddress,172.16.0.0/12,.melbourne.rc.n
 # docker proxy config
 docker_proxy_config_path: /etc/systemd/system/docker.service.d
 
-
 # Github account info
 github_account: G17ServerBot
 github_password: adminG17ServerBotadmin
@@ -19,3 +18,6 @@ github_password: adminG17ServerBotadmin
 repo_address: "https://{{ github_account }}:{{ github_password }}@github.com/CCC-2020-G17/city-analytics-on-the-cloud.git"
 repo_local_path: ~/COMP90024
 repo_depth: 1
+
+# RESTFul API backend server
+restful_server_dir: ~/app
