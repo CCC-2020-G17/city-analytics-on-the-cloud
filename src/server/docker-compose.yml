@@ -15,4 +15,5 @@ services:
         container_name: nginx
         restart: always
         ports:
+            # For local test
             - "8080:80"
