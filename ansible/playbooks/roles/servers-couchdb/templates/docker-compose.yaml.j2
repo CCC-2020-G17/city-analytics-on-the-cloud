@@ -1,7 +1,8 @@
-version: "3"
+version: "3.7"
+
 services:
   couch_master:
-    image: "ibmcom/couchdb3:3.0.0"
+    image: couchdb
     restart: always
     ports:
       - "5984:5984"

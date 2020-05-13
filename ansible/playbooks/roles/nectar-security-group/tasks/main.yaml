@@ -15,12 +15,7 @@
     msg: "Security group(s) {{ sg_names }} have been created."
 
 # Create security group rules
-- name: Create security group rules
-  os_security_group_rule:
-    security_group: '{{ item.name }}'
-    protocol: '{{ item.protocol }}'
-    port_range_min: '{{ item.port_range_min }}'
-    port_range_max: '{{ item.port_range_max }}'
-    remote_ip_prefix: '{{ item.remote_ip_prefix }}'
-    state: present
+- include_tasks: addrules.yaml
   loop: '{{ security_groups }}'
+  loop_control:
+    loop_var: security_group_item
