@@ -13,7 +13,7 @@ def bad_request(error):
 def not_found(error):
     return make_response(jsonify({'error': 'Not found'}), 404)
 
-@app.route('/')
+@app.route('/api/')
 def index():
     return "</p>Server RSETFUL API</p>"
 
