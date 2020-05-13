@@ -3,3 +3,4 @@
 - import_playbook: playbooks/nectar.yaml
   tags: instances-init
 - import_playbook: playbooks/servers.yaml
+  tags: servers-init

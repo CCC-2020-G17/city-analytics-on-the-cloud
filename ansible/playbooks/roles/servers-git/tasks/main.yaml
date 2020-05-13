@@ -1,16 +1,22 @@
 - name: Set global git_config http.proxy
+  tags: github
+  become: yes
   git_config:
     name: http.proxy
     scope: global
     value: "{{ proxy_address }}"
 
 - name: Set global git_config https.proxy
+  tags: github
+  become: yes
   git_config:
     name: https.proxy
     scope: global
     value: "{{ proxy_address }}"
 
 - name: Clone the repo from Github
+  tags: github
+  become: yes
   git:
     repo: "{{ repo_address }}"
     dest: "{{ repo_local_path }}"

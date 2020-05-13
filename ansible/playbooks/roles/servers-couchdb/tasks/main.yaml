@@ -1,13 +1,38 @@
-- name: Download Couchbase package
-  get_url: 
-    url: http://packages.couchbase.com/releases/2.0.1/couchbase-server-enterprise_x86_64_2.0.1.deb 
-    dest: ~/.
-
-- name: Install dependencies
+- name: Create couchDB working directory
+  tags: couchdb
   become: yes
-  apt: 
-    pkg: libssl 
-    state: latest
+  file:
+    path: "{{ couchDB_dir }}"
+    recurse: yes
+    state: directory
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
 
-- name: Install Couchbase .deb file on all machines
-  shell: dpkg -i ~/couchbase-server-enterprise_x86_64_2.0.1.deb
+- name: Create couchDB data directory
+  tags: couchdb
+  become: yes
+  file:
+    path: "{{ couchDB_data_dir }}"
+    recurse: yes
+    state: directory
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+
+- name: Create couchDB docker-compose
+  tags: couchdb
+  become: yes
+  template:
+    src: docker-compose.yaml.j2
+    dest: "{{ couchDB_dir }}/docker-compose.yaml"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+
+- name: Run couchDB docker-compose
+  tags: couchdb
+  become: yes
+  docker_compose:
+    project_src: "{{ couchDB_dir }}"
+    pull: yes
+    remove_orphans: yes
+    state: present
+    recreate: always

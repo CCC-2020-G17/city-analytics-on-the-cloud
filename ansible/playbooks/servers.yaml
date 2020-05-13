@@ -1,6 +1,6 @@
 # Use for environment setup for all the managedNotes
 
-- hosts: servers
+- hosts: Nodes
   gather_facts: true
   vars_files:
     - variables/servers.yaml
@@ -9,7 +9,7 @@
     - role: servers-environment
     - role: servers-volume
     - role: servers-docker
-    # - role: servers-git
+    - role: servers-git
     - role: servers-restfulapi-server
+    - role: servers-couchdb
       tags: test
-    # - role: servers-couchdb

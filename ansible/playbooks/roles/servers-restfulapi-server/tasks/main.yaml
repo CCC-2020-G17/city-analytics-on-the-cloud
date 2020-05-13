@@ -1,4 +1,5 @@
 - name: Create RestfulAPI server directory
+  tags: restfulapi
   become: yes
   file:
     path: "{{ restful_server_dir }}"
@@ -9,9 +10,20 @@
 
 
 - name: Create RestfulAPI docker-compose
+  tags: restfulapi
   become: yes
   template:
     src: docker-compose.yaml.j2
     dest: "{{ restful_server_dir }}/docker-compose.yaml"
     owner: "{{ ansible_user }}"
     group: "{{ ansible_user }}"
+
+- name: Run RestfulAPI docker-compose
+  tags: restfulapi
+  become: yes
+  docker_compose:
+    project_src: "{{ restful_server_dir }}"
+    pull: yes
+    remove_orphans: yes
+    state: present
+    recreate: always

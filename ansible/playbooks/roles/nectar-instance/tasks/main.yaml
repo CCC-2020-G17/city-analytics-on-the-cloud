@@ -30,19 +30,35 @@
   loop: '{{ os_instance.results }}'
   when: item.openstack is defined
 
+- name: set inventory info
+  set_fact:
+    inventoryInfo: "{{ inventoryInfo|default([]) + [ {'name': item.openstack.name, 'ip': item.openstack.public_v4, 'group': ('masterNode' if index == 0 else 'slaveNode')} ] }}"
+  when: item.openstack is defined
+  loop: '{{ os_instance.results }}'
+  loop_control:
+    index_var: index
+
+- name: DEBUG
+  debug:
+    msg: "{{ groups }}"
+  
 # Add hosts to Ansible in-memory inventory if groups['servers'] is not defined
 - name: Add host
   add_host:
-    hostname: '{{ item.openstack.public_v4 }}'
-    groups: servers
-  loop: '{{ os_instance.results }}'
-  when: (groups["servers"]|length == 0) and item.openstack is defined
+    hostname: '{{ item.ip }}'
+    groups: '{{ item.group }}'
+  loop: '{{ inventoryInfo }}'
+  when: (groups["all"]|length == 0)
 
 - name: Ensure hosts info is in inventory/inventory.ini
   lineinfile:
     path: inventory/inventory.ini
-    line: '{{ item.openstack.name }} ansible_host={{ item.openstack.public_v4 }}'
+    line: '{{ item.name }} ansible_host={{ item.ip }}'
     state: present
-    insertafter: '\[servers\]'
-    regexp: '^{{item.openstack.name}}'
-  loop: '{{ os_instance.results }}'
+    insertafter: '\[{{ item.group }}\]'
+    regexp: '^{{ item.name }}'
+  loop: '{{ inventoryInfo }}'
+
+- name: DEBUG
+  debug:
+    msg: "{{ groups }}"

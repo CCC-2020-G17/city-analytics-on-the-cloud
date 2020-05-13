@@ -8,6 +8,8 @@ volumes:
     vol_size: 50
   - vol_name: vol_50_2
     vol_size: 50
+  - vol_name: vol_50_3
+    vol_size: 50
 
 # Instance
 # Include the information of their name and 
@@ -17,6 +19,8 @@ instances:
     volumes: vol_50_1
   - name: instance_2
     volumes: vol_50_2
+  - name: instance_3
+    volumes: vol_50_3
 
 # Security group
 security_groups:
