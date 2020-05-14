@@ -1,4 +1,4 @@
-FROM couchdb
+FROM couchdb:latest
 
 COPY vm.args /opt/couchdb/etc/
 
