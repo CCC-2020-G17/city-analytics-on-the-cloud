@@ -28,5 +28,7 @@ couchDB_data_dir: /data/couchdb/data
 couchDB_user: cccg17
 couchDB_password: cccg17
 couchDB_cookie: df4dbec144c6f38c41e851066e000ea8
-
+couchDB_init_deploy_dir: "{{repo_local_path}}/src/server/couchDB/initial_deployment"
 # cluster_size, master_ip_address is used
+
+config_dir: ~/config

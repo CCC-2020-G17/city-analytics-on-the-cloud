@@ -1,6 +1,6 @@
 import json
 from utils import db_util
-
+from configparser import ConfigParser
 
 def get_valid_cities():
     """
@@ -68,8 +68,18 @@ def safe_load_all_analysis():
     return res
 
 
+def _couchdb_get_url(section='DEFAULT', verbose=False):
+    """ Get the url of the couchdb """
+    config = ConfigParser()
+    url_file = 'config/server.url.cfg'
+    if verbose:
+        print('url_file {}'.format(url_file))
+    config.read(url_file)
+    server_url = config.get(section, 'server_url')
+    return server_url
+
 def _load_from_db(db_name, key):
-    server_url = "http://cccg17:cccg17@172.26.133.61:5984"
+    server_url = _couchdb_get_url()
     try:
         db = db_util.cdb(serverURL=server_url, dbname=db_name)
         return db.getByKey(key)

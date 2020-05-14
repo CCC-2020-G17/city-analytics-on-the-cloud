@@ -2,6 +2,8 @@ FROM python:3
 
 WORKDIR /app
 
+RUN mkdir config
+
 # Improve the build speed
 COPY requirements.txt /app
 

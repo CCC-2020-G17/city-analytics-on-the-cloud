@@ -3,26 +3,18 @@ version: "3.7"
 services:
     restful_api_server:
         build: ./restful_api_server
-        container_name: restful_api_server:latest
+        container_name: restful_api_server
         restart: always
         environment:
             - APP_NAME=MyFlaskApp
         expose:
             - 3000
-    
+        volumes:
+            - ./restful_api_server/config:/app/config
+        
     nginx:
         build: ./nginx
-        container_name: nginx:latest 
+        container_name: nginx
         restart: always
         ports:
             - "8080:80"
-
-    couchdb:
-        build: ./couchdb-docker
-        container_name: couchdb:latest
-        restart: always
-        ports:
-            - "5984:5984"
-            - "5986:5986"
-            - "4369:4369"
-            - "9100-9200:9100-9200"

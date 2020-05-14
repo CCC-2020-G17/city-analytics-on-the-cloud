@@ -9,6 +9,8 @@ services:
             - APP_NAME=MyFlaskApp
         expose:
             - 3000
+        volumes:
+            - {{config_dir}}:/app/config
     
     nginx:
         image: mgsweet/server_nginx:latest
