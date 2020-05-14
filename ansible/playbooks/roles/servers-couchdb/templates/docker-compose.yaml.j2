@@ -1,8 +1,8 @@
 version: "3.7"
 
 services:
-  couch_master:
-    image: mgsweet/server_couchdb
+  db:
+    build: .
     restart: always
     ports:
       - "5984:5984"
