@@ -1,3 +1,8 @@
+- name: Collect facts of the host
+  setup:
+    gather_subset:
+      - '!any'
+
 - name: Create couchDB working directory
   tags: couchdb
   become: yes
