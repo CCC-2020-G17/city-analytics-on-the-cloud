@@ -6,7 +6,7 @@ class cdb:
         """initialize a CouchDB connection
 
         Keyword Arguments:
-            serverURL {string} -- the server URL (default: {'http://admin:admin1234@localhost:5984'})
+            serverURL {string} -- the server URL (default: {'http://cccg17:cccg17@localhost:5984'})
             dbname {string} -- the db to connect to (default: {None})
         """
         self.serverURL = serverURL
@@ -242,11 +242,7 @@ class cdb:
     
 if __name__ == '__main__':
     
-    serverURL = 'http://admin:admin1234@172.26.130.149:5984/'
     dbname = 'analysis_results'
-    db = cdb(serverURL, dbname)
+    db = cdb(dbname=dbname)
 
     db.showcurrentDB()
-
-    print(db.getResult(city='adelaide',suburb='city&suburb'))
-    #print(db.getResult_listsuburbs('adelaide'))
