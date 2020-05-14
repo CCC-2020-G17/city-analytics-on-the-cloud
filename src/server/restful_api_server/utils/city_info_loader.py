@@ -1,18 +1,14 @@
 import json
-import os
-from couchDB import db_util
-from configparser import ConfigParser
+from utils import db_util
 
-# http://172.26.130.149:5984/_utils/
-# admin:admin1234
 
-# *************** Public ************************************
 def get_valid_cities():
     """
     Get all the cities that is available in the database
     :return cities' names
     """
     return _valid_cities
+
 
 def safe_load_map_of(city):
     """
@@ -60,6 +56,7 @@ def safe_load_all_cities_analysis():
         res[city] = _from_db_load_city_analysis_of(city)
     return res
 
+
 def safe_load_all_analysis():
     """
     Load all the analysis
@@ -71,41 +68,19 @@ def safe_load_all_analysis():
     return res
 
 
-# ***** Function use to connect with couchdb ***************
-
-def _couchdb_get_url(section='DEFAULT', verbose=False):
-    """ Get the url of the couchdb """
-    config = ConfigParser()
-    url_file = 'config/server.url.cfg'
-    if verbose:
-        print('url_file {}'.format(url_file))
-    config.read(url_file)
-    server_url = config.get(section, 'server_url')
-    return server_url
-
-
 def _load_from_db(db_name, key):
-    """ Load data from the couchdb """
-    server_url = _couchdb_get_url()
+    server_url = "http://cccg17:cccg17@172.26.133.61:5984"
     try:
-        db = db_util.cdb(server_url, db_name)
+        db = db_util.cdb(serverURL=server_url, dbname=db_name)
         return db.getByKey(key)
     except Exception as e:
+        print(e)
         return {}
 
 
-# def _load_from_db(db_name, key, scenario):
-#     server_url = _couchdb_get_url()
-#     try:
-#         db = db_util.cdb(server_url, db_name)
-#         return db.getByKey(key)
-#     except Exception as e:
-#         return {}
-
-# ******************** Private *********************************
-
 # The cities that is available in the database
 _valid_cities = {"melbourne", "sydney", "brisbane", "adelaide", "perth"}
+
 
 def _from_db_load_analysis_of(city):
     """Load all analysis of a city"""
@@ -149,6 +124,7 @@ def _load_all_data_of(city):
             del analysis_data['suburbs']
         data['analysis_result'] = analysis_data
     except Exception as e:
+        print(e)
         return {}
     return data
 
