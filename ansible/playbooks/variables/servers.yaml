@@ -27,3 +27,4 @@ couchDB_dir: ~/couchDB
 couchDB_data_dir: /data/couchdb/data
 couchDB_user: cccg17
 couchDB_password: cccg17
+couchDB_cookie: cccg17

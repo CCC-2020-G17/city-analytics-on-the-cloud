@@ -12,7 +12,7 @@ services:
     
     nginx:
         build: ./nginx
-        container_name: nginx:latest
+        container_name: nginx:latest 
         restart: always
         ports:
             - "8080:80"
