@@ -1,6 +1,7 @@
 """
 Initial Deployment for couchdb
 Running only once after couchdb is set up
+
 """
 import couchdb
 import json
@@ -45,12 +46,12 @@ for db in map_dbs:
             del mapreduce_doc['_rev']
         
         couchdb.save(mapreduce_doc)
-        print(f'design/cities view is created in <{db}>')
+        print(f'design/cities view is created in <Database {db}>')
     except Exception:
         _rev = couchdb['_design/cities']["_rev"]
         mapreduce_doc["_rev"] = _rev
         couchdb.save(mapreduce_doc)
-        print(f'design/cities view is updated in <{db}>')
+        print(f'design/cities view is updated in <Database {db}>')
 
 # save analysis results
 analysis_files = ['adelaide_analysis_result.json','brisbane_analysis_result.json',\
@@ -64,11 +65,31 @@ for filename in analysis_files:
         del data['_rev']
     try:
         couchdb.save(data)
-        print(f'save {filename} to <{couchdb}>')
+        print(f'save {filename} to {couchdb}')
     except Exception:
         key = data['_id']
         _rev = couchdb[key]["_rev"]
         data["_rev"] = _rev
         couchdb.save(data)
-        print(f'udpate {filename} to <{couchdb}>')
+        print(f'udpate {filename} to <DATABASE {couchdb}')
 
+# save aurin data
+couchdb = couchserver['aurin']
+aurin_dir = os.path.join(dir_path,'aurin/')
+for filename in os.listdir(aurin_dir):
+    aurinfilename = os.path.join(aurin_dir,filename)
+    datafile = open(aurinfilename,'r')
+    data = json.load(datafile)
+    datafile.close()
+
+    if '_rev' in data:
+        del data['_rev']
+    try:
+        couchdb.save(data)
+        print(f'save {filename} to <DATABASE {couchdb}')
+    except Exception:
+        key = data['_id']
+        _rev = couchdb[key]["_rev"]
+        data["_rev"] = _rev
+        couchdb.save(data)
+        print(f'udpate {filename} to {couchdb}')

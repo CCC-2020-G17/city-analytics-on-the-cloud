@@ -1,0 +1,260 @@
+{
+    "_id": "perth_income",
+    "_rev": "8-938ced54af8c4c77fb3bdf8e3e988598",
+    "suburbs": {
+      "NEDLANDS": {
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud1000_aud1999wk_pr100": 17.7,
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud3000_plswk_pr100": 14.9,
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud500_aud999wk_pr100": 14,
+        "yr": "2016",
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud2000_aud2999wk_pr100": 7.1,
+        "sa2_main16": "503011035",
+        "tot_p_inc_wk_p_ov_15_yrs_p_negative_inc_pr100": 0.5,
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud1_aud499wk_pr100": 24.3,
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_nil_inc_pr100": 15.4
+      },
+      "DALKEITH": {
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud1000_aud1999wk_pr100": 17.7,
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud3000_plswk_pr100": 14.9,
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud500_aud999wk_pr100": 14,
+        "yr": "2016",
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud2000_aud2999wk_pr100": 7.1,
+        "sa2_main16": "503011035",
+        "tot_p_inc_wk_p_ov_15_yrs_p_negative_inc_pr100": 0.5,
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud1_aud499wk_pr100": 24.3,
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_nil_inc_pr100": 15.4
+      },
+      "CRAWLEY": {
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud1000_aud1999wk_pr100": 17.7,
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud3000_plswk_pr100": 14.9,
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud500_aud999wk_pr100": 14,
+        "yr": "2016",
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud2000_aud2999wk_pr100": 7.1,
+        "sa2_main16": "503011035",
+        "tot_p_inc_wk_p_ov_15_yrs_p_negative_inc_pr100": 0.5,
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud1_aud499wk_pr100": 24.3,
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_nil_inc_pr100": 15.4
+      },
+      "NORTH PERTH": {
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud1000_aud1999wk_pr100": 24.9,
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud3000_plswk_pr100": 8.6,
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud500_aud999wk_pr100": 17.2,
+        "yr": "2016",
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud2000_aud2999wk_pr100": 10,
+        "sa2_main16": "503021040",
+        "tot_p_inc_wk_p_ov_15_yrs_p_negative_inc_pr100": 0.4,
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud1_aud499wk_pr100": 22.3,
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_nil_inc_pr100": 7.2
+      },
+      "CITY BEACH": {
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud1000_aud1999wk_pr100": 20.2,
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud3000_plswk_pr100": 18.5,
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud500_aud999wk_pr100": 14.8,
+        "yr": "2016",
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud2000_aud2999wk_pr100": 8.7,
+        "sa2_main16": "503011030",
+        "tot_p_inc_wk_p_ov_15_yrs_p_negative_inc_pr100": 0.3,
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud1_aud499wk_pr100": 19.9,
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_nil_inc_pr100": 11.1
+      },
+      "SUBIACO": {
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud1000_aud1999wk_pr100": 24.5,
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud3000_plswk_pr100": 11.7,
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud500_aud999wk_pr100": 15.9,
+        "yr": "2016",
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud2000_aud2999wk_pr100": 10.1,
+        "sa2_main16": "503021042",
+        "tot_p_inc_wk_p_ov_15_yrs_p_negative_inc_pr100": 0.3,
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud1_aud499wk_pr100": 19,
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_nil_inc_pr100": 8.2
+      },
+      "SHENTON PARK": {
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud1000_aud1999wk_pr100": 24.5,
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud3000_plswk_pr100": 11.7,
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud500_aud999wk_pr100": 15.9,
+        "yr": "2016",
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud2000_aud2999wk_pr100": 10.1,
+        "sa2_main16": "503021042",
+        "tot_p_inc_wk_p_ov_15_yrs_p_negative_inc_pr100": 0.3,
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud1_aud499wk_pr100": 19,
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_nil_inc_pr100": 8.2
+      },
+      "MOSMAN PARK": {
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud1000_aud1999wk_pr100": 20.5,
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud3000_plswk_pr100": 14.6,
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud500_aud999wk_pr100": 15.4,
+        "yr": "2016",
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud2000_aud2999wk_pr100": 7.6,
+        "sa2_main16": "503011034",
+        "tot_p_inc_wk_p_ov_15_yrs_p_negative_inc_pr100": 0.6,
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud1_aud499wk_pr100": 19.9,
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_nil_inc_pr100": 11.1
+      },
+      "PEPPERMINT GROVE": {
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud1000_aud1999wk_pr100": 20.5,
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud3000_plswk_pr100": 14.6,
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud500_aud999wk_pr100": 15.4,
+        "yr": "2016",
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud2000_aud2999wk_pr100": 7.6,
+        "sa2_main16": "503011034",
+        "tot_p_inc_wk_p_ov_15_yrs_p_negative_inc_pr100": 0.6,
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud1_aud499wk_pr100": 19.9,
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_nil_inc_pr100": 11.1
+      },
+      "KINGS PARK": {
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud1000_aud1999wk_pr100": 13,
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud3000_plswk_pr100": 26.1,
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud500_aud999wk_pr100": 30.4,
+        "yr": "2016",
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud2000_aud2999wk_pr100": null,
+        "sa2_main16": "503021037",
+        "tot_p_inc_wk_p_ov_15_yrs_p_negative_inc_pr100": null,
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud1_aud499wk_pr100": null,
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_nil_inc_pr100": null
+      },
+      "SWANBOURNE": {
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud1000_aud1999wk_pr100": 20.1,
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud3000_plswk_pr100": 15.8,
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud500_aud999wk_pr100": 14.9,
+        "yr": "2016",
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud2000_aud2999wk_pr100": 8.9,
+        "sa2_main16": "503011036",
+        "tot_p_inc_wk_p_ov_15_yrs_p_negative_inc_pr100": 0.4,
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud1_aud499wk_pr100": 21.2,
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_nil_inc_pr100": 11.4
+      },
+      "MOUNT CLAREMONT": {
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud1000_aud1999wk_pr100": 20.1,
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud3000_plswk_pr100": 15.8,
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud500_aud999wk_pr100": 14.9,
+        "yr": "2016",
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud2000_aud2999wk_pr100": 8.9,
+        "sa2_main16": "503011036",
+        "tot_p_inc_wk_p_ov_15_yrs_p_negative_inc_pr100": 0.4,
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud1_aud499wk_pr100": 21.2,
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_nil_inc_pr100": 11.4
+      },
+      "CLAREMONT": {
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud1000_aud1999wk_pr100": 22.1,
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud3000_plswk_pr100": 12.8,
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud500_aud999wk_pr100": 16,
+        "yr": "2016",
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud2000_aud2999wk_pr100": 8.4,
+        "sa2_main16": "503011031",
+        "tot_p_inc_wk_p_ov_15_yrs_p_negative_inc_pr100": 0.4,
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud1_aud499wk_pr100": 19.1,
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_nil_inc_pr100": 9.9
+      },
+      "MOUNT HAWTHORN": {
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud1000_aud1999wk_pr100": 27.4,
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud3000_plswk_pr100": 9.7,
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud500_aud999wk_pr100": 16.3,
+        "yr": "2016",
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud2000_aud2999wk_pr100": 12.5,
+        "sa2_main16": "503021038",
+        "tot_p_inc_wk_p_ov_15_yrs_p_negative_inc_pr100": 0.3,
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud1_aud499wk_pr100": 20.1,
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_nil_inc_pr100": 6.7
+      },
+      "LEEDERVILLE": {
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud1000_aud1999wk_pr100": 27.4,
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud3000_plswk_pr100": 9.7,
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud500_aud999wk_pr100": 16.3,
+        "yr": "2016",
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud2000_aud2999wk_pr100": 12.5,
+        "sa2_main16": "503021038",
+        "tot_p_inc_wk_p_ov_15_yrs_p_negative_inc_pr100": 0.3,
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud1_aud499wk_pr100": 20.1,
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_nil_inc_pr100": 6.7
+      },
+      "MOUNT LAWLEY": {
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud1000_aud1999wk_pr100": 25,
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud3000_plswk_pr100": 8.6,
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud500_aud999wk_pr100": 17.5,
+        "yr": "2016",
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud2000_aud2999wk_pr100": 8.8,
+        "sa2_main16": "503021039",
+        "tot_p_inc_wk_p_ov_15_yrs_p_negative_inc_pr100": 0.4,
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud1_aud499wk_pr100": 21.8,
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_nil_inc_pr100": 7.7
+      },
+      "INGLEWOOD": {
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud1000_aud1999wk_pr100": 25,
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud3000_plswk_pr100": 8.6,
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud500_aud999wk_pr100": 17.5,
+        "yr": "2016",
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud2000_aud2999wk_pr100": 8.8,
+        "sa2_main16": "503021039",
+        "tot_p_inc_wk_p_ov_15_yrs_p_negative_inc_pr100": 0.4,
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud1_aud499wk_pr100": 21.8,
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_nil_inc_pr100": 7.7
+      },
+      "WEMBLEY": {
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud1000_aud1999wk_pr100": 24.5,
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud3000_plswk_pr100": 8.5,
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud500_aud999wk_pr100": 18.8,
+        "yr": "2016",
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud2000_aud2999wk_pr100": 8.4,
+        "sa2_main16": "503021043",
+        "tot_p_inc_wk_p_ov_15_yrs_p_negative_inc_pr100": 0.3,
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud1_aud499wk_pr100": 21.8,
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_nil_inc_pr100": 8.4
+      },
+      "WEST LEEDERVILLE": {
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud1000_aud1999wk_pr100": 24.5,
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud3000_plswk_pr100": 8.5,
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud500_aud999wk_pr100": 18.8,
+        "yr": "2016",
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud2000_aud2999wk_pr100": 8.4,
+        "sa2_main16": "503021043",
+        "tot_p_inc_wk_p_ov_15_yrs_p_negative_inc_pr100": 0.3,
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud1_aud499wk_pr100": 21.8,
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_nil_inc_pr100": 8.4
+      },
+      "GLENDALOUGH": {
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud1000_aud1999wk_pr100": 24.5,
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud3000_plswk_pr100": 8.5,
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud500_aud999wk_pr100": 18.8,
+        "yr": "2016",
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud2000_aud2999wk_pr100": 8.4,
+        "sa2_main16": "503021043",
+        "tot_p_inc_wk_p_ov_15_yrs_p_negative_inc_pr100": 0.3,
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud1_aud499wk_pr100": 21.8,
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_nil_inc_pr100": 8.4
+      },
+      "FLOREAT": {
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud1000_aud1999wk_pr100": 21.1,
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud3000_plswk_pr100": 16.5,
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud500_aud999wk_pr100": 16,
+        "yr": "2016",
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud2000_aud2999wk_pr100": 10.8,
+        "sa2_main16": "503011033",
+        "tot_p_inc_wk_p_ov_15_yrs_p_negative_inc_pr100": 0.4,
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud1_aud499wk_pr100": 20.4,
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_nil_inc_pr100": 9.8
+      },
+      "COTTESLOE": {
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud1000_aud1999wk_pr100": 22.5,
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud3000_plswk_pr100": 19,
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud500_aud999wk_pr100": 14.6,
+        "yr": "2016",
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud2000_aud2999wk_pr100": 10.2,
+        "sa2_main16": "503011032",
+        "tot_p_inc_wk_p_ov_15_yrs_p_negative_inc_pr100": 0.6,
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud1_aud499wk_pr100": 16.5,
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_nil_inc_pr100": 8.2
+      },
+      "PERTH CITY": {
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud1000_aud1999wk_pr100": 24.8,
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud3000_plswk_pr100": 6.9,
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud500_aud999wk_pr100": 16.3,
+        "yr": "2016",
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud2000_aud2999wk_pr100": 9.6,
+        "sa2_main16": "503021041",
+        "tot_p_inc_wk_p_ov_15_yrs_p_negative_inc_pr100": 0.6,
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_aud1_aud499wk_pr100": 17.2,
+        "tot_p_inc_wk_p_ov_15_yrs_p_earn_nil_inc_pr100": 8.3
+      }
+    },
+    "db_timestamp": "1588492300"
+  }

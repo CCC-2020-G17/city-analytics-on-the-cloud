@@ -1,0 +1,260 @@
+{
+    "_id": "perth_migration",
+    "_rev": "8-1f95da8589dd2d5253c1a1b75736ed86",
+    "suburbs": {
+      "NORTH PERTH": {
+        "aus_citizenship_no_aus_citizen_net_mig_pr100": 9.6,
+        "aus_citizenship_aus_citizen_net_mig_pr100": 83.1,
+        "ab_torres_strait_islander_ppls_prop_tot_pop_net_mig_pr100": 0.5,
+        "yr": "2016",
+        "aus_citizenship_aus_citizenship_ns_net_mig_pr100": 7.3,
+        "sa2_main16": "503021040",
+        "pop_density_pop_density_p_p_km2": 2976,
+        "spks_lang_oth_eng_home_prop_tot_pop_net_mig_pr100": 21.3,
+        "ovs_brn_pop_prop_tot_pop_tot_brn_ovs_net_mig_pr100": 31.7
+      },
+      "CITY BEACH": {
+        "aus_citizenship_no_aus_citizen_net_mig_pr100": 8.3,
+        "aus_citizenship_aus_citizen_net_mig_pr100": 86.6,
+        "ab_torres_strait_islander_ppls_prop_tot_pop_net_mig_pr100": 0.2,
+        "yr": "2016",
+        "aus_citizenship_aus_citizenship_ns_net_mig_pr100": 5.3,
+        "sa2_main16": "503011030",
+        "pop_density_pop_density_p_p_km2": 707.2,
+        "spks_lang_oth_eng_home_prop_tot_pop_net_mig_pr100": 12.9,
+        "ovs_brn_pop_prop_tot_pop_tot_brn_ovs_net_mig_pr100": 29.7
+      },
+      "SUBIACO": {
+        "aus_citizenship_no_aus_citizen_net_mig_pr100": 14.9,
+        "aus_citizenship_aus_citizen_net_mig_pr100": 77,
+        "ab_torres_strait_islander_ppls_prop_tot_pop_net_mig_pr100": 0.6,
+        "yr": "2016",
+        "aus_citizenship_aus_citizenship_ns_net_mig_pr100": 8.1,
+        "sa2_main16": "503021042",
+        "pop_density_pop_density_p_p_km2": 2210.2,
+        "spks_lang_oth_eng_home_prop_tot_pop_net_mig_pr100": 16.7,
+        "ovs_brn_pop_prop_tot_pop_tot_brn_ovs_net_mig_pr100": 35.4
+      },
+      "SHENTON PARK": {
+        "aus_citizenship_no_aus_citizen_net_mig_pr100": 14.9,
+        "aus_citizenship_aus_citizen_net_mig_pr100": 77,
+        "ab_torres_strait_islander_ppls_prop_tot_pop_net_mig_pr100": 0.6,
+        "yr": "2016",
+        "aus_citizenship_aus_citizenship_ns_net_mig_pr100": 8.1,
+        "sa2_main16": "503021042",
+        "pop_density_pop_density_p_p_km2": 2210.2,
+        "spks_lang_oth_eng_home_prop_tot_pop_net_mig_pr100": 16.7,
+        "ovs_brn_pop_prop_tot_pop_tot_brn_ovs_net_mig_pr100": 35.4
+      },
+      "NEDLANDS": {
+        "aus_citizenship_no_aus_citizen_net_mig_pr100": 18.8,
+        "aus_citizenship_aus_citizen_net_mig_pr100": 75.8,
+        "ab_torres_strait_islander_ppls_prop_tot_pop_net_mig_pr100": 0.6,
+        "yr": "2016",
+        "aus_citizenship_aus_citizenship_ns_net_mig_pr100": 5.4,
+        "sa2_main16": "503011035",
+        "pop_density_pop_density_p_p_km2": 1994.5,
+        "spks_lang_oth_eng_home_prop_tot_pop_net_mig_pr100": 24.1,
+        "ovs_brn_pop_prop_tot_pop_tot_brn_ovs_net_mig_pr100": 39.7
+      },
+      "DALKEITH": {
+        "aus_citizenship_no_aus_citizen_net_mig_pr100": 18.8,
+        "aus_citizenship_aus_citizen_net_mig_pr100": 75.8,
+        "ab_torres_strait_islander_ppls_prop_tot_pop_net_mig_pr100": 0.6,
+        "yr": "2016",
+        "aus_citizenship_aus_citizenship_ns_net_mig_pr100": 5.4,
+        "sa2_main16": "503011035",
+        "pop_density_pop_density_p_p_km2": 1994.5,
+        "spks_lang_oth_eng_home_prop_tot_pop_net_mig_pr100": 24.1,
+        "ovs_brn_pop_prop_tot_pop_tot_brn_ovs_net_mig_pr100": 39.7
+      },
+      "CRAWLEY": {
+        "aus_citizenship_no_aus_citizen_net_mig_pr100": 18.8,
+        "aus_citizenship_aus_citizen_net_mig_pr100": 75.8,
+        "ab_torres_strait_islander_ppls_prop_tot_pop_net_mig_pr100": 0.6,
+        "yr": "2016",
+        "aus_citizenship_aus_citizenship_ns_net_mig_pr100": 5.4,
+        "sa2_main16": "503011035",
+        "pop_density_pop_density_p_p_km2": 1994.5,
+        "spks_lang_oth_eng_home_prop_tot_pop_net_mig_pr100": 24.1,
+        "ovs_brn_pop_prop_tot_pop_tot_brn_ovs_net_mig_pr100": 39.7
+      },
+      "MOSMAN PARK": {
+        "aus_citizenship_no_aus_citizen_net_mig_pr100": 11.4,
+        "aus_citizenship_aus_citizen_net_mig_pr100": 80,
+        "ab_torres_strait_islander_ppls_prop_tot_pop_net_mig_pr100": 1,
+        "yr": "2016",
+        "aus_citizenship_aus_citizenship_ns_net_mig_pr100": 8.7,
+        "sa2_main16": "503011034",
+        "pop_density_pop_density_p_p_km2": 2008.3,
+        "spks_lang_oth_eng_home_prop_tot_pop_net_mig_pr100": 12.8,
+        "ovs_brn_pop_prop_tot_pop_tot_brn_ovs_net_mig_pr100": 31
+      },
+      "PEPPERMINT GROVE": {
+        "aus_citizenship_no_aus_citizen_net_mig_pr100": 11.4,
+        "aus_citizenship_aus_citizen_net_mig_pr100": 80,
+        "ab_torres_strait_islander_ppls_prop_tot_pop_net_mig_pr100": 1,
+        "yr": "2016",
+        "aus_citizenship_aus_citizenship_ns_net_mig_pr100": 8.7,
+        "sa2_main16": "503011034",
+        "pop_density_pop_density_p_p_km2": 2008.3,
+        "spks_lang_oth_eng_home_prop_tot_pop_net_mig_pr100": 12.8,
+        "ovs_brn_pop_prop_tot_pop_tot_brn_ovs_net_mig_pr100": 31
+      },
+      "KINGS PARK": {
+        "aus_citizenship_no_aus_citizen_net_mig_pr100": 13,
+        "aus_citizenship_aus_citizen_net_mig_pr100": 65.2,
+        "ab_torres_strait_islander_ppls_prop_tot_pop_net_mig_pr100": null,
+        "yr": "2016",
+        "aus_citizenship_aus_citizenship_ns_net_mig_pr100": 13,
+        "sa2_main16": "503021037",
+        "pop_density_pop_density_p_p_km2": 8.6,
+        "spks_lang_oth_eng_home_prop_tot_pop_net_mig_pr100": 13,
+        "ovs_brn_pop_prop_tot_pop_tot_brn_ovs_net_mig_pr100": 56.5
+      },
+      "SWANBOURNE": {
+        "aus_citizenship_no_aus_citizen_net_mig_pr100": 8,
+        "aus_citizenship_aus_citizen_net_mig_pr100": 86.1,
+        "ab_torres_strait_islander_ppls_prop_tot_pop_net_mig_pr100": 0.7,
+        "yr": "2016",
+        "aus_citizenship_aus_citizenship_ns_net_mig_pr100": 5.8,
+        "sa2_main16": "503011036",
+        "pop_density_pop_density_p_p_km2": 778.3,
+        "spks_lang_oth_eng_home_prop_tot_pop_net_mig_pr100": 10.7,
+        "ovs_brn_pop_prop_tot_pop_tot_brn_ovs_net_mig_pr100": 28.5
+      },
+      "MOUNT CLAREMONT": {
+        "aus_citizenship_no_aus_citizen_net_mig_pr100": 8,
+        "aus_citizenship_aus_citizen_net_mig_pr100": 86.1,
+        "ab_torres_strait_islander_ppls_prop_tot_pop_net_mig_pr100": 0.7,
+        "yr": "2016",
+        "aus_citizenship_aus_citizenship_ns_net_mig_pr100": 5.8,
+        "sa2_main16": "503011036",
+        "pop_density_pop_density_p_p_km2": 778.3,
+        "spks_lang_oth_eng_home_prop_tot_pop_net_mig_pr100": 10.7,
+        "ovs_brn_pop_prop_tot_pop_tot_brn_ovs_net_mig_pr100": 28.5
+      },
+      "CLAREMONT": {
+        "aus_citizenship_no_aus_citizen_net_mig_pr100": 11.9,
+        "aus_citizenship_aus_citizen_net_mig_pr100": 79.2,
+        "ab_torres_strait_islander_ppls_prop_tot_pop_net_mig_pr100": 0.4,
+        "yr": "2016",
+        "aus_citizenship_aus_citizenship_ns_net_mig_pr100": 8.8,
+        "sa2_main16": "503011031",
+        "pop_density_pop_density_p_p_km2": 2230.9,
+        "spks_lang_oth_eng_home_prop_tot_pop_net_mig_pr100": 13.4,
+        "ovs_brn_pop_prop_tot_pop_tot_brn_ovs_net_mig_pr100": 30.7
+      },
+      "MOUNT HAWTHORN": {
+        "aus_citizenship_no_aus_citizen_net_mig_pr100": 10.1,
+        "aus_citizenship_aus_citizen_net_mig_pr100": 83.5,
+        "ab_torres_strait_islander_ppls_prop_tot_pop_net_mig_pr100": 0.6,
+        "yr": "2016",
+        "aus_citizenship_aus_citizenship_ns_net_mig_pr100": 6.4,
+        "sa2_main16": "503021038",
+        "pop_density_pop_density_p_p_km2": 2886.9,
+        "spks_lang_oth_eng_home_prop_tot_pop_net_mig_pr100": 16.3,
+        "ovs_brn_pop_prop_tot_pop_tot_brn_ovs_net_mig_pr100": 28.1
+      },
+      "LEEDERVILLE": {
+        "aus_citizenship_no_aus_citizen_net_mig_pr100": 10.1,
+        "aus_citizenship_aus_citizen_net_mig_pr100": 83.5,
+        "ab_torres_strait_islander_ppls_prop_tot_pop_net_mig_pr100": 0.6,
+        "yr": "2016",
+        "aus_citizenship_aus_citizenship_ns_net_mig_pr100": 6.4,
+        "sa2_main16": "503021038",
+        "pop_density_pop_density_p_p_km2": 2886.9,
+        "spks_lang_oth_eng_home_prop_tot_pop_net_mig_pr100": 16.3,
+        "ovs_brn_pop_prop_tot_pop_tot_brn_ovs_net_mig_pr100": 28.1
+      },
+      "MOUNT LAWLEY": {
+        "aus_citizenship_no_aus_citizen_net_mig_pr100": 11.2,
+        "aus_citizenship_aus_citizen_net_mig_pr100": 80.3,
+        "ab_torres_strait_islander_ppls_prop_tot_pop_net_mig_pr100": 0.9,
+        "yr": "2016",
+        "aus_citizenship_aus_citizenship_ns_net_mig_pr100": 8.4,
+        "sa2_main16": "503021039",
+        "pop_density_pop_density_p_p_km2": 2439.7,
+        "spks_lang_oth_eng_home_prop_tot_pop_net_mig_pr100": 17.6,
+        "ovs_brn_pop_prop_tot_pop_tot_brn_ovs_net_mig_pr100": 30.8
+      },
+      "INGLEWOOD": {
+        "aus_citizenship_no_aus_citizen_net_mig_pr100": 11.2,
+        "aus_citizenship_aus_citizen_net_mig_pr100": 80.3,
+        "ab_torres_strait_islander_ppls_prop_tot_pop_net_mig_pr100": 0.9,
+        "yr": "2016",
+        "aus_citizenship_aus_citizenship_ns_net_mig_pr100": 8.4,
+        "sa2_main16": "503021039",
+        "pop_density_pop_density_p_p_km2": 2439.7,
+        "spks_lang_oth_eng_home_prop_tot_pop_net_mig_pr100": 17.6,
+        "ovs_brn_pop_prop_tot_pop_tot_brn_ovs_net_mig_pr100": 30.8
+      },
+      "WEMBLEY": {
+        "aus_citizenship_no_aus_citizen_net_mig_pr100": 20.3,
+        "aus_citizenship_aus_citizen_net_mig_pr100": 71.7,
+        "ab_torres_strait_islander_ppls_prop_tot_pop_net_mig_pr100": 0.4,
+        "yr": "2016",
+        "aus_citizenship_aus_citizenship_ns_net_mig_pr100": 8,
+        "sa2_main16": "503021043",
+        "pop_density_pop_density_p_p_km2": 2854.6,
+        "spks_lang_oth_eng_home_prop_tot_pop_net_mig_pr100": 24.6,
+        "ovs_brn_pop_prop_tot_pop_tot_brn_ovs_net_mig_pr100": 38.3
+      },
+      "WEST LEEDERVILLE": {
+        "aus_citizenship_no_aus_citizen_net_mig_pr100": 20.3,
+        "aus_citizenship_aus_citizen_net_mig_pr100": 71.7,
+        "ab_torres_strait_islander_ppls_prop_tot_pop_net_mig_pr100": 0.4,
+        "yr": "2016",
+        "aus_citizenship_aus_citizenship_ns_net_mig_pr100": 8,
+        "sa2_main16": "503021043",
+        "pop_density_pop_density_p_p_km2": 2854.6,
+        "spks_lang_oth_eng_home_prop_tot_pop_net_mig_pr100": 24.6,
+        "ovs_brn_pop_prop_tot_pop_tot_brn_ovs_net_mig_pr100": 38.3
+      },
+      "GLENDALOUGH": {
+        "aus_citizenship_no_aus_citizen_net_mig_pr100": 20.3,
+        "aus_citizenship_aus_citizen_net_mig_pr100": 71.7,
+        "ab_torres_strait_islander_ppls_prop_tot_pop_net_mig_pr100": 0.4,
+        "yr": "2016",
+        "aus_citizenship_aus_citizenship_ns_net_mig_pr100": 8,
+        "sa2_main16": "503021043",
+        "pop_density_pop_density_p_p_km2": 2854.6,
+        "spks_lang_oth_eng_home_prop_tot_pop_net_mig_pr100": 24.6,
+        "ovs_brn_pop_prop_tot_pop_tot_brn_ovs_net_mig_pr100": 38.3
+      },
+      "FLOREAT": {
+        "aus_citizenship_no_aus_citizen_net_mig_pr100": 7.3,
+        "aus_citizenship_aus_citizen_net_mig_pr100": 88.4,
+        "ab_torres_strait_islander_ppls_prop_tot_pop_net_mig_pr100": 0.2,
+        "yr": "2016",
+        "aus_citizenship_aus_citizenship_ns_net_mig_pr100": 4.4,
+        "sa2_main16": "503011033",
+        "pop_density_pop_density_p_p_km2": 1868.3,
+        "spks_lang_oth_eng_home_prop_tot_pop_net_mig_pr100": 11.1,
+        "ovs_brn_pop_prop_tot_pop_tot_brn_ovs_net_mig_pr100": 25.3
+      },
+      "COTTESLOE": {
+        "aus_citizenship_no_aus_citizen_net_mig_pr100": 8.9,
+        "aus_citizenship_aus_citizen_net_mig_pr100": 83.7,
+        "ab_torres_strait_islander_ppls_prop_tot_pop_net_mig_pr100": 0.4,
+        "yr": "2016",
+        "aus_citizenship_aus_citizenship_ns_net_mig_pr100": 7.4,
+        "sa2_main16": "503011032",
+        "pop_density_pop_density_p_p_km2": 2097.5,
+        "spks_lang_oth_eng_home_prop_tot_pop_net_mig_pr100": 6.9,
+        "ovs_brn_pop_prop_tot_pop_tot_brn_ovs_net_mig_pr100": 24.7
+      },
+      "PERTH CITY": {
+        "aus_citizenship_no_aus_citizen_net_mig_pr100": 32,
+        "aus_citizenship_aus_citizen_net_mig_pr100": 52.3,
+        "ab_torres_strait_islander_ppls_prop_tot_pop_net_mig_pr100": 0.8,
+        "yr": "2016",
+        "aus_citizenship_aus_citizenship_ns_net_mig_pr100": 15.7,
+        "sa2_main16": "503021041",
+        "pop_density_pop_density_p_p_km2": 3097.4,
+        "spks_lang_oth_eng_home_prop_tot_pop_net_mig_pr100": 33.8,
+        "ovs_brn_pop_prop_tot_pop_tot_brn_ovs_net_mig_pr100": 50
+      }
+    },
+    "db_timestamp": "1588492300"
+  }
