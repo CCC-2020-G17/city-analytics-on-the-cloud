@@ -1,0 +1,13 @@
+{
+    "_id": "_design/cities",
+    "views": {
+      "get_id": {
+        "map": "function (doc) {\n  if(doc.place.place_type == \"city\"){\n    emit(doc.place.name, 1);\n  }\n}"
+      },
+      "get_timestamp": {
+        "reduce": "_count",
+        "map": "function (doc) {\n  if(doc.place === null){\n    emit([doc.db_timestamp,\"Missing\"], 1);\n  }else{\n    emit([doc.db_timestamp,doc.place.name], 1);\n  }\n}"
+      }
+    },
+    "language": "javascript"
+  }

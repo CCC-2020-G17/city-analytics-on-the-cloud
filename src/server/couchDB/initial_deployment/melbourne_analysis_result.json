@@ -1,0 +1,1935 @@
+{
+    "_id": "melbourne_analysis_result",
+    "_rev": "33-460e87b948cec28caa613443c7d67b3a",
+    "city_name": "Melbourne",
+    "city_tweet_count": 54741,
+    "city_tweet_with_geo_count": 54741,
+    "covid-19": {
+      "tweet_count": 120,
+      "english_count": 117,
+      "chinese_count": 3,
+      "spanish_count": 0,
+      "others_count": 0
+    },
+    "crime": {
+      "crime_index": 44.59,
+      "vulgar_tweet_count": 409
+    },
+    "suburbs": {
+      "PASCOE VALE SOUTH": {
+        "suburb_tweet_count": 57,
+        "income": {
+          "low_income_proportion": 35.8,
+          "high_income_proportion": 10.5,
+          "tweet_positive_count": 19,
+          "tweet_negative_count": 4,
+          "tweet_neutral_count": 34
+        },
+        "education": {
+          "complete_yr_12_proportion": 60.8,
+          "post_school_proportion": 60.2,
+          "youth_in_study_or_work_proportion": 87.5,
+          "vulgar_tweet_count": 0
+        },
+        "migration": {
+          "not_english_at_home": 30.3,
+          "born_overseas_proportion": 22,
+          "population_density": 3501.5,
+          "non_english_tweet_count": 1
+        }
+      },
+      "AIRPORT WEST": {
+        "suburb_tweet_count": 23,
+        "income": {
+          "low_income_proportion": 0,
+          "high_income_proportion": 0,
+          "tweet_positive_count": 4,
+          "tweet_negative_count": 0,
+          "tweet_neutral_count": 19
+        },
+        "education": {
+          "complete_yr_12_proportion": 0,
+          "post_school_proportion": 0,
+          "youth_in_study_or_work_proportion": 0,
+          "vulgar_tweet_count": 0
+        },
+        "migration": {
+          "not_english_at_home": 0,
+          "born_overseas_proportion": 0,
+          "population_density": 0,
+          "non_english_tweet_count": 0
+        }
+      },
+      "MIDDLE PARK": {
+        "suburb_tweet_count": 36,
+        "income": {
+          "low_income_proportion": 0,
+          "high_income_proportion": 0,
+          "tweet_positive_count": 19,
+          "tweet_negative_count": 1,
+          "tweet_neutral_count": 16
+        },
+        "education": {
+          "complete_yr_12_proportion": 0,
+          "post_school_proportion": 0,
+          "youth_in_study_or_work_proportion": 0,
+          "vulgar_tweet_count": 0
+        },
+        "migration": {
+          "not_english_at_home": 0,
+          "born_overseas_proportion": 0,
+          "population_density": 0,
+          "non_english_tweet_count": 0
+        }
+      },
+      "ESSENDON WEST": {
+        "suburb_tweet_count": 0,
+        "income": {
+          "low_income_proportion": 0,
+          "high_income_proportion": 0,
+          "tweet_positive_count": 0,
+          "tweet_negative_count": 0,
+          "tweet_neutral_count": 0
+        },
+        "education": {
+          "complete_yr_12_proportion": 0,
+          "post_school_proportion": 0,
+          "youth_in_study_or_work_proportion": 0,
+          "vulgar_tweet_count": 0
+        },
+        "migration": {
+          "not_english_at_home": 0,
+          "born_overseas_proportion": 0,
+          "population_density": 0,
+          "non_english_tweet_count": 0
+        }
+      },
+      "FOOTSCRAY": {
+        "suburb_tweet_count": 588,
+        "income": {
+          "low_income_proportion": 0,
+          "high_income_proportion": 0,
+          "tweet_positive_count": 290,
+          "tweet_negative_count": 36,
+          "tweet_neutral_count": 262
+        },
+        "education": {
+          "complete_yr_12_proportion": 0,
+          "post_school_proportion": 0,
+          "youth_in_study_or_work_proportion": 0,
+          "vulgar_tweet_count": 5
+        },
+        "migration": {
+          "not_english_at_home": 0,
+          "born_overseas_proportion": 0,
+          "population_density": 0,
+          "non_english_tweet_count": 30
+        }
+      },
+      "TOORAK": {
+        "suburb_tweet_count": 61,
+        "income": {
+          "low_income_proportion": 23.3,
+          "high_income_proportion": 27.299999999999997,
+          "tweet_positive_count": 35,
+          "tweet_negative_count": 3,
+          "tweet_neutral_count": 23
+        },
+        "education": {
+          "complete_yr_12_proportion": 76.3,
+          "post_school_proportion": 73.1,
+          "youth_in_study_or_work_proportion": 90.3,
+          "vulgar_tweet_count": 0
+        },
+        "migration": {
+          "not_english_at_home": 19.1,
+          "born_overseas_proportion": 28.4,
+          "population_density": 3246.6,
+          "non_english_tweet_count": 4
+        }
+      },
+      "STRATHMORE": {
+        "suburb_tweet_count": 11,
+        "income": {
+          "low_income_proportion": 0,
+          "high_income_proportion": 0,
+          "tweet_positive_count": 4,
+          "tweet_negative_count": 0,
+          "tweet_neutral_count": 7
+        },
+        "education": {
+          "complete_yr_12_proportion": 0,
+          "post_school_proportion": 0,
+          "youth_in_study_or_work_proportion": 0,
+          "vulgar_tweet_count": 0
+        },
+        "migration": {
+          "not_english_at_home": 0,
+          "born_overseas_proportion": 0,
+          "population_density": 0,
+          "non_english_tweet_count": 0
+        }
+      },
+      "BRUNSWICK WEST": {
+        "suburb_tweet_count": 26,
+        "income": {
+          "low_income_proportion": 34,
+          "high_income_proportion": 9.4,
+          "tweet_positive_count": 11,
+          "tweet_negative_count": 4,
+          "tweet_neutral_count": 11
+        },
+        "education": {
+          "complete_yr_12_proportion": 70,
+          "post_school_proportion": 68.8,
+          "youth_in_study_or_work_proportion": 85.4,
+          "vulgar_tweet_count": 0
+        },
+        "migration": {
+          "not_english_at_home": 32.1,
+          "born_overseas_proportion": 31.5,
+          "population_density": 4567.7,
+          "non_english_tweet_count": 0
+        }
+      },
+      "NORTHCOTE": {
+        "suburb_tweet_count": 383,
+        "income": {
+          "low_income_proportion": 30.3,
+          "high_income_proportion": 14.2,
+          "tweet_positive_count": 200,
+          "tweet_negative_count": 24,
+          "tweet_neutral_count": 159
+        },
+        "education": {
+          "complete_yr_12_proportion": 71.7,
+          "post_school_proportion": 71.8,
+          "youth_in_study_or_work_proportion": 85.9,
+          "vulgar_tweet_count": 1
+        },
+        "migration": {
+          "not_english_at_home": 22.1,
+          "born_overseas_proportion": 24.5,
+          "population_density": 4300.1,
+          "non_english_tweet_count": 14
+        }
+      },
+      "MALVERN": {
+        "suburb_tweet_count": 71,
+        "income": {
+          "low_income_proportion": 0,
+          "high_income_proportion": 0,
+          "tweet_positive_count": 31,
+          "tweet_negative_count": 4,
+          "tweet_neutral_count": 36
+        },
+        "education": {
+          "complete_yr_12_proportion": 0,
+          "post_school_proportion": 0,
+          "youth_in_study_or_work_proportion": 0,
+          "vulgar_tweet_count": 0
+        },
+        "migration": {
+          "not_english_at_home": 0,
+          "born_overseas_proportion": 0,
+          "population_density": 0,
+          "non_english_tweet_count": 8
+        }
+      },
+      "BALACLAVA": {
+        "suburb_tweet_count": 56,
+        "income": {
+          "low_income_proportion": 0,
+          "high_income_proportion": 0,
+          "tweet_positive_count": 24,
+          "tweet_negative_count": 6,
+          "tweet_neutral_count": 26
+        },
+        "education": {
+          "complete_yr_12_proportion": 0,
+          "post_school_proportion": 0,
+          "youth_in_study_or_work_proportion": 0,
+          "vulgar_tweet_count": 0
+        },
+        "migration": {
+          "not_english_at_home": 0,
+          "born_overseas_proportion": 0,
+          "population_density": 0,
+          "non_english_tweet_count": 3
+        }
+      },
+      "ALPHINGTON": {
+        "suburb_tweet_count": 18,
+        "income": {
+          "low_income_proportion": 31.7,
+          "high_income_proportion": 14.4,
+          "tweet_positive_count": 9,
+          "tweet_negative_count": 0,
+          "tweet_neutral_count": 9
+        },
+        "education": {
+          "complete_yr_12_proportion": 70.1,
+          "post_school_proportion": 69.3,
+          "youth_in_study_or_work_proportion": 91.7,
+          "vulgar_tweet_count": 0
+        },
+        "migration": {
+          "not_english_at_home": 21.9,
+          "born_overseas_proportion": 24,
+          "population_density": 3269.7,
+          "non_english_tweet_count": 0
+        }
+      },
+      "ST KILDA WEST": {
+        "suburb_tweet_count": 95,
+        "income": {
+          "low_income_proportion": 0,
+          "high_income_proportion": 0,
+          "tweet_positive_count": 42,
+          "tweet_negative_count": 7,
+          "tweet_neutral_count": 46
+        },
+        "education": {
+          "complete_yr_12_proportion": 0,
+          "post_school_proportion": 0,
+          "youth_in_study_or_work_proportion": 0,
+          "vulgar_tweet_count": 0
+        },
+        "migration": {
+          "not_english_at_home": 0,
+          "born_overseas_proportion": 0,
+          "population_density": 0,
+          "non_english_tweet_count": 7
+        }
+      },
+      "SPOTSWOOD": {
+        "suburb_tweet_count": 82,
+        "income": {
+          "low_income_proportion": 0,
+          "high_income_proportion": 0,
+          "tweet_positive_count": 24,
+          "tweet_negative_count": 7,
+          "tweet_neutral_count": 51
+        },
+        "education": {
+          "complete_yr_12_proportion": 0,
+          "post_school_proportion": 0,
+          "youth_in_study_or_work_proportion": 0,
+          "vulgar_tweet_count": 0
+        },
+        "migration": {
+          "not_english_at_home": 0,
+          "born_overseas_proportion": 0,
+          "population_density": 0,
+          "non_english_tweet_count": 0
+        }
+      },
+      "MALVERN EAST": {
+        "suburb_tweet_count": 137,
+        "income": {
+          "low_income_proportion": 0,
+          "high_income_proportion": 0,
+          "tweet_positive_count": 68,
+          "tweet_negative_count": 9,
+          "tweet_neutral_count": 60
+        },
+        "education": {
+          "complete_yr_12_proportion": 0,
+          "post_school_proportion": 0,
+          "youth_in_study_or_work_proportion": 0,
+          "vulgar_tweet_count": 0
+        },
+        "migration": {
+          "not_english_at_home": 0,
+          "born_overseas_proportion": 0,
+          "population_density": 0,
+          "non_english_tweet_count": 9
+        }
+      },
+      "SOUTH MELBOURNE": {
+        "suburb_tweet_count": 411,
+        "income": {
+          "low_income_proportion": 26.1,
+          "high_income_proportion": 20.299999999999997,
+          "tweet_positive_count": 182,
+          "tweet_negative_count": 29,
+          "tweet_neutral_count": 200
+        },
+        "education": {
+          "complete_yr_12_proportion": 70.8,
+          "post_school_proportion": 74.7,
+          "youth_in_study_or_work_proportion": 82.4,
+          "vulgar_tweet_count": 2
+        },
+        "migration": {
+          "not_english_at_home": 24.1,
+          "born_overseas_proportion": 34.8,
+          "population_density": 5007.2,
+          "non_english_tweet_count": 22
+        }
+      },
+      "ESSENDON NORTH": {
+        "suburb_tweet_count": 7,
+        "income": {
+          "low_income_proportion": 0,
+          "high_income_proportion": 0,
+          "tweet_positive_count": 2,
+          "tweet_negative_count": 3,
+          "tweet_neutral_count": 2
+        },
+        "education": {
+          "complete_yr_12_proportion": 0,
+          "post_school_proportion": 0,
+          "youth_in_study_or_work_proportion": 0,
+          "vulgar_tweet_count": 0
+        },
+        "migration": {
+          "not_english_at_home": 0,
+          "born_overseas_proportion": 0,
+          "population_density": 0,
+          "non_english_tweet_count": 0
+        }
+      },
+      "ELSTERNWICK": {
+        "suburb_tweet_count": 66,
+        "income": {
+          "low_income_proportion": 0,
+          "high_income_proportion": 0,
+          "tweet_positive_count": 29,
+          "tweet_negative_count": 3,
+          "tweet_neutral_count": 34
+        },
+        "education": {
+          "complete_yr_12_proportion": 0,
+          "post_school_proportion": 0,
+          "youth_in_study_or_work_proportion": 0,
+          "vulgar_tweet_count": 1
+        },
+        "migration": {
+          "not_english_at_home": 0,
+          "born_overseas_proportion": 0,
+          "population_density": 0,
+          "non_english_tweet_count": 10
+        }
+      },
+      "CARNEGIE": {
+        "suburb_tweet_count": 57,
+        "income": {
+          "low_income_proportion": 0,
+          "high_income_proportion": 0,
+          "tweet_positive_count": 22,
+          "tweet_negative_count": 5,
+          "tweet_neutral_count": 30
+        },
+        "education": {
+          "complete_yr_12_proportion": 0,
+          "post_school_proportion": 0,
+          "youth_in_study_or_work_proportion": 0,
+          "vulgar_tweet_count": 1
+        },
+        "migration": {
+          "not_english_at_home": 0,
+          "born_overseas_proportion": 0,
+          "population_density": 0,
+          "non_english_tweet_count": 16
+        }
+      },
+      "HAWTHORN": {
+        "suburb_tweet_count": 253,
+        "income": {
+          "low_income_proportion": 0,
+          "high_income_proportion": 0,
+          "tweet_positive_count": 131,
+          "tweet_negative_count": 10,
+          "tweet_neutral_count": 112
+        },
+        "education": {
+          "complete_yr_12_proportion": 0,
+          "post_school_proportion": 0,
+          "youth_in_study_or_work_proportion": 0,
+          "vulgar_tweet_count": 3
+        },
+        "migration": {
+          "not_english_at_home": 0,
+          "born_overseas_proportion": 0,
+          "population_density": 0,
+          "non_english_tweet_count": 18
+        }
+      },
+      "CAULFIELD SOUTH": {
+        "suburb_tweet_count": 26,
+        "income": {
+          "low_income_proportion": 0,
+          "high_income_proportion": 0,
+          "tweet_positive_count": 7,
+          "tweet_negative_count": 3,
+          "tweet_neutral_count": 16
+        },
+        "education": {
+          "complete_yr_12_proportion": 0,
+          "post_school_proportion": 0,
+          "youth_in_study_or_work_proportion": 0,
+          "vulgar_tweet_count": 0
+        },
+        "migration": {
+          "not_english_at_home": 0,
+          "born_overseas_proportion": 0,
+          "population_density": 0,
+          "non_english_tweet_count": 0
+        }
+      },
+      "RESERVOIR": {
+        "suburb_tweet_count": 64,
+        "income": {
+          "low_income_proportion": 0,
+          "high_income_proportion": 0,
+          "tweet_positive_count": 28,
+          "tweet_negative_count": 6,
+          "tweet_neutral_count": 30
+        },
+        "education": {
+          "complete_yr_12_proportion": 0,
+          "post_school_proportion": 0,
+          "youth_in_study_or_work_proportion": 0,
+          "vulgar_tweet_count": 1
+        },
+        "migration": {
+          "not_english_at_home": 0,
+          "born_overseas_proportion": 0,
+          "population_density": 0,
+          "non_english_tweet_count": 1
+        }
+      },
+      "PRESTON": {
+        "suburb_tweet_count": 187,
+        "income": {
+          "low_income_proportion": 0,
+          "high_income_proportion": 0,
+          "tweet_positive_count": 70,
+          "tweet_negative_count": 17,
+          "tweet_neutral_count": 100
+        },
+        "education": {
+          "complete_yr_12_proportion": 0,
+          "post_school_proportion": 0,
+          "youth_in_study_or_work_proportion": 0,
+          "vulgar_tweet_count": 2
+        },
+        "migration": {
+          "not_english_at_home": 0,
+          "born_overseas_proportion": 0,
+          "population_density": 0,
+          "non_english_tweet_count": 13
+        }
+      },
+      "NEWPORT": {
+        "suburb_tweet_count": 32,
+        "income": {
+          "low_income_proportion": 0,
+          "high_income_proportion": 0,
+          "tweet_positive_count": 12,
+          "tweet_negative_count": 5,
+          "tweet_neutral_count": 15
+        },
+        "education": {
+          "complete_yr_12_proportion": 0,
+          "post_school_proportion": 0,
+          "youth_in_study_or_work_proportion": 0,
+          "vulgar_tweet_count": 0
+        },
+        "migration": {
+          "not_english_at_home": 0,
+          "born_overseas_proportion": 0,
+          "population_density": 0,
+          "non_english_tweet_count": 1
+        }
+      },
+      "DOCKLANDS": {
+        "suburb_tweet_count": 679,
+        "income": {
+          "low_income_proportion": 28,
+          "high_income_proportion": 15.5,
+          "tweet_positive_count": 290,
+          "tweet_negative_count": 34,
+          "tweet_neutral_count": 355
+        },
+        "education": {
+          "complete_yr_12_proportion": 75.5,
+          "post_school_proportion": 76.9,
+          "youth_in_study_or_work_proportion": 80.5,
+          "vulgar_tweet_count": 6
+        },
+        "migration": {
+          "not_english_at_home": 52.8,
+          "born_overseas_proportion": 59.3,
+          "population_density": 4841.2,
+          "non_english_tweet_count": 47
+        }
+      },
+      "MELBOURNE": {
+        "suburb_tweet_count": 15979,
+        "income": {
+          "low_income_proportion": 46.2,
+          "high_income_proportion": 6.699999999999999,
+          "tweet_positive_count": 7777,
+          "tweet_negative_count": 1139,
+          "tweet_neutral_count": 7063
+        },
+        "education": {
+          "complete_yr_12_proportion": 79.1,
+          "post_school_proportion": 67.6,
+          "youth_in_study_or_work_proportion": 86.9,
+          "vulgar_tweet_count": 123
+        },
+        "migration": {
+          "not_english_at_home": 66.7,
+          "born_overseas_proportion": 73.8,
+          "population_density": 16961.2,
+          "non_english_tweet_count": 888
+        }
+      },
+      "COBURG": {
+        "suburb_tweet_count": 1003,
+        "income": {
+          "low_income_proportion": 37.8,
+          "high_income_proportion": 8.6,
+          "tweet_positive_count": 300,
+          "tweet_negative_count": 145,
+          "tweet_neutral_count": 558
+        },
+        "education": {
+          "complete_yr_12_proportion": 65.4,
+          "post_school_proportion": 63,
+          "youth_in_study_or_work_proportion": 85.4,
+          "vulgar_tweet_count": 4
+        },
+        "migration": {
+          "not_english_at_home": 37.2,
+          "born_overseas_proportion": 32.5,
+          "population_density": 4009.2,
+          "non_english_tweet_count": 63
+        }
+      },
+      "PRINCES HILL": {
+        "suburb_tweet_count": 219,
+        "income": {
+          "low_income_proportion": 25.8,
+          "high_income_proportion": 15.9,
+          "tweet_positive_count": 91,
+          "tweet_negative_count": 26,
+          "tweet_neutral_count": 102
+        },
+        "education": {
+          "complete_yr_12_proportion": 79.8,
+          "post_school_proportion": 77,
+          "youth_in_study_or_work_proportion": 82.4,
+          "vulgar_tweet_count": 3
+        },
+        "migration": {
+          "not_english_at_home": 17.7,
+          "born_overseas_proportion": 24.2,
+          "population_density": 3931.1,
+          "non_english_tweet_count": 8
+        }
+      },
+      "ST KILDA": {
+        "suburb_tweet_count": 1476,
+        "income": {
+          "low_income_proportion": 21.799999999999997,
+          "high_income_proportion": 13.6,
+          "tweet_positive_count": 800,
+          "tweet_negative_count": 78,
+          "tweet_neutral_count": 598
+        },
+        "education": {
+          "complete_yr_12_proportion": 69.5,
+          "post_school_proportion": 78,
+          "youth_in_study_or_work_proportion": 81.6,
+          "vulgar_tweet_count": 6
+        },
+        "migration": {
+          "not_english_at_home": 21.2,
+          "born_overseas_proportion": 34.9,
+          "population_density": 7220.2,
+          "non_english_tweet_count": 63
+        }
+      },
+      "PORT MELBOURNE": {
+        "suburb_tweet_count": 483,
+        "income": {
+          "low_income_proportion": 23.4,
+          "high_income_proportion": 24.3,
+          "tweet_positive_count": 224,
+          "tweet_negative_count": 33,
+          "tweet_neutral_count": 226
+        },
+        "education": {
+          "complete_yr_12_proportion": 67.7,
+          "post_school_proportion": 72.9,
+          "youth_in_study_or_work_proportion": 86,
+          "vulgar_tweet_count": 3
+        },
+        "migration": {
+          "not_english_at_home": 19.2,
+          "born_overseas_proportion": 27.5,
+          "population_density": 6262.6,
+          "non_english_tweet_count": 11
+        }
+      },
+      "CAULFIELD EAST": {
+        "suburb_tweet_count": 100,
+        "income": {
+          "low_income_proportion": 0,
+          "high_income_proportion": 0,
+          "tweet_positive_count": 48,
+          "tweet_negative_count": 8,
+          "tweet_neutral_count": 44
+        },
+        "education": {
+          "complete_yr_12_proportion": 0,
+          "post_school_proportion": 0,
+          "youth_in_study_or_work_proportion": 0,
+          "vulgar_tweet_count": 0
+        },
+        "migration": {
+          "not_english_at_home": 0,
+          "born_overseas_proportion": 0,
+          "population_density": 0,
+          "non_english_tweet_count": 22
+        }
+      },
+      "PRAHRAN": {
+        "suburb_tweet_count": 997,
+        "income": {
+          "low_income_proportion": 22.3,
+          "high_income_proportion": 16.4,
+          "tweet_positive_count": 445,
+          "tweet_negative_count": 45,
+          "tweet_neutral_count": 507
+        },
+        "education": {
+          "complete_yr_12_proportion": 73.6,
+          "post_school_proportion": 75.2,
+          "youth_in_study_or_work_proportion": 81.1,
+          "vulgar_tweet_count": 9
+        },
+        "migration": {
+          "not_english_at_home": 21.5,
+          "born_overseas_proportion": 31.7,
+          "population_density": 7322.6,
+          "non_english_tweet_count": 36
+        }
+      },
+      "CARLTON NORTH": {
+        "suburb_tweet_count": 221,
+        "income": {
+          "low_income_proportion": 25.8,
+          "high_income_proportion": 15.9,
+          "tweet_positive_count": 62,
+          "tweet_negative_count": 9,
+          "tweet_neutral_count": 150
+        },
+        "education": {
+          "complete_yr_12_proportion": 79.8,
+          "post_school_proportion": 77,
+          "youth_in_study_or_work_proportion": 82.4,
+          "vulgar_tweet_count": 0
+        },
+        "migration": {
+          "not_english_at_home": 17.7,
+          "born_overseas_proportion": 24.2,
+          "population_density": 3931.1,
+          "non_english_tweet_count": 21
+        }
+      },
+      "IVANHOE": {
+        "suburb_tweet_count": 16,
+        "income": {
+          "low_income_proportion": 0,
+          "high_income_proportion": 0,
+          "tweet_positive_count": 7,
+          "tweet_negative_count": 0,
+          "tweet_neutral_count": 9
+        },
+        "education": {
+          "complete_yr_12_proportion": 0,
+          "post_school_proportion": 0,
+          "youth_in_study_or_work_proportion": 0,
+          "vulgar_tweet_count": 0
+        },
+        "migration": {
+          "not_english_at_home": 0,
+          "born_overseas_proportion": 0,
+          "population_density": 0,
+          "non_english_tweet_count": 1
+        }
+      },
+      "ESSENDON FIELDS": {
+        "suburb_tweet_count": 11,
+        "income": {
+          "low_income_proportion": 0,
+          "high_income_proportion": 0,
+          "tweet_positive_count": 2,
+          "tweet_negative_count": 4,
+          "tweet_neutral_count": 5
+        },
+        "education": {
+          "complete_yr_12_proportion": 0,
+          "post_school_proportion": 0,
+          "youth_in_study_or_work_proportion": 0,
+          "vulgar_tweet_count": 1
+        },
+        "migration": {
+          "not_english_at_home": 0,
+          "born_overseas_proportion": 0,
+          "population_density": 0,
+          "non_english_tweet_count": 0
+        }
+      },
+      "SOUTH YARRA": {
+        "suburb_tweet_count": 2328,
+        "income": {
+          "low_income_proportion": 0,
+          "high_income_proportion": 0,
+          "tweet_positive_count": 1489,
+          "tweet_negative_count": 67,
+          "tweet_neutral_count": 772
+        },
+        "education": {
+          "complete_yr_12_proportion": 0,
+          "post_school_proportion": 0,
+          "youth_in_study_or_work_proportion": 0,
+          "vulgar_tweet_count": 15
+        },
+        "migration": {
+          "not_english_at_home": 0,
+          "born_overseas_proportion": 0,
+          "population_density": 0,
+          "non_english_tweet_count": 299
+        }
+      },
+      "CAULFIELD": {
+        "suburb_tweet_count": 10,
+        "income": {
+          "low_income_proportion": 0,
+          "high_income_proportion": 0,
+          "tweet_positive_count": 4,
+          "tweet_negative_count": 0,
+          "tweet_neutral_count": 6
+        },
+        "education": {
+          "complete_yr_12_proportion": 0,
+          "post_school_proportion": 0,
+          "youth_in_study_or_work_proportion": 0,
+          "vulgar_tweet_count": 0
+        },
+        "migration": {
+          "not_english_at_home": 0,
+          "born_overseas_proportion": 0,
+          "population_density": 0,
+          "non_english_tweet_count": 0
+        }
+      },
+      "HEIDELBERG WEST": {
+        "suburb_tweet_count": 11,
+        "income": {
+          "low_income_proportion": 0,
+          "high_income_proportion": 0,
+          "tweet_positive_count": 6,
+          "tweet_negative_count": 1,
+          "tweet_neutral_count": 4
+        },
+        "education": {
+          "complete_yr_12_proportion": 0,
+          "post_school_proportion": 0,
+          "youth_in_study_or_work_proportion": 0,
+          "vulgar_tweet_count": 0
+        },
+        "migration": {
+          "not_english_at_home": 0,
+          "born_overseas_proportion": 0,
+          "population_density": 0,
+          "non_english_tweet_count": 0
+        }
+      },
+      "MOONEE PONDS": {
+        "suburb_tweet_count": 808,
+        "income": {
+          "low_income_proportion": 31.4,
+          "high_income_proportion": 14.6,
+          "tweet_positive_count": 393,
+          "tweet_negative_count": 53,
+          "tweet_neutral_count": 362
+        },
+        "education": {
+          "complete_yr_12_proportion": 67.1,
+          "post_school_proportion": 66.5,
+          "youth_in_study_or_work_proportion": 89.4,
+          "vulgar_tweet_count": 18
+        },
+        "migration": {
+          "not_english_at_home": 25.2,
+          "born_overseas_proportion": 26.1,
+          "population_density": 3480.5,
+          "non_english_tweet_count": 5
+        }
+      },
+      "FITZROY NORTH": {
+        "suburb_tweet_count": 832,
+        "income": {
+          "low_income_proportion": 26,
+          "high_income_proportion": 16.4,
+          "tweet_positive_count": 377,
+          "tweet_negative_count": 55,
+          "tweet_neutral_count": 400
+        },
+        "education": {
+          "complete_yr_12_proportion": 74.7,
+          "post_school_proportion": 76.3,
+          "youth_in_study_or_work_proportion": 84.2,
+          "vulgar_tweet_count": 8
+        },
+        "migration": {
+          "not_english_at_home": 17.5,
+          "born_overseas_proportion": 24.3,
+          "population_density": 5240.9,
+          "non_english_tweet_count": 43
+        }
+      },
+      "MARIBYRNONG": {
+        "suburb_tweet_count": 56,
+        "income": {
+          "low_income_proportion": 0,
+          "high_income_proportion": 0,
+          "tweet_positive_count": 16,
+          "tweet_negative_count": 2,
+          "tweet_neutral_count": 38
+        },
+        "education": {
+          "complete_yr_12_proportion": 0,
+          "post_school_proportion": 0,
+          "youth_in_study_or_work_proportion": 0,
+          "vulgar_tweet_count": 0
+        },
+        "migration": {
+          "not_english_at_home": 0,
+          "born_overseas_proportion": 0,
+          "population_density": 0,
+          "non_english_tweet_count": 5
+        }
+      },
+      "ELWOOD": {
+        "suburb_tweet_count": 129,
+        "income": {
+          "low_income_proportion": 19.4,
+          "high_income_proportion": 18.9,
+          "tweet_positive_count": 72,
+          "tweet_negative_count": 7,
+          "tweet_neutral_count": 50
+        },
+        "education": {
+          "complete_yr_12_proportion": 74.5,
+          "post_school_proportion": 78.4,
+          "youth_in_study_or_work_proportion": 86.6,
+          "vulgar_tweet_count": 2
+        },
+        "migration": {
+          "not_english_at_home": 14.3,
+          "born_overseas_proportion": 25.4,
+          "population_density": 6416.8,
+          "non_english_tweet_count": 7
+        }
+      },
+      "KEW": {
+        "suburb_tweet_count": 285,
+        "income": {
+          "low_income_proportion": 0,
+          "high_income_proportion": 0,
+          "tweet_positive_count": 43,
+          "tweet_negative_count": 8,
+          "tweet_neutral_count": 234
+        },
+        "education": {
+          "complete_yr_12_proportion": 0,
+          "post_school_proportion": 0,
+          "youth_in_study_or_work_proportion": 0,
+          "vulgar_tweet_count": 2
+        },
+        "migration": {
+          "not_english_at_home": 0,
+          "born_overseas_proportion": 0,
+          "population_density": 0,
+          "non_english_tweet_count": 11
+        }
+      },
+      "CREMORNE": {
+        "suburb_tweet_count": 110,
+        "income": {
+          "low_income_proportion": 0,
+          "high_income_proportion": 0,
+          "tweet_positive_count": 47,
+          "tweet_negative_count": 12,
+          "tweet_neutral_count": 51
+        },
+        "education": {
+          "complete_yr_12_proportion": 0,
+          "post_school_proportion": 0,
+          "youth_in_study_or_work_proportion": 0,
+          "vulgar_tweet_count": 0
+        },
+        "migration": {
+          "not_english_at_home": 0,
+          "born_overseas_proportion": 0,
+          "population_density": 0,
+          "non_english_tweet_count": 4
+        }
+      },
+      "KEW EAST": {
+        "suburb_tweet_count": 140,
+        "income": {
+          "low_income_proportion": 0,
+          "high_income_proportion": 0,
+          "tweet_positive_count": 101,
+          "tweet_negative_count": 6,
+          "tweet_neutral_count": 33
+        },
+        "education": {
+          "complete_yr_12_proportion": 0,
+          "post_school_proportion": 0,
+          "youth_in_study_or_work_proportion": 0,
+          "vulgar_tweet_count": 0
+        },
+        "migration": {
+          "not_english_at_home": 0,
+          "born_overseas_proportion": 0,
+          "population_density": 0,
+          "non_english_tweet_count": 0
+        }
+      },
+      "YARRAVILLE": {
+        "suburb_tweet_count": 160,
+        "income": {
+          "low_income_proportion": 0,
+          "high_income_proportion": 0,
+          "tweet_positive_count": 23,
+          "tweet_negative_count": 3,
+          "tweet_neutral_count": 134
+        },
+        "education": {
+          "complete_yr_12_proportion": 0,
+          "post_school_proportion": 0,
+          "youth_in_study_or_work_proportion": 0,
+          "vulgar_tweet_count": 0
+        },
+        "migration": {
+          "not_english_at_home": 0,
+          "born_overseas_proportion": 0,
+          "population_density": 0,
+          "non_english_tweet_count": 2
+        }
+      },
+      "PASCOE VALE": {
+        "suburb_tweet_count": 8,
+        "income": {
+          "low_income_proportion": 0,
+          "high_income_proportion": 0,
+          "tweet_positive_count": 2,
+          "tweet_negative_count": 0,
+          "tweet_neutral_count": 6
+        },
+        "education": {
+          "complete_yr_12_proportion": 0,
+          "post_school_proportion": 0,
+          "youth_in_study_or_work_proportion": 0,
+          "vulgar_tweet_count": 0
+        },
+        "migration": {
+          "not_english_at_home": 0,
+          "born_overseas_proportion": 0,
+          "population_density": 0,
+          "non_english_tweet_count": 2
+        }
+      },
+      "BRIGHTON": {
+        "suburb_tweet_count": 318,
+        "income": {
+          "low_income_proportion": 0,
+          "high_income_proportion": 0,
+          "tweet_positive_count": 180,
+          "tweet_negative_count": 18,
+          "tweet_neutral_count": 120
+        },
+        "education": {
+          "complete_yr_12_proportion": 0,
+          "post_school_proportion": 0,
+          "youth_in_study_or_work_proportion": 0,
+          "vulgar_tweet_count": 3
+        },
+        "migration": {
+          "not_english_at_home": 0,
+          "born_overseas_proportion": 0,
+          "population_density": 0,
+          "non_english_tweet_count": 8
+        }
+      },
+      "RICHMOND": {
+        "suburb_tweet_count": 1795,
+        "income": {
+          "low_income_proportion": 24,
+          "high_income_proportion": 17.200000000000003,
+          "tweet_positive_count": 1191,
+          "tweet_negative_count": 68,
+          "tweet_neutral_count": 536
+        },
+        "education": {
+          "complete_yr_12_proportion": 73.2,
+          "post_school_proportion": 73.1,
+          "youth_in_study_or_work_proportion": 86.2,
+          "vulgar_tweet_count": 5
+        },
+        "migration": {
+          "not_english_at_home": 24.8,
+          "born_overseas_proportion": 30.5,
+          "population_density": 5261.3,
+          "non_english_tweet_count": 59
+        }
+      },
+      "CARLTON": {
+        "suburb_tweet_count": 939,
+        "income": {
+          "low_income_proportion": 53,
+          "high_income_proportion": 5.9,
+          "tweet_positive_count": 372,
+          "tweet_negative_count": 50,
+          "tweet_neutral_count": 517
+        },
+        "education": {
+          "complete_yr_12_proportion": 78.5,
+          "post_school_proportion": 62.4,
+          "youth_in_study_or_work_proportion": 89.8,
+          "vulgar_tweet_count": 9
+        },
+        "migration": {
+          "not_english_at_home": 57,
+          "born_overseas_proportion": 62.8,
+          "population_density": 11131.2,
+          "non_english_tweet_count": 112
+        }
+      },
+      "ASCOT VALE": {
+        "suburb_tweet_count": 79,
+        "income": {
+          "low_income_proportion": 32.5,
+          "high_income_proportion": 14.2,
+          "tweet_positive_count": 23,
+          "tweet_negative_count": 4,
+          "tweet_neutral_count": 52
+        },
+        "education": {
+          "complete_yr_12_proportion": 67.3,
+          "post_school_proportion": 68.5,
+          "youth_in_study_or_work_proportion": 83.9,
+          "vulgar_tweet_count": 0
+        },
+        "migration": {
+          "not_english_at_home": 26.7,
+          "born_overseas_proportion": 27.8,
+          "population_density": 4039.8,
+          "non_english_tweet_count": 36
+        }
+      },
+      "ST KILDA EAST": {
+        "suburb_tweet_count": 84,
+        "income": {
+          "low_income_proportion": 23.400000000000002,
+          "high_income_proportion": 12.7,
+          "tweet_positive_count": 47,
+          "tweet_negative_count": 6,
+          "tweet_neutral_count": 31
+        },
+        "education": {
+          "complete_yr_12_proportion": 74.5,
+          "post_school_proportion": 76,
+          "youth_in_study_or_work_proportion": 81.2,
+          "vulgar_tweet_count": 1
+        },
+        "migration": {
+          "not_english_at_home": 22,
+          "born_overseas_proportion": 32,
+          "population_density": 7297.7,
+          "non_english_tweet_count": 5
+        }
+      },
+      "WILLIAMSTOWN": {
+        "suburb_tweet_count": 133,
+        "income": {
+          "low_income_proportion": 0,
+          "high_income_proportion": 0,
+          "tweet_positive_count": 60,
+          "tweet_negative_count": 5,
+          "tweet_neutral_count": 68
+        },
+        "education": {
+          "complete_yr_12_proportion": 0,
+          "post_school_proportion": 0,
+          "youth_in_study_or_work_proportion": 0,
+          "vulgar_tweet_count": 0
+        },
+        "migration": {
+          "not_english_at_home": 0,
+          "born_overseas_proportion": 0,
+          "population_density": 0,
+          "non_english_tweet_count": 4
+        }
+      },
+      "KENSINGTON": {
+        "suburb_tweet_count": 201,
+        "income": {
+          "low_income_proportion": 27.700000000000003,
+          "high_income_proportion": 15.3,
+          "tweet_positive_count": 67,
+          "tweet_negative_count": 39,
+          "tweet_neutral_count": 95
+        },
+        "education": {
+          "complete_yr_12_proportion": 75.5,
+          "post_school_proportion": 75,
+          "youth_in_study_or_work_proportion": 86.6,
+          "vulgar_tweet_count": 1
+        },
+        "migration": {
+          "not_english_at_home": 26,
+          "born_overseas_proportion": 31.8,
+          "population_density": 5370.3,
+          "non_english_tweet_count": 15
+        }
+      },
+      "WINDSOR": {
+        "suburb_tweet_count": 350,
+        "income": {
+          "low_income_proportion": 22.3,
+          "high_income_proportion": 16.4,
+          "tweet_positive_count": 141,
+          "tweet_negative_count": 16,
+          "tweet_neutral_count": 193
+        },
+        "education": {
+          "complete_yr_12_proportion": 73.6,
+          "post_school_proportion": 75.2,
+          "youth_in_study_or_work_proportion": 81.1,
+          "vulgar_tweet_count": 1
+        },
+        "migration": {
+          "not_english_at_home": 21.5,
+          "born_overseas_proportion": 31.7,
+          "population_density": 7322.6,
+          "non_english_tweet_count": 42
+        }
+      },
+      "FAIRFIELD": {
+        "suburb_tweet_count": 46,
+        "income": {
+          "low_income_proportion": 31.7,
+          "high_income_proportion": 14.4,
+          "tweet_positive_count": 26,
+          "tweet_negative_count": 0,
+          "tweet_neutral_count": 20
+        },
+        "education": {
+          "complete_yr_12_proportion": 70.1,
+          "post_school_proportion": 69.3,
+          "youth_in_study_or_work_proportion": 91.7,
+          "vulgar_tweet_count": 1
+        },
+        "migration": {
+          "not_english_at_home": 21.9,
+          "born_overseas_proportion": 24,
+          "population_density": 3269.7,
+          "non_english_tweet_count": 6
+        }
+      },
+      "GLEN IRIS": {
+        "suburb_tweet_count": 49,
+        "income": {
+          "low_income_proportion": 0,
+          "high_income_proportion": 0,
+          "tweet_positive_count": 17,
+          "tweet_negative_count": 8,
+          "tweet_neutral_count": 24
+        },
+        "education": {
+          "complete_yr_12_proportion": 0,
+          "post_school_proportion": 0,
+          "youth_in_study_or_work_proportion": 0,
+          "vulgar_tweet_count": 0
+        },
+        "migration": {
+          "not_english_at_home": 0,
+          "born_overseas_proportion": 0,
+          "population_density": 0,
+          "non_english_tweet_count": 2
+        }
+      },
+      "BRUNSWICK EAST": {
+        "suburb_tweet_count": 871,
+        "income": {
+          "low_income_proportion": 29.099999999999998,
+          "high_income_proportion": 11.3,
+          "tweet_positive_count": 396,
+          "tweet_negative_count": 46,
+          "tweet_neutral_count": 429
+        },
+        "education": {
+          "complete_yr_12_proportion": 75.9,
+          "post_school_proportion": 74,
+          "youth_in_study_or_work_proportion": 88.2,
+          "vulgar_tweet_count": 8
+        },
+        "migration": {
+          "not_english_at_home": 27.1,
+          "born_overseas_proportion": 31.6,
+          "population_density": 5404.1,
+          "non_english_tweet_count": 5
+        }
+      },
+      "FITZROY": {
+        "suburb_tweet_count": 1693,
+        "income": {
+          "low_income_proportion": 27.599999999999998,
+          "high_income_proportion": 15.3,
+          "tweet_positive_count": 701,
+          "tweet_negative_count": 118,
+          "tweet_neutral_count": 874
+        },
+        "education": {
+          "complete_yr_12_proportion": 69.2,
+          "post_school_proportion": 75.1,
+          "youth_in_study_or_work_proportion": 75.2,
+          "vulgar_tweet_count": 18
+        },
+        "migration": {
+          "not_english_at_home": 25.7,
+          "born_overseas_proportion": 31.8,
+          "population_density": 8170.5,
+          "non_english_tweet_count": 105
+        }
+      },
+      "CAULFIELD NORTH": {
+        "suburb_tweet_count": 36,
+        "income": {
+          "low_income_proportion": 0,
+          "high_income_proportion": 0,
+          "tweet_positive_count": 19,
+          "tweet_negative_count": 0,
+          "tweet_neutral_count": 17
+        },
+        "education": {
+          "complete_yr_12_proportion": 0,
+          "post_school_proportion": 0,
+          "youth_in_study_or_work_proportion": 0,
+          "vulgar_tweet_count": 0
+        },
+        "migration": {
+          "not_english_at_home": 0,
+          "born_overseas_proportion": 0,
+          "population_density": 0,
+          "non_english_tweet_count": 1
+        }
+      },
+      "ABERFELDIE": {
+        "suburb_tweet_count": 9,
+        "income": {
+          "low_income_proportion": 30.8,
+          "high_income_proportion": 13.3,
+          "tweet_positive_count": 5,
+          "tweet_negative_count": 1,
+          "tweet_neutral_count": 3
+        },
+        "education": {
+          "complete_yr_12_proportion": 65.3,
+          "post_school_proportion": 66,
+          "youth_in_study_or_work_proportion": 91.3,
+          "vulgar_tweet_count": 0
+        },
+        "migration": {
+          "not_english_at_home": 23.9,
+          "born_overseas_proportion": 23.5,
+          "population_density": 3428.4,
+          "non_english_tweet_count": 0
+        }
+      },
+      "TRAVANCORE": {
+        "suburb_tweet_count": 5,
+        "income": {
+          "low_income_proportion": 0,
+          "high_income_proportion": 0,
+          "tweet_positive_count": 0,
+          "tweet_negative_count": 0,
+          "tweet_neutral_count": 5
+        },
+        "education": {
+          "complete_yr_12_proportion": 0,
+          "post_school_proportion": 0,
+          "youth_in_study_or_work_proportion": 0,
+          "vulgar_tweet_count": 0
+        },
+        "migration": {
+          "not_english_at_home": 0,
+          "born_overseas_proportion": 0,
+          "population_density": 0,
+          "non_english_tweet_count": 0
+        }
+      },
+      "BELLFIELD": {
+        "suburb_tweet_count": 0,
+        "income": {
+          "low_income_proportion": 0,
+          "high_income_proportion": 0,
+          "tweet_positive_count": 0,
+          "tweet_negative_count": 0,
+          "tweet_neutral_count": 0
+        },
+        "education": {
+          "complete_yr_12_proportion": 0,
+          "post_school_proportion": 0,
+          "youth_in_study_or_work_proportion": 0,
+          "vulgar_tweet_count": 0
+        },
+        "migration": {
+          "not_english_at_home": 0,
+          "born_overseas_proportion": 0,
+          "population_density": 0,
+          "non_english_tweet_count": 0
+        }
+      },
+      "WILLIAMSTOWN NORTH": {
+        "suburb_tweet_count": 10,
+        "income": {
+          "low_income_proportion": 0,
+          "high_income_proportion": 0,
+          "tweet_positive_count": 4,
+          "tweet_negative_count": 2,
+          "tweet_neutral_count": 4
+        },
+        "education": {
+          "complete_yr_12_proportion": 0,
+          "post_school_proportion": 0,
+          "youth_in_study_or_work_proportion": 0,
+          "vulgar_tweet_count": 0
+        },
+        "migration": {
+          "not_english_at_home": 0,
+          "born_overseas_proportion": 0,
+          "population_density": 0,
+          "non_english_tweet_count": 0
+        }
+      },
+      "BRUNSWICK": {
+        "suburb_tweet_count": 1595,
+        "income": {
+          "low_income_proportion": 31.299999999999997,
+          "high_income_proportion": 10.6,
+          "tweet_positive_count": 495,
+          "tweet_negative_count": 54,
+          "tweet_neutral_count": 1046
+        },
+        "education": {
+          "complete_yr_12_proportion": 74.8,
+          "post_school_proportion": 71.5,
+          "youth_in_study_or_work_proportion": 82,
+          "vulgar_tweet_count": 3
+        },
+        "migration": {
+          "not_english_at_home": 27.9,
+          "born_overseas_proportion": 31.7,
+          "population_density": 5335,
+          "non_english_tweet_count": 126
+        }
+      },
+      "GLEN HUNTLY": {
+        "suburb_tweet_count": 295,
+        "income": {
+          "low_income_proportion": 0,
+          "high_income_proportion": 0,
+          "tweet_positive_count": 137,
+          "tweet_negative_count": 23,
+          "tweet_neutral_count": 135
+        },
+        "education": {
+          "complete_yr_12_proportion": 0,
+          "post_school_proportion": 0,
+          "youth_in_study_or_work_proportion": 0,
+          "vulgar_tweet_count": 1
+        },
+        "migration": {
+          "not_english_at_home": 0,
+          "born_overseas_proportion": 0,
+          "population_density": 0,
+          "non_english_tweet_count": 25
+        }
+      },
+      "PARKVILLE": {
+        "suburb_tweet_count": 373,
+        "income": {
+          "low_income_proportion": 46,
+          "high_income_proportion": 8.4,
+          "tweet_positive_count": 181,
+          "tweet_negative_count": 24,
+          "tweet_neutral_count": 168
+        },
+        "education": {
+          "complete_yr_12_proportion": 79.4,
+          "post_school_proportion": 64.4,
+          "youth_in_study_or_work_proportion": 91.5,
+          "vulgar_tweet_count": 1
+        },
+        "migration": {
+          "not_english_at_home": 29.7,
+          "born_overseas_proportion": 37.8,
+          "population_density": 1950.5,
+          "non_english_tweet_count": 25
+        }
+      },
+      "SEDDON": {
+        "suburb_tweet_count": 14,
+        "income": {
+          "low_income_proportion": 0,
+          "high_income_proportion": 0,
+          "tweet_positive_count": 7,
+          "tweet_negative_count": 2,
+          "tweet_neutral_count": 5
+        },
+        "education": {
+          "complete_yr_12_proportion": 0,
+          "post_school_proportion": 0,
+          "youth_in_study_or_work_proportion": 0,
+          "vulgar_tweet_count": 2
+        },
+        "migration": {
+          "not_english_at_home": 0,
+          "born_overseas_proportion": 0,
+          "population_density": 0,
+          "non_english_tweet_count": 1
+        }
+      },
+      "THORNBURY": {
+        "suburb_tweet_count": 200,
+        "income": {
+          "low_income_proportion": 32.199999999999996,
+          "high_income_proportion": 9.8,
+          "tweet_positive_count": 69,
+          "tweet_negative_count": 7,
+          "tweet_neutral_count": 124
+        },
+        "education": {
+          "complete_yr_12_proportion": 67.1,
+          "post_school_proportion": 68.4,
+          "youth_in_study_or_work_proportion": 85.1,
+          "vulgar_tweet_count": 2
+        },
+        "migration": {
+          "not_english_at_home": 30,
+          "born_overseas_proportion": 27.9,
+          "population_density": 3917.8,
+          "non_english_tweet_count": 2
+        }
+      },
+      "NIDDRIE": {
+        "suburb_tweet_count": 10,
+        "income": {
+          "low_income_proportion": 0,
+          "high_income_proportion": 0,
+          "tweet_positive_count": 5,
+          "tweet_negative_count": 1,
+          "tweet_neutral_count": 4
+        },
+        "education": {
+          "complete_yr_12_proportion": 0,
+          "post_school_proportion": 0,
+          "youth_in_study_or_work_proportion": 0,
+          "vulgar_tweet_count": 0
+        },
+        "migration": {
+          "not_english_at_home": 0,
+          "born_overseas_proportion": 0,
+          "population_density": 0,
+          "non_english_tweet_count": 0
+        }
+      },
+      "ARMADALE": {
+        "suburb_tweet_count": 88,
+        "income": {
+          "low_income_proportion": 25.200000000000003,
+          "high_income_proportion": 20.9,
+          "tweet_positive_count": 43,
+          "tweet_negative_count": 4,
+          "tweet_neutral_count": 41
+        },
+        "education": {
+          "complete_yr_12_proportion": 76.5,
+          "post_school_proportion": 75.2,
+          "youth_in_study_or_work_proportion": 87.9,
+          "vulgar_tweet_count": 0
+        },
+        "migration": {
+          "not_english_at_home": 19.5,
+          "born_overseas_proportion": 28.2,
+          "population_density": 4405.3,
+          "non_english_tweet_count": 2
+        }
+      },
+      "COLLINGWOOD": {
+        "suburb_tweet_count": 584,
+        "income": {
+          "low_income_proportion": 25.9,
+          "high_income_proportion": 12.8,
+          "tweet_positive_count": 248,
+          "tweet_negative_count": 36,
+          "tweet_neutral_count": 300
+        },
+        "education": {
+          "complete_yr_12_proportion": 69.6,
+          "post_school_proportion": 74.8,
+          "youth_in_study_or_work_proportion": 75.7,
+          "vulgar_tweet_count": 5
+        },
+        "migration": {
+          "not_english_at_home": 26.9,
+          "born_overseas_proportion": 34.2,
+          "population_density": 7288.3,
+          "non_english_tweet_count": 17
+        }
+      },
+      "SOUTH WHARF": {
+        "suburb_tweet_count": 246,
+        "income": {
+          "low_income_proportion": 0,
+          "high_income_proportion": 0,
+          "tweet_positive_count": 131,
+          "tweet_negative_count": 11,
+          "tweet_neutral_count": 104
+        },
+        "education": {
+          "complete_yr_12_proportion": 0,
+          "post_school_proportion": 0,
+          "youth_in_study_or_work_proportion": 0,
+          "vulgar_tweet_count": 1
+        },
+        "migration": {
+          "not_english_at_home": 0,
+          "born_overseas_proportion": 0,
+          "population_density": 0,
+          "non_english_tweet_count": 10
+        }
+      },
+      "FLEMINGTON": {
+        "suburb_tweet_count": 270,
+        "income": {
+          "low_income_proportion": 36.7,
+          "high_income_proportion": 9.2,
+          "tweet_positive_count": 130,
+          "tweet_negative_count": 24,
+          "tweet_neutral_count": 116
+        },
+        "education": {
+          "complete_yr_12_proportion": 66.8,
+          "post_school_proportion": 68.5,
+          "youth_in_study_or_work_proportion": 82.1,
+          "vulgar_tweet_count": 3
+        },
+        "migration": {
+          "not_english_at_home": 41.5,
+          "born_overseas_proportion": 39.8,
+          "population_density": 6790.2,
+          "non_english_tweet_count": 11
+        }
+      },
+      "KOOYONG": {
+        "suburb_tweet_count": 14,
+        "income": {
+          "low_income_proportion": 0,
+          "high_income_proportion": 0,
+          "tweet_positive_count": 2,
+          "tweet_negative_count": 5,
+          "tweet_neutral_count": 7
+        },
+        "education": {
+          "complete_yr_12_proportion": 0,
+          "post_school_proportion": 0,
+          "youth_in_study_or_work_proportion": 0,
+          "vulgar_tweet_count": 0
+        },
+        "migration": {
+          "not_english_at_home": 0,
+          "born_overseas_proportion": 0,
+          "population_density": 0,
+          "non_english_tweet_count": 0
+        }
+      },
+      "EAST MELBOURNE": {
+        "suburb_tweet_count": 531,
+        "income": {
+          "low_income_proportion": 16.6,
+          "high_income_proportion": 24.4,
+          "tweet_positive_count": 212,
+          "tweet_negative_count": 40,
+          "tweet_neutral_count": 279
+        },
+        "education": {
+          "complete_yr_12_proportion": 76,
+          "post_school_proportion": 81.4,
+          "youth_in_study_or_work_proportion": 70.5,
+          "vulgar_tweet_count": 5
+        },
+        "migration": {
+          "not_english_at_home": 14.1,
+          "born_overseas_proportion": 25.7,
+          "population_density": 1888.1,
+          "non_english_tweet_count": 18
+        }
+      },
+      "CLIFTON HILL": {
+        "suburb_tweet_count": 193,
+        "income": {
+          "low_income_proportion": 0,
+          "high_income_proportion": 0,
+          "tweet_positive_count": 76,
+          "tweet_negative_count": 16,
+          "tweet_neutral_count": 101
+        },
+        "education": {
+          "complete_yr_12_proportion": 0,
+          "post_school_proportion": 0,
+          "youth_in_study_or_work_proportion": 0,
+          "vulgar_tweet_count": 3
+        },
+        "migration": {
+          "not_english_at_home": 0,
+          "born_overseas_proportion": 0,
+          "population_density": 0,
+          "non_english_tweet_count": 2
+        }
+      },
+      "RIPPONLEA": {
+        "suburb_tweet_count": 19,
+        "income": {
+          "low_income_proportion": 0,
+          "high_income_proportion": 0,
+          "tweet_positive_count": 12,
+          "tweet_negative_count": 0,
+          "tweet_neutral_count": 7
+        },
+        "education": {
+          "complete_yr_12_proportion": 0,
+          "post_school_proportion": 0,
+          "youth_in_study_or_work_proportion": 0,
+          "vulgar_tweet_count": 0
+        },
+        "migration": {
+          "not_english_at_home": 0,
+          "born_overseas_proportion": 0,
+          "population_density": 0,
+          "non_english_tweet_count": 1
+        }
+      },
+      "ESSENDON": {
+        "suburb_tweet_count": 32,
+        "income": {
+          "low_income_proportion": 30.8,
+          "high_income_proportion": 13.3,
+          "tweet_positive_count": 16,
+          "tweet_negative_count": 1,
+          "tweet_neutral_count": 15
+        },
+        "education": {
+          "complete_yr_12_proportion": 65.3,
+          "post_school_proportion": 66,
+          "youth_in_study_or_work_proportion": 91.3,
+          "vulgar_tweet_count": 1
+        },
+        "migration": {
+          "not_english_at_home": 23.9,
+          "born_overseas_proportion": 23.5,
+          "population_density": 3428.4,
+          "non_english_tweet_count": 0
+        }
+      },
+      "SOUTHBANK": {
+        "suburb_tweet_count": 2002,
+        "income": {
+          "low_income_proportion": 26.3,
+          "high_income_proportion": 15.3,
+          "tweet_positive_count": 990,
+          "tweet_negative_count": 107,
+          "tweet_neutral_count": 905
+        },
+        "education": {
+          "complete_yr_12_proportion": 76.5,
+          "post_school_proportion": 77,
+          "youth_in_study_or_work_proportion": 80.8,
+          "vulgar_tweet_count": 14
+        },
+        "migration": {
+          "not_english_at_home": 46,
+          "born_overseas_proportion": 57.5,
+          "population_density": 6599.2,
+          "non_english_tweet_count": 99
+        }
+      },
+      "BURNLEY": {
+        "suburb_tweet_count": 15,
+        "income": {
+          "low_income_proportion": 0,
+          "high_income_proportion": 0,
+          "tweet_positive_count": 5,
+          "tweet_negative_count": 0,
+          "tweet_neutral_count": 10
+        },
+        "education": {
+          "complete_yr_12_proportion": 0,
+          "post_school_proportion": 0,
+          "youth_in_study_or_work_proportion": 0,
+          "vulgar_tweet_count": 0
+        },
+        "migration": {
+          "not_english_at_home": 0,
+          "born_overseas_proportion": 0,
+          "population_density": 0,
+          "non_english_tweet_count": 1
+        }
+      },
+      "ALBERT PARK": {
+        "suburb_tweet_count": 316,
+        "income": {
+          "low_income_proportion": 23.7,
+          "high_income_proportion": 24.799999999999997,
+          "tweet_positive_count": 162,
+          "tweet_negative_count": 12,
+          "tweet_neutral_count": 142
+        },
+        "education": {
+          "complete_yr_12_proportion": 72.5,
+          "post_school_proportion": 75,
+          "youth_in_study_or_work_proportion": 88.1,
+          "vulgar_tweet_count": 1
+        },
+        "migration": {
+          "not_english_at_home": 23.1,
+          "born_overseas_proportion": 32.1,
+          "population_density": 3527.5,
+          "non_english_tweet_count": 8
+        }
+      },
+      "HAWTHORN EAST": {
+        "suburb_tweet_count": 34,
+        "income": {
+          "low_income_proportion": 0,
+          "high_income_proportion": 0,
+          "tweet_positive_count": 15,
+          "tweet_negative_count": 3,
+          "tweet_neutral_count": 16
+        },
+        "education": {
+          "complete_yr_12_proportion": 0,
+          "post_school_proportion": 0,
+          "youth_in_study_or_work_proportion": 0,
+          "vulgar_tweet_count": 1
+        },
+        "migration": {
+          "not_english_at_home": 0,
+          "born_overseas_proportion": 0,
+          "population_density": 0,
+          "non_english_tweet_count": 3
+        }
+      },
+      "WEST MELBOURNE": {
+        "suburb_tweet_count": 135,
+        "income": {
+          "low_income_proportion": 0,
+          "high_income_proportion": 0,
+          "tweet_positive_count": 62,
+          "tweet_negative_count": 7,
+          "tweet_neutral_count": 66
+        },
+        "education": {
+          "complete_yr_12_proportion": 0,
+          "post_school_proportion": 0,
+          "youth_in_study_or_work_proportion": 0,
+          "vulgar_tweet_count": 0
+        },
+        "migration": {
+          "not_english_at_home": 0,
+          "born_overseas_proportion": 0,
+          "population_density": 0.5,
+          "non_english_tweet_count": 8
+        }
+      },
+      "NORTH MELBOURNE": {
+        "suburb_tweet_count": 252,
+        "income": {
+          "low_income_proportion": 36.7,
+          "high_income_proportion": 9.7,
+          "tweet_positive_count": 115,
+          "tweet_negative_count": 14,
+          "tweet_neutral_count": 123
+        },
+        "education": {
+          "complete_yr_12_proportion": 74.2,
+          "post_school_proportion": 73.7,
+          "youth_in_study_or_work_proportion": 83,
+          "vulgar_tweet_count": 1
+        },
+        "migration": {
+          "not_english_at_home": 41.5,
+          "born_overseas_proportion": 46.4,
+          "population_density": 6803.5,
+          "non_english_tweet_count": 6
+        }
+      },
+      "COBURG NORTH": {
+        "suburb_tweet_count": 25,
+        "income": {
+          "low_income_proportion": 0,
+          "high_income_proportion": 0,
+          "tweet_positive_count": 13,
+          "tweet_negative_count": 1,
+          "tweet_neutral_count": 11
+        },
+        "education": {
+          "complete_yr_12_proportion": 0,
+          "post_school_proportion": 0,
+          "youth_in_study_or_work_proportion": 0,
+          "vulgar_tweet_count": 0
+        },
+        "migration": {
+          "not_english_at_home": 0,
+          "born_overseas_proportion": 0,
+          "population_density": 0,
+          "non_english_tweet_count": 4
+        }
+      },
+      "ABBOTSFORD": {
+        "suburb_tweet_count": 203,
+        "income": {
+          "low_income_proportion": 23,
+          "high_income_proportion": 14.9,
+          "tweet_positive_count": 78,
+          "tweet_negative_count": 16,
+          "tweet_neutral_count": 109
+        },
+        "education": {
+          "complete_yr_12_proportion": 76,
+          "post_school_proportion": 76.8,
+          "youth_in_study_or_work_proportion": 82.4,
+          "vulgar_tweet_count": 0
+        },
+        "migration": {
+          "not_english_at_home": 26.1,
+          "born_overseas_proportion": 35.1,
+          "population_density": 5038.8,
+          "non_english_tweet_count": 12
+        }
+      }
+    },
+    "db_timestamp": "1588499400"
+  }
