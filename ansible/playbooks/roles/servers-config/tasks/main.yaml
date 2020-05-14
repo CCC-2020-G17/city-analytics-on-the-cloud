@@ -1,0 +1,20 @@
+- name: Create config directory
+  tags: config
+  become: yes
+  file:
+    path: "{{ config_dir }}"
+    recurse: yes
+    state: directory
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+
+- name: "Copy server.url.cfg to {{config_dir}}"
+  tags: config
+  become: yes
+  template:
+    src: server.url.cfg.j2
+    dest: "{{config_dir}}/server.url.cfg"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: '777'
+
