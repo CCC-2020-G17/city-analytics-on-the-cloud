@@ -13,3 +13,8 @@
   pip:
     name: ['pip']
     state: latest
+
+- name: Install pip package
+  become: yes
+  pip:
+    name: couchdb

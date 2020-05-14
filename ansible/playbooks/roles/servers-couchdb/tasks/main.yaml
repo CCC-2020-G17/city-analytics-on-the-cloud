@@ -158,4 +158,12 @@
 - debug:
     msg: "{{verify_cluster_connect_out.stdout}}"
 
+- name: Set database in couchDB and set initial data
+  tags: couchdb
+  become: yes
+  shell:
+  args:
+    cmd: "python3 init_deploy.py -u cccg17 -p cccg17 -s 172.26.132.161"
+    chdir: "{{couchDB_init_deploy_dir}}/"
+
 

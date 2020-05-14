@@ -2,7 +2,7 @@ version: "3.7"
 
 services:
     restful_api_server:
-        image: mgsweet/server_restful_api_server
+        image: mgsweet/server_restful_api_server:latest
         container_name: restful_api_server
         restart: always
         environment:
@@ -11,7 +11,7 @@ services:
             - 3000
     
     nginx:
-        image: mgsweet/server_nginx
+        image: mgsweet/server_nginx:latest
         container_name: nginx
         restart: always
         ports:
