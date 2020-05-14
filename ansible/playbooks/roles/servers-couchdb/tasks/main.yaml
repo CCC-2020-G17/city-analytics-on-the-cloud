@@ -20,6 +20,7 @@
     cluster_size: "{{ groups['Nodes'] | length }}"    
     
 - name: Print the size of cluster
+  tags: couchdb
   debug:
     msg: "Size of cluster: {{ cluster_size }} "
 
@@ -44,6 +45,7 @@
     group: "{{ ansible_user }}"
 
 - name: "Copy couchDB vm.args to {{ couchDB_dir }}"
+  tags: couchdb
   become: yes
   template:
     src: vm.args.j2
@@ -52,7 +54,8 @@
     owner: "{{ ansible_user }}"
     group: "{{ ansible_user }}"
 
-- name: "Copy docker-compose.yaml to {{ couchDB_dir }}"
+- name: "Copy Dockerfile to {{ couchDB_dir }}"
+  tags: couchdb
   become: yes
   copy:
     src: Dockerfile
@@ -60,7 +63,7 @@
     owner: "{{ ansible_user }}"
     group: "{{ ansible_user }}"
 
-- name: Create couchDB docker-compose
+- name: "Copy docker-compose.yaml to {{ couchDB_dir }}"
   tags: couchdb
   become: yes
   template:
@@ -73,11 +76,13 @@
   tags: couchdb
   become: yes
   docker_compose:
-    project_src: "{{ couchDB_dir }}"
     pull: yes
+    build: yes
+    project_src: "{{ couchDB_dir }}"
     remove_orphans: yes
     state: present
     recreate: always
+    restarted: yes
 
 # curl -X POST -H "Content-Type: application/json" http://admin:password@127.0.0.1:5984/_cluster_setup -d '{"action": "enable_cluster", "bind_address":"0.0.0.0", "username": "admin", "password":"password", "node_count":"3"}'
 - name: "Copy masterSetUp.sh to {{ couchDB_dir }}"
@@ -135,6 +140,22 @@
 # Verify install:
 # curl http://cccg17:cccg17@172.26.133.180:5984/_cluster_setup
 # Respect response: {"state":"cluster_finished"}
-#
+- name: Verify Cluster install
+  tags: couchdb
+  command: "curl http://{{ couchDB_user }}:{{ couchDB_password }}@{{ ansible_host }}:5984/_cluster_setup"
+  register: verify_cluster_install_out
+
+- debug:
+    msg: "{{verify_cluster_install_out.stdout}}"
+
 # Verify all cluster nodes are connected:
 # curl http://cccg17:cccg17@172.26.133.180:5984/_membership
+- name: Verify all cluster nodes are connected
+  tags: couchdb
+  command: "curl http://{{ couchDB_user }}:{{ couchDB_password }}@{{ ansible_host }}:5984/_membership"
+  register: verify_cluster_connect_out
+
+- debug:
+    msg: "{{verify_cluster_connect_out.stdout}}"
+
+
