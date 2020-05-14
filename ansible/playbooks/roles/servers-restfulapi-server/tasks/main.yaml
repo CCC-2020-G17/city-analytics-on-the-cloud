@@ -27,3 +27,5 @@
     remove_orphans: yes
     state: present
     recreate: always
+    restarted: yes
+    build: yes

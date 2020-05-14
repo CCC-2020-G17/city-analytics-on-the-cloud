@@ -1,5 +1,5 @@
-FROM ibmcom/couchdb3:3.0.0
+FROM couchdb
 
 COPY vm.args /opt/couchdb/etc/
 
-EXPOSE 9100-9200 5984 5986 
+EXPOSE 9100-9200 5984 5986
