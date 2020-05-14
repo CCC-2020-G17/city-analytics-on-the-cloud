@@ -14,6 +14,6 @@ services:
     environment:
       - COUCHDB_USER={{ couchDB_user }}
       - COUCHDB_PASSWORD={{ couchDB_password }}
-      - NODENAME={{ hostvars[inventory_hostname]['ansible_env'].SSH_CONNECTION.split(' ')[2] }}
+      - NODENAME={{ ansible_host }}
     container_name: server-couchdb
     

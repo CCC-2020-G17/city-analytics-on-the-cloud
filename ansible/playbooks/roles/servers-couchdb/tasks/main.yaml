@@ -1,7 +1,27 @@
 - name: Collect facts of the host
+  tags: couchdb
   setup:
     gather_subset:
       - '!any'
+
+- name: Set master ip address
+  tags: couchdb
+  set_fact: 
+    master_ip_address: "{{ groups['masterNode'] | map('extract', hostvars, ['ansible_host']) | join(',') }}"
+
+- name:  Print the ip of master
+  tags: couchdb
+  debug: 
+    msg: "Master ip: {{master_ip_address}}"
+
+- name: Get the size of cluster
+  tags: couchdb
+  set_fact:
+    cluster_size: "{{ groups['Nodes'] | length }}"    
+    
+- name: Print the size of cluster
+  debug:
+    msg: "Size of cluster: {{ cluster_size }} "
 
 - name: Create couchDB working directory
   tags: couchdb
@@ -58,3 +78,35 @@
     remove_orphans: yes
     state: present
     recreate: always
+
+- name: "Copy masterSetUp.sh to {{ couchDB_dir }}"
+  tags: couchdb
+  become: yes
+  template:
+    src: clusterSetUp.sh.j2
+    dest: "{{ couchDB_dir }}/clusterSetUp.sh"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: '777'
+
+- name: Cluster init
+  tags: couchdb
+  become: yes
+  shell: "{{ couchDB_dir }}/clusterSetUp.sh  >> {{ couchDB_dir }}/log_clusterSetUp.sh"
+
+- name: "Copy addToMaster.sh to {{ couchDB_dir }}"
+  tags: couchdb
+  become: yes
+  template:
+    src: addToMaster.sh.j2
+    dest: "{{ couchDB_dir }}/addToMaster.sh"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: '777'
+  when: ansible_host != master_ip_address
+
+- name: Add slave Node to cluster
+  tags: couchdb
+  become: yes
+  shell: "{{ couchDB_dir }}/addToMaster.sh  >> {{ couchDB_dir }}/log_addToMaster.txt"
+  when: ansible_host != master_ip_address

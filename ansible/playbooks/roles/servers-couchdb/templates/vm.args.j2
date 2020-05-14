@@ -28,6 +28,6 @@
 +Bd -noinput
 
 # Ensure that the Erlang VM listens on a known port
--name couchdb@{{ hostvars[inventory_hostname]['ansible_env'].SSH_CONNECTION.split(' ')[2] }}
+-name couchdb@{{ ansible_host }}
 -setcookie {{ couchDB_cookie }}
 
