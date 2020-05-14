@@ -2,7 +2,7 @@ import couchdb
 import time
 
 class cdb:
-    def __init__(self, serverURL='http://admin:admin1234@localhost:5984',dbname=None):
+    def __init__(self, serverURL='http://cccg17:cccg17@localhost:5984',dbname=None):
         """initialize a CouchDB connection
 
         Keyword Arguments:
