@@ -110,3 +110,29 @@
   become: yes
   shell: "{{ couchDB_dir }}/addToMaster.sh  >> {{ couchDB_dir }}/log_addToMaster.txt"
   when: ansible_host != master_ip_address
+
+
+- name: "Copy completeClusterSetUp.sh to {{ couchDB_dir }}"
+  tags: couchdb
+  become: yes
+  template:
+    src: completeClusterSetUp.sh.j2
+    dest: "{{ couchDB_dir }}/completeClusterSetUp.sh"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: '777'
+  when: ansible_host == master_ip_address
+
+# curl -X POST -H "Content-Type: application/json" http://cccg17:cccg17@172.26.133.180:5984/_cluster_setup -d '{"action": "finish_cluster"}'
+- name: Complete cluster setting!
+  tags: couchdb
+  become: yes
+  shell: "{{ couchDB_dir }}/completeClusterSetUp.sh  >> {{ couchDB_dir }}/log_completeClusterSetUp.txt"
+  when: ansible_host == master_ip_address
+
+# Verify install:
+# curl http://cccg17:cccg17@172.26.133.180:5984/_cluster_setup
+# Respect response: {"state":"cluster_finished"}
+#
+# Verify all cluster nodes are connected:
+# curl http://cccg17:cccg17@172.26.133.180:5984/_membership
