@@ -1,13 +1,15 @@
 import os
+import sys
+import time
 import json
-from nltk.corpus import twitter_samples
+import logging
+from multiprocessing import Process
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
-from collections import defaultdict, Counter
 from configparser import ConfigParser
 from shapely.geometry import Point
 from shapely.geometry.polygon import Polygon
-from analyzer import db_connecter
 from better_profanity import profanity
+from analyzer import db_connecter
 
 
 class tweetAnalyzer():
@@ -193,6 +195,16 @@ class tweetAnalyzer():
         return self.analysis_result
 
 
+def _setup_analysis_logger():
+    """
+    Setup a logger for the application
+    """
+    global logger
+    logging.basicConfig(filename='analysis_log.log', level=logging.INFO,
+                        format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    logger = logging.getLogger(__name__)
+
+
 def _load_timestamp_record():
     with open('timestamp_record.json', 'r') as f:
         record = json.load(f)
@@ -212,7 +224,7 @@ def _update_timestamp_record():
 
 def analyze_cities():
     start_ts, end_ts = _load_timestamp_record()
-    print(start_ts, end_ts)
+    logger.info('The analysis about to make is on data with timestamp {} to {}'.format(start_ts, end_ts))
     cities = ["Melbourne", "Sydney", "Brisbane", "Adelaide", "Perth (WA)"]
     for city in cities:
         city = city.split(" ")[0]
@@ -223,18 +235,20 @@ def analyze_cities():
         city_period_data = data_loader.load_period_tweet_data(start_ts, end_ts)
         analysis_result = tweet_analyzer.analyze(city_period_data)
         analysis_result_saver.update_analysis(analysis_result)
-
         # city_data = data_loader.load_tweet_data()
         # analysis_result = tweet_analyzer.analyze(city_data)
         # analysis_result_saver.update_analysis(analysis_result, type='replace')
-
     _update_timestamp_record()
 
 
-
 if __name__ == '__main__':
+    _setup_analysis_logger()
     while True:
         try:
-            analyze_cities()
+            action_process = Process(target=analyze_cities)
+            action_process.start()
+            action_process.join(timeout=1000)
+            action_process.terminate()
+            logger.info('Process timeout.')
         except Exception as e:
-            raise e
+            logger.exception(e)
