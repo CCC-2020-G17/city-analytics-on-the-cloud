@@ -193,40 +193,48 @@ class tweetAnalyzer():
         return self.analysis_result
 
 
-def load_timestamp_record():
+def _load_timestamp_record():
     with open('timestamp_record.json', 'r') as f:
         record = json.load(f)
         start_ts = record["tweets_with_geo"]
-        end_ts = str(int(start_ts) + 100)
+        end_ts = str(int(start_ts) + 1000)
     return start_ts, end_ts
 
 
-def update_timestamp_record():
+def _update_timestamp_record():
     with open('timestamp_record.json', 'r') as f:
         record = json.load(f)
         start_ts = record["tweets_with_geo"]
-        end_ts = int(start_ts) + 100
+        end_ts = int(start_ts) + 1000
     with open('timestamp_record.json', 'w')  as f:
         record["tweets_with_geo"] = end_ts
         json.dump(record, f, indent=1)
 
+def analyze_cities():
+    start_ts, end_ts = _load_timestamp_record()
+    print(start_ts, end_ts)
+    cities = ["Melbourne", "Sydney", "Brisbane", "Adelaide", "Perth (WA)"]
+    for city in cities:
+        city = city.split(" ")[0]
+        # TODO: Solve extended form. (By other offline functions. Formalize all data.)
+        data_loader = db_connecter.dataLoader(city)
+        analysis_result_saver = db_connecter.analysisResultSaver(city)
+        tweet_analyzer = tweetAnalyzer(city)
+        city_period_data = data_loader.load_period_tweet_data(start_ts, end_ts)
+        analysis_result = tweet_analyzer.analyze(city_period_data)
+        analysis_result_saver.update_analysis(analysis_result)
+
+        # city_data = data_loader.load_tweet_data()
+        # analysis_result = tweet_analyzer.analyze(city_data)
+        # analysis_result_saver.update_analysis(analysis_result, type='replace')
+
+    _update_timestamp_record()
+
+
 
 if __name__ == '__main__':
-    # TODO: Receive city parameter from backend.
-    cities = ["Melbourne", "Sydney", "Brisbane", "Adelaide", "Perth (WA)"]
-    city = cities[2].split(" ")[0]
-
-    # TODO: Solve extended form. (By other offline functions. Formalize all data.)
-    data_loader = db_connecter.dataLoader(city)
-    analysis_result_saver = db_connecter.analysisResultSaver(city)
-    tweet_analyzer = tweetAnalyzer(city)
-
-    # start_ts, end_ts = load_timestamp_record()
-    # city_period_data = data_loader.load_period_tweet_data(start_ts, end_ts)
-    # analysis_result = tweet_analyzer.analyze(city_period_data)
-    # analysis_result_saver.update_analysis(analysis_result)
-    # update_timestamp_record()
-
-    city_data = data_loader.load_tweet_data()
-    analysis_result = tweet_analyzer.analyze(city_data)
-    analysis_result_saver.update_analysis(analysis_result, type='replace')
+    while True:
+        try:
+            analyze_cities()
+        except Exception as e:
+            raise e

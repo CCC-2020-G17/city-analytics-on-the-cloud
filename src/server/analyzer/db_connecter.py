@@ -25,12 +25,12 @@ class dataLoader():
         Load all data from given city
         :return:
         """
-        db = db_util.cdb(self.serverURL, "tweets_for_test")
+        db = db_util.cdb(self.serverURL, "tweets_with_geo")
         city_key = self.city
         return  db.getByCity(city_key)  # TODO: Check Perth city key
 
     def load_period_tweet_data(self, start_ts, end_ts):
-        db = db_util.cdb(self.serverURL, "tweets_for_test")
+        db = db_util.cdb(self.serverURL, "tweets_with_geo")
         cityData = db.getByBlock(start_ts=start_ts, end_ts=end_ts, cityname=self.city)
         return cityData
 
