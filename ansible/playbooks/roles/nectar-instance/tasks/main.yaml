@@ -39,12 +39,11 @@
     index_var: index
 
 # Add hosts to Ansible in-memory inventory if groups['servers'] is not defined
-- name: Add host
-  add_host:
-    hostname: '{{ item.ip }}'
-    groups: '{{ item.group }}'
-  loop: '{{ inventoryInfo }}'
-  when: (groups["all"]|length == 0)
+# - name: Add host
+#   add_host:
+#     hostname: '{{ item.ip }}'
+#     groups: '{{ item.group }}'
+#   loop: '{{ inventoryInfo }}'
 
 - name: Ensure hosts info is in inventory/inventory.ini
   lineinfile:
@@ -54,3 +53,9 @@
     insertafter: '\[{{ item.group }}\]'
     regexp: '^{{ item.name }}'
   loop: '{{ inventoryInfo }}'
+
+- name: Remove all hosts in memory
+  meta: refresh_inventory
+
+- debug:
+    msg: "{{ groups['Nodes'] | map('extract', hostvars, ['ansible_host']) | join(',') }} "
