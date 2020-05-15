@@ -1,0 +1,5 @@
+better-profanity==0.6.1
+configparser==5.0.0
+CouchDB==1.2
+Shapely==1.7.0
+vaderSentiment==3.3.1
