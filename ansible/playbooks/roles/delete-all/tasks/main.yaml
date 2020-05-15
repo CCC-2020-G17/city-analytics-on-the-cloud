@@ -1,0 +1,17 @@
+# Deletes all instances
+- name: remove all instance
+  os_server:
+    name: '{{ item.name }}'
+    state: absent
+    wait: yes
+    timeout: 600
+  loop: '{{ instances }}'
+
+# Deletes all volume
+- name: remove all instance
+  os_volume:
+    display_name: '{{ item.vol_name }}'
+    state: absent
+    wait: yes
+    timeout: 600
+  loop: '{{ volumes }}'

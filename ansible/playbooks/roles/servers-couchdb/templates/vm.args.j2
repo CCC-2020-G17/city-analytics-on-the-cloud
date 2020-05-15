@@ -28,7 +28,8 @@
 +Bd -noinput
 
 # Ensure that the Erlang VM listens on a known port
-# -name couchdb@{{ ansible_host }}
+
+-name couchdb@{{ ansible_host }}
 
 -setcookie {{ couchDB_cookie }}
 
