@@ -50,7 +50,7 @@
   template:
     src: vm.args.j2
     dest: '{{ couchDB_dir }}/vm.args'
-    force: no
+    force: yes
     owner: "{{ ansible_user }}"
     group: "{{ ansible_user }}"
 
@@ -100,6 +100,12 @@
   become: yes
   shell: "{{ couchDB_dir }}/clusterSetUp.sh  >> {{ couchDB_dir }}/log_clusterSetUp.txt"
 
+# Pause for 10s to add the slave.
+- name: Wati for cluster setup
+  tags: couchdb
+  pause:
+    seconds: "{{ couchDB_cluster_setting_interval }}"
+
 # curl -X POST -H "Content-Type: application/json" http://admin:password@<setup-coordination-node>:5984/_cluster_setup -d '{"action": "enable_cluster", "bind_address":"0.0.0.0", "username": "admin", "password":"password", "port": 5984, "node_count": "3", "remote_node": "<remote-node-ip>", "remote_current_user": "<remote-node-username>", "remote_current_password": "<remote-node-password>" }'
 # curl -X POST -H "Content-Type: application/json" http://admin:password@<setup-coordination-node>:5984/_cluster_setup -d '{"action": "add_node", "host":"<remote-node-ip>", "port": <remote-node-port>, "username": "admin", "password":"password"}'
 - name: "Copy addToMaster.sh to {{ couchDB_dir }}"
@@ -119,6 +125,12 @@
   shell: "{{ couchDB_dir }}/addToMaster.sh  >> {{ couchDB_dir }}/log_addToMaster.txt"
   when: ansible_host != master_ip_address
 
+# Pause for 10s to add the slave.
+- name: Wati for adding process
+  tags: couchdb
+  pause:
+    seconds: "{{ couchDB_cluster_setting_interval }}"
+
 # curl -X POST -H "Content-Type: application/json" http://cccg17:cccg17@172.26.133.180:5984/_cluster_setup -d '{"action": "finish_cluster"}'
 - name: "Copy completeClusterSetUp.sh to {{ couchDB_dir }}"
   tags: couchdb
@@ -137,6 +149,12 @@
   shell: "{{ couchDB_dir }}/completeClusterSetUp.sh  >> {{ couchDB_dir }}/log_completeClusterSetUp.txt"
   when: ansible_host == master_ip_address
 
+# Pause for 10s to add the slave.
+- name: Wati for completing process
+  tags: couchdb
+  pause:
+    seconds: "{{ couchDB_cluster_setting_interval }}"
+
 # Verify install:
 # curl http://cccg17:cccg17@172.26.133.180:5984/_cluster_setup
 # Respect response: {"state":"cluster_finished"}
@@ -145,7 +163,9 @@
   command: "curl http://{{ couchDB_user }}:{{ couchDB_password }}@{{ ansible_host }}:5984/_cluster_setup"
   register: verify_cluster_install_out
 
-- debug:
+- name: Verify install output
+  tags: couchdb
+  debug:
     msg: "{{verify_cluster_install_out.stdout}}"
 
 # Verify all cluster nodes are connected:
@@ -155,15 +175,19 @@
   command: "curl http://{{ couchDB_user }}:{{ couchDB_password }}@{{ ansible_host }}:5984/_membership"
   register: verify_cluster_connect_out
 
-- debug:
+- name: Verify cluster connection output
+  tags: couchdb
+  debug:
     msg: "{{verify_cluster_connect_out.stdout}}"
 
+# Init deploy
 - name: Set database in couchDB and set initial data
   tags: couchdb
   become: yes
   shell:
   args:
-    cmd: "python3 init_deploy.py -u cccg17 -p cccg17 -s 172.26.132.161"
+    cmd: "python3 init_deploy.py -u cccg17 -p cccg17 -s {{ master_ip_address }}"
     chdir: "{{couchDB_init_deploy_dir}}/"
+  when: ansible_host == master_ip_address
 
 
