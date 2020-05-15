@@ -34,7 +34,7 @@ class cdb:
             dbname {string} -- database name to delete
         """
         try:
-            del couchserver[dbname]
+            del self.couchserver[dbname]
         except NameError:
             print(f"Database {dbname} does not exists")
 

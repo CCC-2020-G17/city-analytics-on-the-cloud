@@ -104,13 +104,13 @@ class tweetAnalyzer():
         text = tweet_json['text']
         # TODO: Should also include extended_tweets etc.
         # TODO: Extract from hashtag
-        if 'covid' in str(tweet_json).lower():
+        if 'covid' in str(tweet_json).lower() or '新冠' in str(tweet_json).lower():
         # if 'covid' in text.lower():
             self.analysis_result['covid-19']['tweet_count'] += 1
             # self.judge_attitude(text, suburb)
             if tweet_json['lang'] == 'en':
                 self.analysis_result['covid-19']['english_count'] += 1
-            if tweet_json['lang'] == 'zh-cn' or 'zh-tw':
+            if tweet_json['lang'] == 'zh-cn' or tweet_json['lang'] == 'zh-tw' or tweet_json['lang'] == 'zh':
                 self.analysis_result['covid-19']['chinese_count'] += 1
             if tweet_json['lang'] == 'es':
                 self.analysis_result['covid-19']['spanish_count'] += 1
@@ -213,19 +213,19 @@ def update_timestamp_record():
 if __name__ == '__main__':
     # TODO: Receive city parameter from backend.
     cities = ["Melbourne", "Sydney", "Brisbane", "Adelaide", "Perth (WA)"]
-    city = cities[0].split(" ")[0]
+    city = cities[1].split(" ")[0]
 
     # TODO: Solve extended form. (By other offline functions. Formalize all data.)
     data_loader = db_connecter.dataLoader(city)
     analysis_result_saver = db_connecter.analysisResultSaver(city)
     tweet_analyzer = tweetAnalyzer(city)
 
-    start_ts, end_ts = load_timestamp_record()
-    city_period_data = data_loader.load_period_tweet_data(start_ts, end_ts)
-    analysis_result = tweet_analyzer.analyze(city_period_data)
-    analysis_result_saver.update_analysis(analysis_result)
-    update_timestamp_record()
+    # start_ts, end_ts = load_timestamp_record()
+    # city_period_data = data_loader.load_period_tweet_data(start_ts, end_ts)
+    # analysis_result = tweet_analyzer.analyze(city_period_data)
+    # analysis_result_saver.update_analysis(analysis_result)
+    # update_timestamp_record()
 
-    # city_data = data_loader.load_tweet_data()
-    # analysis_result = tweet_analyzer.analyze(city_data)
-    # analysis_result_saver.save_analysis(analysis_result)
+    city_data = data_loader.load_tweet_data()
+    analysis_result = tweet_analyzer.analyze(city_data)
+    analysis_result_saver.save_analysis(analysis_result)

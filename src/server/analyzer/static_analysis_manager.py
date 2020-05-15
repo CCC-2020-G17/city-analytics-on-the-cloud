@@ -115,9 +115,11 @@ class staticAnalysisGenerator():
 
 
 if __name__ == '__main__':
-    city = 'melbourne'
+    cities = ["Melbourne", "Sydney", "Brisbane", "Adelaide", "Perth (WA)"]
+    city = cities[1].split(" ")[0].lower()
     generator = staticAnalysisGenerator(city)
-    generator.add_static_data_to_db()
+    print(generator.analysis_result)
+    # generator.add_static_data_to_db()
     # db_connecter.analysisResultSaver(city).reset_static_result()
 
 

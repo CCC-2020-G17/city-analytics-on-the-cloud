@@ -6,7 +6,7 @@ username/password: admin/admin1234
 to access the CouchDB instance, download couchDB.pem from Slack and run:
 ssh -i couchDB.pem ubuntu@172.26.130.149
 """
-import db_util
+from couchDB import db_util
 import json
 import argparse
 

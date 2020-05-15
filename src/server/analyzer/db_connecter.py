@@ -21,9 +21,13 @@ class dataLoader():
         self.city = city
 
     def load_tweet_data(self):
+        """
+        Load all data from given city
+        :return:
+        """
         db = db_util.cdb(self.serverURL, "tweets_with_geo")
         city_key = self.city
-        return  db.getByCity(city_key)
+        return  db.getByCity(city_key)  # TODO: Check Perth city key
 
     def load_period_tweet_data(self, start_ts, end_ts):
         db = db_util.cdb(self.serverURL, "tweets_with_geo")
@@ -92,7 +96,8 @@ class analysisResultSaver():
         analysis_city_id = "{}_analysis_result".format(self.city.lower())
         db.put(analysis_result, analysis_city_id)
 
-    def update_helper(self, renewal, existing):
+    def update_helper(self, renewal, existing,  type='add'):
+        # TODO: Add functionality that can replace the result before
         if not isinstance(renewal, dict) or not isinstance(existing, dict):
             if isinstance(renewal, str) and isinstance(existing, str):
                 return existing
