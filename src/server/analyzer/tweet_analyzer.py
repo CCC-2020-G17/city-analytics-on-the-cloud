@@ -104,7 +104,8 @@ class tweetAnalyzer():
         text = tweet_json['text']
         # TODO: Should also include extended_tweets etc.
         # TODO: Extract from hashtag
-        if 'covid' in str(tweet_json).lower() or '新冠' in str(tweet_json).lower():
+        # TODO: May add COVID language dictionary
+        if 'covid' in str(tweet_json).lower() or '新冠' in str(tweet_json).lower() or '新型冠状' in str(tweet_json).lower():
         # if 'covid' in text.lower():
             self.analysis_result['covid-19']['tweet_count'] += 1
             # self.judge_attitude(text, suburb)
@@ -213,7 +214,7 @@ def update_timestamp_record():
 if __name__ == '__main__':
     # TODO: Receive city parameter from backend.
     cities = ["Melbourne", "Sydney", "Brisbane", "Adelaide", "Perth (WA)"]
-    city = cities[1].split(" ")[0]
+    city = cities[2].split(" ")[0]
 
     # TODO: Solve extended form. (By other offline functions. Formalize all data.)
     data_loader = db_connecter.dataLoader(city)
@@ -228,4 +229,4 @@ if __name__ == '__main__':
 
     city_data = data_loader.load_tweet_data()
     analysis_result = tweet_analyzer.analyze(city_data)
-    analysis_result_saver.save_analysis(analysis_result)
+    analysis_result_saver.update_analysis(analysis_result, type='replace')

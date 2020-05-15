@@ -25,12 +25,12 @@ class dataLoader():
         Load all data from given city
         :return:
         """
-        db = db_util.cdb(self.serverURL, "tweets_with_geo")
+        db = db_util.cdb(self.serverURL, "tweets_for_test")
         city_key = self.city
         return  db.getByCity(city_key)  # TODO: Check Perth city key
 
     def load_period_tweet_data(self, start_ts, end_ts):
-        db = db_util.cdb(self.serverURL, "tweets_with_geo")
+        db = db_util.cdb(self.serverURL, "tweets_for_test")
         cityData = db.getByBlock(start_ts=start_ts, end_ts=end_ts, cityname=self.city)
         return cityData
 
@@ -68,7 +68,7 @@ class dataLoader():
 
     def load_analysis(self):
         if self.city:
-            db = db_util.cdb(self.serverURL, "analysis_results")
+            db = db_util.cdb(self.serverURL, "analysis_results_for_test")
             city_key = "{}_analysis_result".format(self.city.lower())
             return db.getByKey(city_key)
         else:
@@ -92,33 +92,37 @@ class analysisResultSaver():
                                     ('population_density', 'pop_density_pop_density_p_p_km2')]
 
     def save_analysis(self, analysis_result):
-        db = db_util.cdb(self.serverURL, "analysis_results")  # TODO: Change back to analysis_results
+        """
+        Save analysis result to database. This will replace the document with the same id.
+        """
+        db = db_util.cdb(self.serverURL, "analysis_results_for_test")
         analysis_city_id = "{}_analysis_result".format(self.city.lower())
         db.put(analysis_result, analysis_city_id)
 
-    def update_helper(self, renewal, existing,  type='add'):
-        # TODO: Add functionality that can replace the result before
+    def update_helper(self, renewal, existing,  type):
         if not isinstance(renewal, dict) or not isinstance(existing, dict):
             if isinstance(renewal, str) and isinstance(existing, str):
                 return existing
             elif isinstance(renewal, numbers.Number) and isinstance(existing, numbers.Number):
-                return sum([renewal, existing])
+                if type == 'add':
+                    return sum([renewal, existing])
+                elif type == 'replace':
+                    return renewal
             elif renewal is None or existing is None:
                 return existing
         for key in existing:
             if key in renewal:
-                renewal[key] = self.update_helper(renewal[key], existing[key])
+                renewal[key] = self.update_helper(renewal[key], existing[key], type)
             else:
                 renewal[key] = existing[key]
         return renewal
 
-    def update_analysis(self, renewal):
+    def update_analysis(self, renewal, type='add'):
         """
-        Add the new result to the existing result. May update only some scenarios.
-        :param renewal: the renewal result
+        Update the analysis result. Can be add to or replace the values of certain keys.
         """
         existing = dataLoader(self.city).load_analysis()
-        new_result = self.update_helper(renewal, existing)
+        new_result = self.update_helper(renewal, existing, type)
         self.save_analysis(new_result)
 
     def reset_static_result(self):
