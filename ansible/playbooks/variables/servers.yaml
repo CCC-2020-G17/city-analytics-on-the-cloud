@@ -27,9 +27,13 @@ couchDB_dir: ~/couchDB
 couchDB_data_dir: /data/couchdb/data
 couchDB_user: cccg17
 couchDB_password: cccg17
-couchDB_cookie: monster
+couchDB_uuid: a192aeb9904e6590849337933b000c99
+couchDB_cookie: a192aeb9904e6590849337933b001159
 couchDB_init_deploy_dir: "{{repo_local_path}}/src/server/couchDB/initial_deployment"
 couchDB_cluster_setting_interval: 10
 # cluster_size, master_ip_address is used
+
+# Frontend
+frontend_dir:
 
 config_dir: ~/config

@@ -14,6 +14,8 @@ services:
     environment:
       - COUCHDB_USER={{ couchDB_user }}
       - COUCHDB_PASSWORD={{ couchDB_password }}
-      - NODENAME={{ ansible_host }}
+      - COUCHDB_SECRET={{couchDB_cookie}}
+      - NODENAME=couchdb@{{ ansible_host }}
+    command: "-setcookie {{couchDB_cookie}}"
     container_name: server-couchdb
     

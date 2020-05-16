@@ -1,1 +1,4 @@
-curl -X POST -H "Content-Type: application/json" http://{{ couchDB_user }}:{{ couchDB_password }}@{{ master_ip_address }}:5984/_cluster_setup -d '{"action": "finish_cluster"}'
+curl --request POST \
+  --url http://{{couchDB_user}}:{{couchDB_password}}@localhost:5984/_cluster_setup \
+  --header 'content-type: application/json' \
+  --data '{ "action": "finish_cluster" }'
