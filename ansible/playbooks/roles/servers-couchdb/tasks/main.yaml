@@ -125,8 +125,30 @@
   shell: "{{ couchDB_dir }}/addToMaster.sh  >> {{ couchDB_dir }}/log_addToMaster.txt"
   when: ansible_host != master_ip_address
 
-# Pause for 10s to add the slave.
+# Pause for mission complete
 - name: Wati for adding process
+  tags: couchdb
+  pause:
+    seconds: "{{ couchDB_cluster_setting_interval }}"
+
+# Try access couchDB, to get avoid an strange error: Cluster setup unable to sync admin passwords
+- name: "Copy tryAccess.sh to {{ couchDB_dir }}"
+  tags: couchdb
+  become: yes
+  template:
+    src: tryAccess.sh.j2
+    dest: "{{ couchDB_dir }}/tryAccess.sh"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: '777'
+
+- name: "Try access couchDB, to get avoid an strange error: Cluster setup unable to sync admin passwords"
+  tags: couchdb
+  become: yes
+  shell: "{{ couchDB_dir }}/tryAccess.sh  >> {{ couchDB_dir }}/log_tryAccess.txt"
+
+# Pause for mission complete.
+- name: Wati for access trial
   tags: couchdb
   pause:
     seconds: "{{ couchDB_cluster_setting_interval }}"
@@ -149,7 +171,7 @@
   shell: "{{ couchDB_dir }}/completeClusterSetUp.sh  >> {{ couchDB_dir }}/log_completeClusterSetUp.txt"
   when: ansible_host == master_ip_address
 
-# Pause for 10s to add the slave.
+# Pause for mission complete
 - name: Wati for completing process
   tags: couchdb
   pause:

@@ -1,0 +1,35 @@
+- name: Down couchDB docker-compose
+  tags: couchdb
+  become: yes
+  docker_compose:
+    project_src: "{{ couchDB_dir }}"
+    state: absent
+
+- name: remove couchDB data
+  become: yes
+  file: 
+    path: "{{couchDB_data_dir}}"
+    state: absent
+
+- name: Create couchDB working directory
+  tags: couchdb
+  become: yes
+  file:
+    path: "{{ couchDB_data_dir }}"
+    recurse: yes
+    state: directory
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+
+
+# - name: Run couchDB docker-compose
+#   tags: couchdb
+#   become: yes
+#   docker_compose:
+#     pull: yes
+#     build: yes
+#     project_src: "{{ couchDB_dir }}"
+#     remove_orphans: yes
+#     state: present
+#     recreate: always
+#     restarted: yes
