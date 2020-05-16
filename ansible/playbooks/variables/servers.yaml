@@ -34,6 +34,6 @@ couchDB_cluster_setting_interval: 10
 # cluster_size, master_ip_address is used
 
 # Frontend
-frontend_dir:
+frontend_dir: "{{repo_local_path}}/src/client/dist“
 
 config_dir: ~/config
