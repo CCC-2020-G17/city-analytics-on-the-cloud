@@ -128,7 +128,6 @@ class cdb:
         """
         data = []
         for item in self.db.view('cities/by_city',reduce=False,include_docs=True, key=cityname):
-            print(item)
             data.append(item.doc)
         return data
         
@@ -242,18 +241,26 @@ class cdb:
     """
     
 if __name__ == '__main__':
-    
+    """
     dbname = 'tweets_with_geo'
     db = cdb('http://admin:admin1234@172.26.130.149:5984',dbname=dbname)
 
     db.showcurrentDB()
 
-    for data in db.getByCity('Aachen'):
+    for data in db.getByCity('Adelaide'):
         print(data)
         break;
-
-    """
+    
     for data in db.getByBlock(start_ts='1588256300',end_ts='1588256300',cityname='Sydney'):
         print(data)
         break;
     """
+
+    couchserver = couchdb.Server('http://admin:admin1234@172.26.130.149:5984')
+    db = couchserver['tweets_with_geo']
+
+    for item in db.view('cities/get_city_notAU',reduce=False,include_docs=True,limit=2000):
+        data = item['doc']
+        #print(data)
+        db.delete(data)
+  
