@@ -13,9 +13,11 @@ for line in file0:
     if(line.endswith(',\n')):
         line = line[:-2]
         data = json.loads(line)
-        if(data['key'][1]==2017):
-            count += 1
-            db.twput(data['doc'])
+        print(data)
+        break;
+        #if(data['key'][1]==2017):
+            #count += 1
+            #db.twput(data['doc'])
         
 print('total: ', count)
 

@@ -19,9 +19,13 @@ for filename in os.listdir(dirpath):
     content = open(os.path.join(dirpath,filename),'r')
     data = json.load(content)
     _id = filename[:-5]
+    
     if filename.endswith('_suburbs.json'):
         #db.put(data,_id)
         pass
+    elif filename.endswith('_demographics.json') or filename.endswith('_languages.json'):
+        print(f'save {filename} to {db}')
+        db.put(data,_id)
     else:
         data_toload = {}
         data_toload["_id"] = _id
