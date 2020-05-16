@@ -127,7 +127,7 @@ class cdb:
             {list} -- a list of twitter documents
         """
         data = []
-        for item in self.db.view('cities/get_id',include_docs=True, key=cityname):
+        for item in self.db.view('cities/by_city',include_docs=True, key=cityname):
             data.append(item.doc)
         return data
         
@@ -150,11 +150,11 @@ class cdb:
             endkey = [str(end_ts),cityname]
         # whether to include doc or just get id
         if only_id:
-            for item in self.db.view('cities/get_timestamp',\
+            for item in self.db.view('cities/by_ts_city',\
             reduce=False,include_docs=False,startkey=startkey,endkey=endkey):
                 data.append(item.id)
         else:
-            for item in self.db.view('cities/get_timestamp',\
+            for item in self.db.view('cities/by_ts_city',\
             reduce=False,include_docs=True,startkey=startkey,endkey=endkey):
                 data.append(item.doc)
         # return results
