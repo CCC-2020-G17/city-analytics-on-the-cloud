@@ -23,9 +23,28 @@ for filename in os.listdir(dirpath):
     if filename.endswith('_suburbs.json'):
         #db.put(data,_id)
         pass
-    elif filename.endswith('_demographics.json') or filename.endswith('_languages.json'):
+    elif filename.endswith('_demographics.json'):
         print(f'save {filename} to {db}')
-        db.put(data,_id)
+        data_toload = {}
+        data_toload["_id"] = _id
+        data_toload["features"] = {}
+        for item in data['features']:
+            region = item['properties']['gccsa_name_2011']
+            regiondata = item['properties']
+            regiondata["id"]=item["id"]
+            data_toload["features"][region] = regiondata
+        db.put(data_toload,_id)
+    elif filename.endswith('_languages.json'):
+        print(f'save {filename} to {db}')
+        data_toload = {}
+        data_toload["_id"] = _id
+        data_toload["features"] = {}
+        for item in data['features']:
+            region = item['properties']['gcc_name16']
+            regiondata = item['properties']
+            regiondata["id"]=item["id"]
+            data_toload["features"][region] = regiondata
+        db.put(data_toload,_id)
     else:
         data_toload = {}
         data_toload["_id"] = _id
