@@ -1,0 +1,41 @@
+- name:  "Create {{ app_dir }} directory"
+  tags: app
+  become: yes
+  file:
+    path: "{{ app_dir }}"
+    recurse: yes
+    state: directory
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+
+- name: "Create {{ keepalived_dir }} directory"
+  tags: app
+  become: yes
+  file:
+    path: "{{ keepalived_dir }}"
+    recurse: yes
+    state: directory
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+
+- name: Create app docker-compose
+  tags: app
+  become: yes
+  template:
+    src: docker-compose.yaml.j2
+    dest: "{{ app_dir }}/docker-compose.yaml"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+
+- name: Run app docker-compose
+  tags: app
+  become: yes
+  docker_compose:
+    project_src: "{{ app_dir }}"
+    pull: yes
+    remove_orphans: yes
+    state: present
+    recreate: always
+    restarted: yes
+    build: yes
+

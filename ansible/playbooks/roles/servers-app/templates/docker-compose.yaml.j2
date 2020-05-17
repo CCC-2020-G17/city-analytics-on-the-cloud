@@ -2,7 +2,7 @@ version: "3.7"
 
 services:
     restful_api_server:
-        build: ./restful_api_server
+        image: mgsweet/server_restful_api_server:latest
         container_name: restful_api_server
         restart: always
         environment:
@@ -10,11 +10,13 @@ services:
         expose:
             - 3000
         volumes:
-            - ./restful_api_server/config:/app/config
-        
+            - {{config_dir}}:/app/config
+
     nginx:
-        build: ./nginx
+        image: mgsweet/server_nginx:latest
         container_name: nginx
         restart: always
         ports:
-            - "8080:80"
+            - "80:80"
+        volumes:
+            - {{frontend_dir}}:/dist

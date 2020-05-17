@@ -3,7 +3,7 @@
   apt:
     name: ['apt-transport-https', 'build-essential', 'ca-certificates',
            'curl', 'git', 'python3-dev', 'python3-pip', 'python3-setuptools',
-           'software-properties-common', 'unzip', 'vim', 'yum', 'net-tools']
+           'software-properties-common', 'unzip', 'vim', 'yum', 'net-tools', 'nmap']
     state: latest
     install_recommends: no
     update_cache: yes

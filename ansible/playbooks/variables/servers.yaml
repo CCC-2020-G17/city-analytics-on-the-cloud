@@ -19,8 +19,10 @@ repo_address: "https://{{ github_account }}:{{ github_password }}@github.com/CCC
 repo_local_path: ~/github_repo
 repo_depth: 1
 
-# RESTFul API backend server
-restful_server_dir: ~/app
+# app
+app_dir: ~/app
+frontend_dir: "{{repo_local_path}}/src/client/dist"
+keepalived_dir: "{{app_dir}}/keepalived"
 
 # couchDB
 couchDB_dir: ~/couchDB
@@ -33,7 +35,5 @@ couchDB_init_deploy_dir: "{{repo_local_path}}/src/server/couchDB/initial_deploym
 couchDB_cluster_setting_interval: 10
 # cluster_size, master_ip_address is used
 
-# Frontend
-frontend_dir: "{{repo_local_path}}/src/client/dist“
-
+# Config
 config_dir: ~/config

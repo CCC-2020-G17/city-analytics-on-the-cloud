@@ -11,5 +11,5 @@
     - role: servers-config
     - role: servers-docker
     - role: servers-git
-    - role: servers-restfulapi-server
+    - role: servers-app
     - role: servers-couchdb
