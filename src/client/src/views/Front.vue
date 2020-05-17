@@ -14,15 +14,23 @@
                 <h6>Aoqi Zuo</h6>
             </div>
         </div>
-        <Statistics class="statistics" id="statistics" :data="barChart" :width="'800px'"></Statistics>
+        <div class="footer">
+            <h2>City Level Analysis</h2>
+            <h4>Tweets about Covid-19</h4>
+            <Statistics id="statistics" :data="covData" :width="'800px'"></Statistics>
+            <h4>Twitter about Young's Perference</h4>
+            <Statistics id="statistics" :data="youngData" :width="'800px'"></Statistics>
+            <h4>Twitter Density</h4>
+            <Statistics id="statistics" :data="denData" :width="'800px'" :options="denOptions"></Statistics>
+        </div>
     </div>
 </template>
 
 <script>
 import Statistics from './Statistics.vue';
 import axios from 'axios';
-
-const cityAPI = 'api/v2.0/analysis/city-level/all';
+import { ROOT} from '../utils/Api';
+const cityAPI = ROOT + 'api/v2.0/analysis/city-level/all';
 
 export default {
   name: 'Front',
@@ -31,7 +39,27 @@ export default {
   },
   data() {
     return {
-      barChart: null,
+      covData: null,
+      youngData: null,
+      denData: null,
+      denOptions: {
+        scales: {
+            yAxes: [{
+                id: 'y1',
+                type: 'linear',
+                position: 'left',
+                ticks: {
+                    min: 0,
+                    max: 100,
+                }
+            }, {
+                id: 'y2',
+                type: 'linear',
+                position: 'right',
+                
+            }]
+        }
+      }
     }
   },
   props: {
@@ -40,45 +68,139 @@ export default {
   mounted() {
     axios.get(cityAPI).then((res) => {
         const data = res.data;
-        let MelbourneList, SydneyList, AdelaideList, BrisbaneList = [];
+        console.log(data)
+        let levelA, levelB, levelC;
+        levelA = [];
+        levelB = [];
+        levelC = [];
         let temp = data['adelaide']['covid-19'];
-        let total = temp['tweet_count'] || 1;
-        AdelaideList = [ temp['english_count'] / total, temp['chinese_count'] / total,  temp['others_count'] / total ];
+        levelA.push(temp['followers_within_100']);
+        levelB.push(temp['followers_100_to_500']);
+        levelC.push(temp['followers_above_500']);
         temp = data['melbourne']['covid-19'];
-        total = temp['tweet_count'] || 1;
-        MelbourneList = [ temp['english_count'] / total, temp['chinese_count'] / total,  temp['others_count'] / total ];
+        levelA.push(temp['followers_within_100']);
+        levelB.push(temp['followers_100_to_500']);
+        levelC.push(temp['followers_above_500']);
         temp = data['brisbane']['covid-19'];
-        total = temp['tweet_count'] || 1;
-        BrisbaneList = [ temp['english_count'] / total, temp['chinese_count'] / total,  temp['others_count'] / total ];
+        levelA.push(temp['followers_within_100']);
+        levelB.push(temp['followers_100_to_500']);
+        levelC.push(temp['followers_above_500']);
         temp = data['sydney']['covid-19'];
-        total = temp['tweet_count'] || 1;
-        SydneyList = [ temp['english_count'] / total, temp['chinese_count'] / total,  temp['others_count'] / total ];
+        levelA.push(temp['followers_within_100']);
+        levelB.push(temp['followers_100_to_500']);
+        levelC.push(temp['followers_above_500']);
         
-        this.barChart = {
-            labels: ['English', 'Chinese', 'Others'],
+        this.covData = {
+            labels: ['Adelaide', 'Melbourne', 'Brisbane', 'Sydney'],
             datasets: [
                 {
-                    label: 'Melbourne',
+                    label: 'Posters whose followers are less than 100',
                     backgroundColor: '#6C7B88',
-                    data: MelbourneList,
+                    data: levelA,
                 },
                 {
-                    label: 'Sydney',
+                    label: 'Posters whose followers are between 100 and 500',
                     backgroundColor: '#0a1D30',
-                    data: SydneyList,
+                    data: levelB,
                 },
                 {
-                    label: 'Adelaide',
+                    label: 'Posters whose followers are above 500',
                     backgroundColor: '#DBE5F0',
-                    data: AdelaideList,
+                    data: levelC,
                 },
-                {
-                    label: 'Brisbane',
-                    backgroundColor: '#486C82',
-                    data: BrisbaneList,
-                }
             ]
         }
+
+        levelA = [];
+        levelB = [];
+        levelC = [];
+        let total_twitter = data['adelaide']['city_tweet_count'] || 1;
+        temp = data['adelaide']['young_twitter_preference'];
+        levelA.push(temp['night_tweets_count'] / total_twitter * 100);
+        levelB.push(temp['tweet_with_geo_count'] / total_twitter * 100);
+        levelC.push(temp['young_people_proportion']);
+        total_twitter = data['melbourne']['city_tweet_count'] || 1;
+        temp = data['melbourne']['young_twitter_preference'];
+        levelA.push(temp['night_tweets_count'] / total_twitter * 100);
+        levelB.push(temp['tweet_with_geo_count'] / total_twitter * 100);
+        levelC.push(temp['young_people_proportion']);
+        total_twitter = data['brisbane']['city_tweet_count'] || 1;
+        temp = data['brisbane']['young_twitter_preference'];
+        levelA.push(temp['night_tweets_count'] / total_twitter * 100);
+        levelB.push(temp['tweet_with_geo_count'] / total_twitter * 100);
+        levelC.push(temp['young_people_proportion']);
+        total_twitter = data['sydney']['city_tweet_count'] || 1;
+        temp = data['sydney']['young_twitter_preference'];
+        levelA.push(temp['night_tweets_count'] / total_twitter * 100);
+        levelB.push(temp['tweet_with_geo_count'] / total_twitter * 100);
+        levelC.push(temp['young_people_proportion']);
+        console.log(levelC);
+        this.youngData = {
+            labels: ['Adelaide', 'Melbourne', 'Brisbane', 'Sydney'],
+            datasets: [
+                {
+                    label: 'Proportion of tweets which are posted at night',
+                    backgroundColor: '#6C7B88',
+                    data: levelA,
+                },
+                {
+                    label: 'Proportion of tweets which are posted with Geo info',
+                    backgroundColor: '#0a1D30',
+                    data: levelB,
+                },
+                {
+                    label: 'Proportion of the young twitter users',
+                    backgroundColor: '#DBE5F0',
+                    data: levelC,
+                },
+            ]
+        }
+
+        levelA = [];
+        levelB = [];
+        levelC = [];
+        total_twitter = data['adelaide']['city_tweet_count'] || 1;
+        temp = data['adelaide']['tweet_density'];
+        levelA.push(total_twitter / temp['unique_user_count']);
+        levelB.push(temp['english_mother_tongue_proportion']);
+        
+        total_twitter = data['melbourne']['city_tweet_count'] || 1;
+        temp = data['melbourne']['tweet_density'];
+        levelA.push(total_twitter / temp['unique_user_count']);
+        levelB.push(temp['english_mother_tongue_proportion']);
+        
+        total_twitter = data['brisbane']['city_tweet_count'] || 1;
+        temp = data['brisbane']['tweet_density'];
+        levelA.push(total_twitter / temp['unique_user_count']);
+        levelB.push(temp['english_mother_tongue_proportion']);
+        
+        total_twitter = data['sydney']['city_tweet_count'] || 1;
+        temp = data['sydney']['tweet_density'];
+        levelA.push(total_twitter / temp['unique_user_count']);
+        levelB.push(temp['english_mother_tongue_proportion']);
+        
+        this.denData = {
+            labels: ['Adelaide', 'Melbourne', 'Brisbane', 'Sydney'],
+            datasets: [
+                {
+                    label: 'Tweets per user',
+                    data: levelA,
+                    type: 'line',
+                    yAxisID: 'y2',
+                    borderColor: '#0a1D30',
+                    fill: false,
+                    
+                },
+                {
+                    label: 'Proportion of posters whose mother tongue is English',
+                    data: levelB,
+                    yAxisID: 'y1',
+                    
+                }
+            ],
+        }
+    
+        
     })
     
   }
@@ -111,6 +233,17 @@ export default {
         top: 0;
         right: 0;
         margin: 10px;
+    }
+}
+.footer {
+    margin: 20px;
+    color: '#486C82';
+
+    h2 {
+        margin: 40px;
+    }
+    h4 {
+        margin: 20px;
     }
 }
 </style>

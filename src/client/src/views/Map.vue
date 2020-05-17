@@ -19,11 +19,12 @@ import Prompt from './Prompt';
 import Vue from 'vue';
 //  const vicMap = 'https://data.gov.au/geoserver/vic-local-government-areas-psma-administrative-boundaries/wfs?request=GetFeature&typeName=ckan_bdf92691_c6fe_42b9_a0e2_a4cd716fa811&outputFormat=json';
 //  const melbMap = 'https://raw.githubusercontent.com/HanxunHuangLemonBear/COMP90024-2019S1-Team7-TrackerHub/master/backend/backend/common/melb_geo.json'
-const melbourneMap = 'api/statistic?city=melbourne';
-const perthMap = 'api/statistic?city=perth';
-const adelaideMap = 'api/statistic?city=adelaide';
-const sydneyMap = 'api/statistic?city=sydney';
-const brisbaneMap = 'api/statistic?city=brisbane';
+import { ROOT } from '../utils/Api';
+const melbourneMap = ROOT + 'api/statistic?city=melbourne';
+const perthMap = ROOT + 'api/statistic?city=perth';
+const adelaideMap = ROOT + 'api/statistic?city=adelaide';
+const sydneyMap = ROOT + 'api/statistic?city=sydney';
+const brisbaneMap = ROOT + 'api/statistic?city=brisbane';
 
 const { aurin } = mock;
 
@@ -70,7 +71,7 @@ export default {
     computed: {
         barChartData() {
             let { barLabel, labelB, labelA, theme, barDataA, barDataB } = this;
-           
+            
             let temp = {
                 labels: barLabel,
                 datasets: [
@@ -81,7 +82,7 @@ export default {
                     },
                     {
                         label: labelB,
-                        backgroundColor: '#FFFF00',
+                        backgroundColor: this.gradient('#F1F0E9', this.theme, 7)[2],
                         data: barDataB
                     }
                 ]
@@ -233,6 +234,7 @@ export default {
             map.data.setStyle((feature) => {
                 let result = feature.getProperty('analysis_result');
                 let name = feature.getProperty('name');
+                console.log(name);
                 let color = basic;
              
                 switch(type) {
@@ -240,19 +242,19 @@ export default {
                         this.theme = '#00FF00';
                         colors = this.gradient(basic, this.theme, 7);
                         let { education } = result;
-                        var { vulgar_tweet_count, complete_yr_12_proportion } = education || {};
+                        var { vulgar_tweet_count, complete_yr_12_proportion = 0 } = education || {};
                         var { suburb_tweet_count } = result;
                         
-                        this.labelB = 'the proportion of people from high education background';
-                        this.labelA = 'the proportion of vulgur tweet';
+                        this.labelB = 'the proportion of people from low education background';
+                        this.labelA = '(the proportion of vulgur tweet) x 10';
                         var total;
                         if(!suburb_tweet_count || !vulgar_tweet_count) total = 0;
                         else total = vulgar_tweet_count / suburb_tweet_count * 100;
                         if(!total) total = 0;
-                        if(!this.barLabel.includes(name)) {
-                            this.barDataB.push(complete_yr_12_proportion);
+                        if(!this.barLabel.includes(name) && complete_yr_12_proportion && total) {
+                            this.barDataB.push(100 - complete_yr_12_proportion);
                             this.barLabel.push(name);
-                            this.barDataA.push(total);
+                            this.barDataA.push(total * 10);
                         }
                         
                         if (total > 0)
@@ -287,7 +289,7 @@ export default {
                         if(!total) total = 0;
                         this.labelB = 'the ratio of positive twitter and negative twitter';  
                         this.labelA = 'the proportion of high income people';
-                        if(!this.barLabel.includes(name)) {
+                        if(!this.barLabel.includes(name) && total && ratio) {
                             this.barDataA.push(total);
                             this.barLabel.push(name);
                             this.barDataB.push(ratio);
@@ -320,7 +322,7 @@ export default {
                         
                         this.labelA = 'the proportion of non-engligh twitter';  
                         this.labelB = 'the proportion of speak non-engligh at home';
-                        if(!this.barLabel.includes(name)) {
+                        if(!this.barLabel.includes(name) && total && not_english_at_home) {
                             this.barDataA.push(total);
                             this.barLabel.push(name);
                             this.barDataB.push(not_english_at_home);
@@ -353,8 +355,10 @@ export default {
             let infowindow = new google.maps.InfoWindow();
 
             map.data.addListener('click', (event) => {
+                
                 const { feature } = event;
                 let result = feature.getProperty('analysis_result');
+                const suburb = feature.getProperty('name');
                 let name = [];
                 let data = [];
                 console.log(type)
@@ -467,6 +471,7 @@ export default {
                     propsData: {
                         name,
                         data,
+                        suburb,
                     }
                 });
                 instance.$mount()

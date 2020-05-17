@@ -2,7 +2,9 @@
   <div class="hello">
     <Nav />
     <Map id="map" @setBarChartData="this.setBarChartData"></Map>
-    <Statistics class="statistics" id="statistics" :data="barChart"></Statistics>
+    <div class="statistics__container">
+      <Statistics class="statistics" id="statistics" :data="barChart" :title="'Suburb Level Analysis'"></Statistics>
+    </div>
   </div>
 </template>
 
@@ -36,8 +38,15 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.statistics {
+.statistics__container {
+  display: flex;
+  justify-content: center;
   width: 100%;
   height: 100vh;
+}
+.statistics {
+
+  
+  
 }
 </style>
