@@ -1,7 +1,16 @@
 # Install dependencies on the host
+- name: Collect only facts returned by facter
+  tags: localhostInit
+  setup:
+    gather_subset:
+      - '!all'
+      - '!all'
+      - '!any'
+      - facter
 
 # sudo apt-get update; sudo apt-get install python-pip
 - name: Install pip
+  tags: localhostInit
   become: yes
   apt:
     name: ['python-pip']
@@ -11,6 +20,7 @@
 
 # pip install --upgrade pip
 - name: Update pip
+  tags: localhostInit
   become: yes
   pip:
     name: ['pip']
@@ -18,6 +28,7 @@
 
 # pip install openstacksdk
 - name: Install openstacksdk
+  tags: localhostInit
   become: yes
   pip:
     name: ['openstacksdk']
