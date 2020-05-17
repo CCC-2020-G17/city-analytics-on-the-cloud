@@ -12,11 +12,15 @@ class staticAnalysisGenerator():
         self.config = ConfigParser()
         self.data_loader = db_connecter.dataLoader(self.city)
         self.suburb_info_json = self.data_loader.load_city_suburb_coordinates()
-        self.city_scenarios = ['covid-19', 'crime']
+        self.city_scenarios = ['covid-19','young_twitter_preference', 'tweet_density']
         self.suburb_scenarios = ['income', 'education', 'migration']
+        self.scenario_file_young = self.data_loader.load_aus_demographics()
+        self.scenario_file_english = self.data_loader.load_aus_language()
         self.scenario_file_income = self.data_loader.load_city_income()
         self.scenario_file_migration = self.data_loader.load_city_migration()
         self.scenario_file_education = self.data_loader.load_city_education()
+        self.young_twitter_key_tuples = [('young_people_proportion', 'p_15_24_yrs_pc', 'p_25_34_yrs_pc')]
+        self.tweet_density_key_tuples = [('english_mother_tongue_proportion', 'person_tot_spks_eng_only', 'person_tot_tot')]
         self.income_key_tuples = [('low_income_proportion', 'tot_p_inc_wk_p_ov_15_yrs_p_earn_nil_inc_pr100',
                                    'tot_p_inc_wk_p_ov_15_yrs_p_earn_aud1_aud499wk_pr100'),
                                   ('high_income_proportion', 'tot_p_inc_wk_p_ov_15_yrs_p_earn_aud2000_aud2999wk_pr100',
@@ -37,11 +41,13 @@ class staticAnalysisGenerator():
         """
         self.config.read(self.structure_file)
         self.analysis_result = json.loads(self.config.get('FIRST-LAYER', 'CITY'))
-        self.analysis_result['city_name'] = self.city
+        self.analysis_result['city_name'] = self.city.capitalize()
         for scenario in self.city_scenarios:
             self.analysis_result[scenario] = json.loads(self.config.get('SECOND-LAYER', scenario.upper()))
         self.polygon_dict = None
-        self.add_crime_index()
+        self.add_young_people_proportion()
+        self.add_english_speaker_proportion()
+        # self.add_crime_index()
 
 
     def load_suburbs_structure(self):
@@ -56,6 +62,24 @@ class staticAnalysisGenerator():
             self.add_income(suburb)
             self.add_migration(suburb)
             self.add_education(suburb)
+
+    def add_young_people_proportion(self):
+        try:
+            city_dict = self.scenario_file_young['features']['Greater {}'.format(self.city.capitalize())]
+            for tuple in self.young_twitter_key_tuples:
+                self.analysis_result['young_twitter_preference'][tuple[0]] \
+                    = city_dict[tuple[1]] + city_dict[tuple[2]]
+        except Exception as e:
+            print(e)
+
+    def add_english_speaker_proportion(self):
+        try:
+            city_dict = self.scenario_file_english['features']['Greater {}'.format(self.city.capitalize())]
+            for tuple in self.tweet_density_key_tuples:
+                self.analysis_result['tweet_density'][tuple[0]] \
+                    = round((city_dict[tuple[1]] / city_dict[tuple[2]])*100, 1)
+        except Exception as e:
+            print(e)
 
     def add_crime_index(self):
         with open('{}/analyzer/static_result.json'.format(os.path.pardir)) as f:
@@ -111,14 +135,16 @@ class staticAnalysisGenerator():
                 self.analysis_result['suburbs'][suburb]['migration'][pair[0]] = 0
 
     def add_static_data_to_db(self):
-        db_connecter.analysisResultSaver(self.city).update_analysis(self.analysis_result)
+        db_connecter.analysisResultSaver(self.city).update_analysis(self.analysis_result, type='add')
 
 
 if __name__ == '__main__':
-    cities = ["Melbourne", "Sydney", "Brisbane", "Adelaide", "Perth (WA)"]
-    city = cities[0].split(" ")[0].lower()
-    generator = staticAnalysisGenerator(city)
-    generator.add_static_data_to_db()
-    # db_connecter.analysisResultSaver(city).reset_static_result()
+    # cities = ["Melbourne", "Sydney", "Brisbane", "Adelaide", "Perth (WA)"]
+    cities = ["Perth (WA)"]
+    for city in cities:
+        city = city.split(" ")[0].lower()
+        generator = staticAnalysisGenerator(city)
+        generator.add_static_data_to_db()
+        # db_connecter.analysisResultSaver(city).reset_static_result()
 
 

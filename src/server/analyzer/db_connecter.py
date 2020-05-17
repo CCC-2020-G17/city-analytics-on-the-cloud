@@ -27,7 +27,7 @@ class dataLoader():
         """
         db = db_util.cdb(self.serverURL, "tweets_with_geo")
         city_key = self.city
-        return  db.getByCity(city_key)  # TODO: Check Perth city key
+        return  db.getByCity(city_key)
 
     def load_period_tweet_data(self, start_ts, end_ts):
         db = db_util.cdb(self.serverURL, "tweets_with_geo")
@@ -41,6 +41,17 @@ class dataLoader():
             return db.getByKey(city_key)
         else:
             return None
+
+    def load_aus_demographics(self):
+        key = "australia_demographics"
+        db = db_util.cdb(self.serverURL, "aurin")
+        return db.getByKey(key)
+
+
+    def load_aus_language(self):
+        key = "australia_languages"
+        db = db_util.cdb(self.serverURL, "aurin")
+        return db.getByKey(key)
 
     def load_city_income(self):
         if self.city:
@@ -68,7 +79,7 @@ class dataLoader():
 
     def load_analysis(self):
         if self.city:
-            db = db_util.cdb(self.serverURL, "analysis_results_for_test")
+            db = db_util.cdb(self.serverURL, "analysis_results")
             city_key = "{}_analysis_result".format(self.city.lower())
             return db.getByKey(city_key)
         else:
@@ -100,6 +111,7 @@ class analysisResultSaver():
         db.put(analysis_result, analysis_city_id)
 
     def update_helper(self, renewal, existing,  type):
+        # TODO: Add special pattern for updating night tweet proportion and tweet frequency
         if not isinstance(renewal, dict) or not isinstance(existing, dict):
             if isinstance(renewal, str) and isinstance(existing, str):
                 return existing

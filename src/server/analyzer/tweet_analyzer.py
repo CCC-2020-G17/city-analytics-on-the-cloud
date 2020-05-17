@@ -1,9 +1,10 @@
 import os
 import sys
-import time
 import json
 import logging
 import tweepy
+import time
+import datetime
 from multiprocessing import Process
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 from configparser import ConfigParser
@@ -21,10 +22,11 @@ class tweetAnalyzer():
         self.structure_file = '{}/config/result.structure.cfg'.format(os.path.pardir)
         self.config = ConfigParser()
         self.suburb_info_json = db_connecter.dataLoader(self.city).load_city_suburb_coordinates()
-        self.city_scenarios = ['covid-19', 'crime']
+        self.city_scenarios = ['covid-19','young_twitter_preference', 'tweet_density']
         self.suburb_scenarios = ['income', 'education', 'migration']
         self.load_city_structure()
-        self.load_suburbs_structure()
+        self.load_suburb_structure()
+        self.all_user_ids = set()
         self.covid_user_ids = []
         self.sentiment_analyser = SentimentIntensityAnalyzer()
         self.api = tweepy.API(get_twitter_auth(), wait_on_rate_limit=True, wait_on_rate_limit_notify=True)
@@ -41,7 +43,7 @@ class tweetAnalyzer():
             self.analysis_result[scenario] = json.loads(self.config.get('SECOND-LAYER', scenario.upper()))
         self.polygon_dict = None
 
-    def load_suburbs_structure(self):
+    def load_suburb_structure(self):
         """
         Load result structure for suburb level analysis
         :return:
@@ -112,28 +114,19 @@ class tweetAnalyzer():
         # TODO: Extract from hashtag
         # TODO: May add COVID language dictionary
         # if 'covid' in text.lower():
-        if 'covid' in str(tweet_json).lower() \
-                or 'corona' in str(tweet_json).lower() \
-                or '新冠' in str(tweet_json).lower() \
-                or '新型冠状' in str(tweet_json).lower():
-            self.covid_user_ids.append(tweet_json['user']['id'])
+        if 'covid' in str(tweet_json).lower() or 'corona' in str(tweet_json).lower():
             self.analysis_result['covid-19']['tweet_count'] += 1
-            # self.judge_attitude(text, suburb)
-            if tweet_json['lang'] == 'en':
-                self.analysis_result['covid-19']['english_count'] += 1
-            if tweet_json['lang'] == 'zh-cn' or tweet_json['lang'] == 'zh-tw' or tweet_json['lang'] == 'zh':
-                self.analysis_result['covid-19']['chinese_count'] += 1
-            if tweet_json['lang'] == 'es':
-                self.analysis_result['covid-19']['spanish_count'] += 1
-            if tweet_json['lang'] != 'en' and tweet_json['lang'] != 'zh-cn' \
-                    and tweet_json['lang'] != 'zh-tw' and tweet_json['lang'] != 'es':
-                self.analysis_result['covid-19']['others_count'] += 1
-
-    # def extract_topic_from_hashtag(self, tweet_json, suburb):
-    #     hashtags = [dict['text'] for dict in tweet_json["entities"]["hashtags"]]
-    #     hashtags_contain_topic = [hashtag for hashtag in hashtags if 'covid' in hashtag.lower()]
-    #     if len(hashtags_contain_topic) > 0:
-    #         self.analysis_result['suburbs'][suburb]['covid-19']['tweet_count'] += 1
+            if tweet_json['user']['id'] not in  self.covid_user_ids:
+                self.covid_user_ids.append(tweet_json['user']['id'])
+            # if tweet_json['lang'] == 'en':
+            #     self.analysis_result['covid-19']['english_count'] += 1
+            # if tweet_json['lang'] == 'zh-cn' or tweet_json['lang'] == 'zh-tw' or tweet_json['lang'] == 'zh':
+            #     self.analysis_result['covid-19']['chinese_count'] += 1
+            # if tweet_json['lang'] == 'es':
+            #     self.analysis_result['covid-19']['spanish_count'] += 1
+            # if tweet_json['lang'] != 'en' and tweet_json['lang'] != 'zh-cn' \
+            #         and tweet_json['lang'] != 'zh-tw' and tweet_json['lang'] != 'es':
+            #     self.analysis_result['covid-19']['others_count'] += 1
 
     def process_crime(self, tweet_json):
         """
@@ -147,6 +140,12 @@ class tweetAnalyzer():
     def process_night_tweets(self, tweet_json):
         tweet_datetime = tweet_json['created_at']   # This is UTC time
         tweet_time = tweet_datetime.split(' ')[3]
+        t0_utc = datetime.datetime.strptime(tweet_time, '%H:%M:%S')
+        # Tranform AEST 22:00 - 05:00(+1) to UTC is 12:00 - 19:00
+        t1 = t0_utc.replace(hour=12, minute=0, second=0, microsecond=0)
+        t2 = t0_utc.replace(hour=19, minute=0, second=0, microsecond=0)
+        if t0_utc > t1 and t0_utc < t2:
+            self.analysis_result['young_twitter_preference']['night_tweets_count'] += 1
 
 
     def process_income(self, tweet_json, suburb):
@@ -173,7 +172,7 @@ class tweetAnalyzer():
         Process scenarios for the tweet.
         """
         self.process_covid_19(tweet_json)
-        self.process_crime(tweet_json)
+        # self.process_crime(tweet_json)
         self.process_night_tweets(tweet_json)
         self.process_income(tweet_json, suburb)
         self.process_education(tweet_json, suburb)
@@ -188,9 +187,10 @@ class tweetAnalyzer():
         """
         if self.get_city(tweet_json) == self.city:
             self.analysis_result['city_tweet_count'] += 1
+            self.all_user_ids.add(tweet_json['user']['id'])
             if tweet_json['geo']:
                 if tweet_json['geo']['type'] == 'Point':
-                    self.analysis_result['city_tweet_with_geo_count'] += 1
+                    self.analysis_result['young_twitter_preference']['tweet_with_geo_count'] += 1
                     coordinates = tweet_json['geo']['coordinates']
                     point = Point(coordinates[1], coordinates[0])  # AURIN data coordinates are reversed
                     for index, polygon in enumerate(polygon_dict['polygons']):
@@ -228,8 +228,8 @@ class tweetAnalyzer():
         self.analysis_result['covid-19']['followers_above_500'] = followers_above_500
         self.analysis_result['covid-19']['follower_not_able_to_get'] = follower_not_able_to_get
 
-    def process_avg_tweet_frequency_per_person(self):
-        pass
+    def process_avg_tweet_density(self):
+        self.analysis_result['tweet_density']['unique_user_count'] = len(self.all_user_ids)
 
     def analyze(self, city_data):
         polygon_dict = self.create_suburb_polygon_dict()
@@ -237,7 +237,7 @@ class tweetAnalyzer():
             suburb = self.match_suburb(tweet_json, polygon_dict)
             self.process_scenarios(tweet_json, suburb)
         self.process_covid_followers()
-        self.process_avg_tweet_frequency_per_person()
+        self.process_avg_tweet_density()
         return self.analysis_result
 
 
@@ -255,7 +255,7 @@ def _load_timestamp_record():
     with open('timestamp_record.json', 'r') as f:
         record = json.load(f)
         start_ts = record["tweets_with_geo"]
-        end_ts = str(int(start_ts) + 1000)
+        end_ts = str(int(start_ts) + 100)
     return start_ts, end_ts
 
 
@@ -263,7 +263,7 @@ def _update_timestamp_record():
     with open('timestamp_record.json', 'r') as f:
         record = json.load(f)
         start_ts = record["tweets_with_geo"]
-        end_ts = int(start_ts) + 1000
+        end_ts = int(start_ts) + 100
     with open('timestamp_record.json', 'w')  as f:
         record["tweets_with_geo"] = end_ts
         json.dump(record, f, indent=1)
@@ -293,11 +293,13 @@ def analyze_cities():
     cities = ["Melbourne", "Sydney", "Brisbane", "Adelaide", "Perth (WA)"]
     for city in cities:
         city = city.split(" ")[0]
+        print(city)
         # TODO: Solve extended form. (By other offline functions. Formalize all data.)
         data_loader = db_connecter.dataLoader(city)
         analysis_result_saver = db_connecter.analysisResultSaver(city)
         tweet_analyzer = tweetAnalyzer(city)
         city_period_data = data_loader.load_period_tweet_data(start_ts, end_ts)
+        print(city_period_data)
         analysis_result = tweet_analyzer.analyze(city_period_data)
         # TODO: May combine static result here and update.
         analysis_result_saver.update_analysis(analysis_result)
@@ -317,14 +319,14 @@ if __name__ == '__main__':
     #     except Exception as e:
     #         logger.exception(e)
 
-    city = 'Melbourne'
+    city = 'Perth'
     # TODO: Solve extended form. (By other offline functions. Formalize all data.)
     data_loader = db_connecter.dataLoader(city)
     analysis_result_saver = db_connecter.analysisResultSaver(city)
     tweet_analyzer = tweetAnalyzer(city)
     city_data = data_loader.load_tweet_data()
+    print(city_data)
     analysis_result = tweet_analyzer.analyze(city_data)
-    print(tweet_analyzer.covid_user_ids)
     analysis_result_saver.save_analysis(analysis_result)
 
 
