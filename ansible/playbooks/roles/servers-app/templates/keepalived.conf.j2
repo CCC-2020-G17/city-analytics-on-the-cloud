@@ -1,0 +1,38 @@
+global_defs { 
+    # Load balance id, should be unique in the LAN
+    router_id {{keepalived_router_id}}
+}
+
+vrrp_script chk_nginx {
+    script "/etc/keepalived/nginx_check.sh"
+    # send heardbeat message per 2 seconds
+    interval 2
+}
+
+# virtual_ipaddress vip
+vrrp_instance VI_1 {
+    state {{keepalived_state}}
+    interface {{keepalived_network_interface}}
+    virtual_router_id {{keepalived_virtual_router_id}}
+    priority {{ keepalived_priority[ansible_host] }}
+    nopreempt #设置为不抢占。默认是抢占的
+    authentication {
+        auth_type PASS
+        auth_pass 1111
+    }
+    ###采用单播通信，避免同一个局域网中多个keepalived组之间的相互影响
+    unicast_src_ip {{ansible_host}}  ##本机ip
+    unicast_peer { #采用单播的方式发送VRRP通告，指定单播邻居的IP地址
+        {% for ip in other_ip_addresses %}
+        {{ip}}
+        {% endfor %}
+    }
+    virtual_ipaddress { #指定VIP地址
+        172.26.143.243
+    }
+    #nginx存活状态检测脚本
+    track_script {
+        chk_nginx
+    }
+    notify "/container/service/keepalived/assets/notify.sh"
+}

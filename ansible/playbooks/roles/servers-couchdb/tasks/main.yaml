@@ -1,7 +1,6 @@
 - name: Collect facts of the host
   tags: 
     - couchdb
-    - test
   setup:
     gather_subset:
       - '!any'
@@ -9,14 +8,12 @@
 - name: Set master ip address
   tags: 
     - couchdb
-    - test
   set_fact: 
     master_ip_address: "{{ groups['masterNode'] | map('extract', hostvars, ['ansible_host']) | join(',') }}"
 
 - name:  Print the ip of master
   tags: 
     - couchdb
-    - test
   debug: 
     msg: "Master ip: {{master_ip_address}}"
 
@@ -230,7 +227,6 @@
 - name: Test
   tags: 
     - couchdb
-    - test
   become: yes
   command: "cat {{couchDB_dir}}/log_addToMaster.txt"
   when: ansible_host != master_ip_address
@@ -239,7 +235,6 @@
 - name: Test
   tags: 
     - couchdb
-    - test
   debug:
     msg: "{{log_output.stdout}}"
   when: ansible_host != master_ip_address
@@ -248,7 +243,6 @@
   become: yes
   tags: 
     - couchdb
-    - test
   command: "cat {{couchDB_dir}}/log_completeClusterSetUp.txt"
   when: ansible_host == master_ip_address
   register: log_output
@@ -256,7 +250,6 @@
 - name: Test
   tags: 
     - couchdb
-    - test
   debug:
     msg: "{{log_output.stdout}}"
   when: ansible_host == master_ip_address

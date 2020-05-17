@@ -13,10 +13,20 @@ services:
             - {{config_dir}}:/app/config
 
     nginx:
-        image: mgsweet/server_nginx:latest
+        build: ./nginx
         container_name: nginx
+        privileged: true
         restart: always
         ports:
             - "80:80"
         volumes:
             - {{frontend_dir}}:/dist
+
+    # keepalived:
+    #     build: ./keepalived
+    #     depends_on:
+    #         - nginx
+    #     network_mode: "host"
+    #     cap_drop:
+    #         - NET_ADMIN
+    #     privileged: true

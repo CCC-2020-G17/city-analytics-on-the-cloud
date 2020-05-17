@@ -1,0 +1,7 @@
+- hosts: instance_1
+  remote_user: root
+  tasks:
+    - name: reboot
+      become: yes
+      reboot:
+        reboot_timeout: 600

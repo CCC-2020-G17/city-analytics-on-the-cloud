@@ -21,8 +21,18 @@ repo_depth: 1
 
 # app
 app_dir: ~/app
+nginx_dir: "{{app_dir}}/nginx"
 frontend_dir: "{{repo_local_path}}/src/client/dist"
-keepalived_dir: "{{app_dir}}/keepalived"
+# Currently keepalived is not usable because we got no access to the float ip
+keepalived_router_id: cccg17
+keepalived_virtual_router_id: 23
+keepalived_network_interface: eth0
+# Please make sure:
+# keepalived_default_priority > cluster_size
+keepalived_max_priority: 100
+# Already used:
+# master_ip_address, other_ip_addresses, all_ip_addresses
+# keepalived_state, keepalived_priority
 
 # couchDB
 couchDB_dir: ~/couchDB
