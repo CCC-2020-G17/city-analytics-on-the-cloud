@@ -259,7 +259,7 @@ if __name__ == '__main__':
     couchserver = couchdb.Server('http://admin:admin1234@172.26.130.149:5984')
     db = couchserver['tweets_with_geo']
 
-    for item in db.view('cities/get_city_notAU',reduce=False,include_docs=True,limit=2000):
+    for item in db.view('cities/get_city_notAU',reduce=False,include_docs=True):
         data = item['doc']
         #print(data)
         db.delete(data)
