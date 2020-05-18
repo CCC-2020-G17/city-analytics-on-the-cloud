@@ -9,18 +9,18 @@
                 <h4>Members:</h4>
                 <h6>Yawei Sun</h6>
                 <h6>Tingli Qiu</h6>
-                <h6>RongbingShan</h6>
+                <h6>Rongbing Shan</h6>
                 <h6>Zhaofeng Qiu</h6>
                 <h6>Aoqi Zuo</h6>
             </div>
         </div>
         <div class="footer">
             <h2>City Level Analysis</h2>
-            <h4>Tweets about Covid-19</h4>
+            <h4>Who Are More Likely to Tweet about COVID-19</h4>
             <Statistics id="statistics" :data="covData" :width="'800px'"></Statistics>
-            <h4>Twitter about Young's Perference</h4>
-            <Statistics id="statistics" :data="youngData" :width="'800px'"></Statistics>
-            <h4>Twitter Density</h4>
+            <h4>Young People Tweeting Preferences</h4>
+            <Statistics id="statistics" :data="youngData" :width="'800px'" :options="youngOptions"></Statistics>
+            <h4>Tweeting Frequency and English Proficiency</h4>
             <Statistics id="statistics" :data="denData" :width="'800px'" :options="denOptions"></Statistics>
         </div>
     </div>
@@ -41,6 +41,33 @@ export default {
     return {
       covData: null,
       youngData: null,
+      youngOptions: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    min: 0,
+                    max: 100,
+                    callback: (label, index, labels) => {
+                        return label + '%';
+                    },
+                },
+            }]
+        },
+        tooltips: {
+            callbacks: {
+                label: function(tooltipItem) {
+
+                    var label = tooltipItem.label || '';
+                    if (label) {
+                        label += ': ';
+                    }
+                    label += Math.round(tooltipItem.yLabel * 100) / 100;
+                    label += '%';
+                    return label;
+                }
+            }
+        }
+      },
       denData: null,
       denOptions: {
         scales: {
@@ -51,15 +78,34 @@ export default {
                 ticks: {
                     min: 0,
                     max: 100,
-                }
+                    callback: (label, index, labels) => {
+                        return label + '%';
+                    },
+                },
             }, {
                 id: 'y2',
                 type: 'linear',
                 position: 'right',
                 
             }]
+        },
+        tooltips: {
+            callbacks: {
+                label: function(tooltipItem, data) {
+                    var label = tooltipItem.label || '';
+                    if (label) {
+                        label += ': ';
+                    }
+                    label += Math.round(tooltipItem.yLabel * 100) / 100;
+                    if(tooltipItem.datasetIndex == 1) {
+                        label += '%';
+                    }
+                    return label;
+                }
+            }
         }
-      }
+      },
+      
     }
   },
   props: {
@@ -94,17 +140,17 @@ export default {
             labels: ['Adelaide', 'Melbourne', 'Brisbane', 'Sydney'],
             datasets: [
                 {
-                    label: 'Posters whose followers are less than 100',
+                    label: 'Posters who have #followers less than 100',
                     backgroundColor: '#6C7B88',
                     data: levelA,
                 },
                 {
-                    label: 'Posters whose followers are between 100 and 500',
+                    label: 'Posters who have #followers between 100 and 500',
                     backgroundColor: '#0a1D30',
                     data: levelB,
                 },
                 {
-                    label: 'Posters whose followers are above 500',
+                    label: 'Posters who have #followers above 500',
                     backgroundColor: '#DBE5F0',
                     data: levelC,
                 },
@@ -139,17 +185,17 @@ export default {
             labels: ['Adelaide', 'Melbourne', 'Brisbane', 'Sydney'],
             datasets: [
                 {
-                    label: 'Proportion of tweets which are posted at night',
+                    label: 'Proportion of tweets posted at night',
                     backgroundColor: '#6C7B88',
                     data: levelA,
                 },
                 {
-                    label: 'Proportion of tweets which are posted with Geo info',
+                    label: 'Proportion of tweets posted with location labels',
                     backgroundColor: '#0a1D30',
                     data: levelB,
                 },
                 {
-                    label: 'Proportion of the young twitter users',
+                    label: 'Proportion of young people',
                     backgroundColor: '#DBE5F0',
                     data: levelC,
                 },
@@ -192,7 +238,7 @@ export default {
                     
                 },
                 {
-                    label: 'Proportion of posters whose mother tongue is English',
+                    label: 'Proportion of people whose mother tongue is English',
                     data: levelB,
                     yAxisID: 'y1',
                     

@@ -51,9 +51,9 @@ export default {
             ],
             typeOptions: [
                 {value: null, text: 'Please select a scenario', disabled: true},
-                {value: 'income', text: 'Scenario1 -- income level vs attitude to life'},
-                {value: 'education', text: 'Scenario2 -- vigur expression vs education'},
-                {value: 'migration', text: 'Scenario3 -- twitter language vs daily language'},
+                {value: 'income', text: 'Scenario1 -- Income level and Tweets sentiments'},
+                {value: 'education', text: 'Scenario2 -- Vigar Tweets and Education'},
+                {value: 'migration', text: 'Scenario3 -- Tweeting language and Migration'},
             ],
             //  bar chart
             labelA: '',
@@ -100,13 +100,13 @@ export default {
             handler: function(val, oldval) {
                 switch(val) {
                     case 'income':
-                        this.tips = 'the color shown on the map represents the income level of that region'; 
+                        this.tips = 'The color shown on the map represents the income level of that region'; 
                         break;
                     case 'education':
-                        this.tips = 'the color shown on the map represents the ratio of vigur expression';
+                        this.tips = 'The color shown on the map represents the frequency of vigar expression occurence';
                         break;
                     case 'migration':
-                        this.tips = 'the color shown on the map represents the ratio of non-english twitter';
+                        this.tips = 'The color shown on the map represents the ratio of non-english twitter';
                         break;
                     default:
                         this.tips = '';
@@ -143,7 +143,7 @@ export default {
         toMelbourne() {
             this.map = new google.maps.Map(document.getElementById('mapCanvas'), {
                 zoom: 11.8,
-                center:  {lat: -37.7998, lng: 145.00},
+                center:  {lat: -37.7998, lng: 144.90},
                 disableDefaultUI: true,
                 styles: mapStyle,
             });
@@ -234,7 +234,7 @@ export default {
             map.data.setStyle((feature) => {
                 let result = feature.getProperty('analysis_result');
                 let name = feature.getProperty('name');
-                console.log(name);
+                
                 let color = basic;
              
                 switch(type) {
@@ -245,8 +245,8 @@ export default {
                         var { vulgar_tweet_count, complete_yr_12_proportion = 0 } = education || {};
                         var { suburb_tweet_count } = result;
                         
-                        this.labelB = 'the proportion of people from low education background';
-                        this.labelA = '(the proportion of vulgur tweet) x 10';
+                        this.labelB = 'Proportion of people with low education achievements';
+                        this.labelA = 'Scaled proportion of vulgar tweets';
                         var total;
                         if(!suburb_tweet_count || !vulgar_tweet_count) total = 0;
                         else total = vulgar_tweet_count / suburb_tweet_count * 100;
@@ -257,17 +257,17 @@ export default {
                             this.barDataA.push(total * 10);
                         }
                         
-                        if (total > 0)
+                        if (total == 0)
                             color = colors[0]
-                        if (total > 2)
+                        if (total > 0.5)
                             color = colors[1]
-                        if (total > 4)
+                        if (total > 1)
                             color = colors[2]
-                        if (total > 6)
+                        if (total > 2)
                             color = colors[3]
-                        if (total > 10)
+                        if (total > 5)
                             color = colors[4]
-                        if (total > 15)
+                        if (total > 10)
                             color = colors[5]
                         if (total > 20)
                             color = colors[6]  
@@ -287,8 +287,8 @@ export default {
                         ratio = tweet_positive_count / tweet_negative_count; 
                        
                         if(!total) total = 0;
-                        this.labelB = 'the ratio of positive twitter and negative twitter';  
-                        this.labelA = 'the proportion of high income people';
+                        this.labelB = 'the ratio of #positive tweets to #negative tweets';  
+                        this.labelA = 'The proportion of high income people';
                         if(!this.barLabel.includes(name) && total && ratio) {
                             this.barDataA.push(total);
                             this.barLabel.push(name);
@@ -320,8 +320,8 @@ export default {
                         else total = non_english_tweet_count / suburb_tweet_count * 100;
                         if(!total) total = 0;
                         
-                        this.labelA = 'the proportion of non-engligh twitter';  
-                        this.labelB = 'the proportion of speak non-engligh at home';
+                        this.labelA = 'The proportion of non-engligh tweets';  
+                        this.labelB = 'The proportion of people don\'t speak Engligh at home';
                         if(!this.barLabel.includes(name) && total && not_english_at_home) {
                             this.barDataA.push(total);
                             this.barLabel.push(name);
@@ -361,7 +361,7 @@ export default {
                 const suburb = feature.getProperty('name');
                 let name = [];
                 let data = [];
-                console.log(type)
+         
                 switch(type) {
                     case 'income':
                         let { income } = result;
@@ -371,9 +371,8 @@ export default {
                             tweet_positive_count = 1,
                             high_income_proportion = 33.3,
                             low_income_proportion = 33.3,
-                            middle_income_proportion = 33.3,
                         } = income || {};
-                      
+                        let totalTweet = ( tweet_negative_count + tweet_neutral_count + tweet_positive_count ) || 1;
                         name = [ 
                             'attitude of twitter',
                             'income level'
@@ -385,17 +384,17 @@ export default {
                                     {
                                         label: 'attitude of twitter',
                                         backgroundColor: this.gradient(basic, this.theme, 3) ,
-                                        data: [tweet_negative_count, tweet_neutral_count, tweet_positive_count],
+                                        data: [tweet_negative_count / totalTweet * 100, tweet_neutral_count / totalTweet * 100, tweet_positive_count / totalTweet * 100],
                                     }
                                 ]
                             },
                             {
-                                labels: ['low_income_proportion', 'middle_income_proportion', 'high_income_proportion'],
+                                labels: ['low_income', 'middle_income', 'high_income'],
                                 datasets: [
                                     {
                                         label: 'income level',
                                         backgroundColor: this.gradient(basic, this.theme, 3) ,
-                                        data: [low_income_proportion, middle_income_proportion, high_income_proportion],
+                                        data: [low_income_proportion, 100 - low_income_proportion - high_income_proportion, high_income_proportion],
                                     }
                                 ]
                             }
@@ -441,7 +440,7 @@ export default {
                         ]
                         data = [
                             {
-                                labels: ['speak non-english at home', 'speak english at home'],
+                                labels: ['People don\'t speak English at home', 'People speak English at home'],
                                 datasets: [
                                     {
                                         label: 'speak language',
@@ -451,7 +450,7 @@ export default {
                                 ]
                             },
                             {
-                                labels: ['people who are born overseas', 'people who are born in Aus'],
+                                labels: ['people born overseas', 'people born in Australia'],
                                 datasets: [
                                     {
                                         label: 'born place',
@@ -466,7 +465,7 @@ export default {
                         break;
                 }
                 let MyPrompt = Vue.extend(Prompt);
-                console.log(data);
+               
                 let instance = new MyPrompt({
                     propsData: {
                         name,

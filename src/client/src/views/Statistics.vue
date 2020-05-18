@@ -1,7 +1,7 @@
 <template>
   <div style="display: flex; justify-content: center; flex-direction: column;align-items: center; overflow-x: auto;">
         <h5>{{ title }}</h5>
-        <bar-chart :height="height || '550px'" :width="width || '1600px'" :name="name" :chart-data="data" :options="options"></bar-chart>
+        <bar-chart :height="height || '550px'" :width="width || '1400px'" :name="name" :chart-data="data" :options="options"></bar-chart>
   </div>
 </template>
 
