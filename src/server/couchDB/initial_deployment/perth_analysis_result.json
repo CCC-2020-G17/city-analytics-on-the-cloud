@@ -1,8 +1,8 @@
 {
   "_id": "perth_analysis_result",
-  "_rev": "12-d9dfefb50cde6235b9cc54c5a64d755f",
-  "city_name": "Perth",
-  "city_tweet_count": 43,
+  "_rev": "14-63daecb36dd8035b25cdada363ad48a5",
+  "city_name": "perth",
+  "city_tweet_count": 0,
   "covid-19": {
     "tweet_count": 0,
     "followers_within_100": 0,
@@ -11,12 +11,12 @@
     "follower_not_able_to_get": 0
   },
   "young_twitter_preference": {
-    "night_tweets_count": 5,
-    "tweet_with_geo_count": 43,
+    "night_tweets_count": 0,
+    "tweet_with_geo_count": 0,
     "young_people_proportion": 30.6
   },
   "tweet_density": {
-    "unique_user_count": 7,
+    "unique_user_count": 0,
     "english_mother_tongue_proportion": 73.5
   },
   "suburbs": {
@@ -989,13 +989,13 @@
       }
     },
     "KINGS PARK": {
-      "suburb_tweet_count": 1,
+      "suburb_tweet_count": 0,
       "income": {
         "low_income_proportion": 0,
         "high_income_proportion": 0,
         "tweet_positive_count": 0,
         "tweet_negative_count": 0,
-        "tweet_neutral_count": 1
+        "tweet_neutral_count": 0
       },
       "education": {
         "complete_yr_12_proportion": 52.2,
@@ -1007,7 +1007,7 @@
         "not_english_at_home": 13,
         "born_overseas_proportion": 56.5,
         "population_density": 8.6,
-        "non_english_tweet_count": 1
+        "non_english_tweet_count": 0
       }
     },
     "JOLIMONT": {
@@ -1297,13 +1297,13 @@
       }
     },
     "NORTHBRIDGE": {
-      "suburb_tweet_count": 8,
+      "suburb_tweet_count": 0,
       "income": {
         "low_income_proportion": 0,
         "high_income_proportion": 0,
-        "tweet_positive_count": 1,
+        "tweet_positive_count": 0,
         "tweet_negative_count": 0,
-        "tweet_neutral_count": 7
+        "tweet_neutral_count": 0
       },
       "education": {
         "complete_yr_12_proportion": 0,
@@ -1315,7 +1315,7 @@
         "not_english_at_home": 0,
         "born_overseas_proportion": 0,
         "population_density": 0,
-        "non_english_tweet_count": 2
+        "non_english_tweet_count": 0
       }
     },
     "MOUNT HAWTHORN": {
@@ -1385,25 +1385,25 @@
       }
     },
     "PERTH": {
-      "suburb_tweet_count": 32,
+      "suburb_tweet_count": 0,
       "income": {
         "low_income_proportion": 0,
         "high_income_proportion": 0,
-        "tweet_positive_count": 11,
-        "tweet_negative_count": 2,
-        "tweet_neutral_count": 19
+        "tweet_positive_count": 0,
+        "tweet_negative_count": 0,
+        "tweet_neutral_count": 0
       },
       "education": {
         "complete_yr_12_proportion": 0,
         "post_school_proportion": 0,
         "youth_in_study_or_work_proportion": 0,
-        "vulgar_tweet_count": 1
+        "vulgar_tweet_count": 0
       },
       "migration": {
         "not_english_at_home": 0,
         "born_overseas_proportion": 0,
         "population_density": 0,
-        "non_english_tweet_count": 1
+        "non_english_tweet_count": 0
       }
     },
     "BENTLEY": {
@@ -1429,5 +1429,5 @@
       }
     }
   },
-  "db_timestamp": "1589645100"
+  "db_timestamp": "1589778400"
 }

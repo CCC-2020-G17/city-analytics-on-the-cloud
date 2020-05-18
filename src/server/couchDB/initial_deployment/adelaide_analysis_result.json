@@ -1,22 +1,22 @@
 {
   "_id": "adelaide_analysis_result",
-  "_rev": "13-0186b1a16dab22c1f6681d93a2c86732",
+  "_rev": "16-f08c2e396dc19acef23f0230b74d10af",
   "city_name": "Adelaide",
-  "city_tweet_count": 37023,
+  "city_tweet_count": 68422,
   "covid-19": {
-    "tweet_count": 126,
-    "followers_within_100": 8,
-    "followers_100_to_500": 21,
-    "followers_above_500": 13,
-    "follower_not_able_to_get": 3
+    "tweet_count": 1181,
+    "followers_within_100": 60,
+    "followers_100_to_500": 109,
+    "followers_above_500": 150,
+    "follower_not_able_to_get": 37
   },
   "young_twitter_preference": {
-    "night_tweets_count": 3777,
-    "tweet_with_geo_count": 37023,
+    "night_tweets_count": 9892,
+    "tweet_with_geo_count": 37767,
     "young_people_proportion": 27.799999999999997
   },
   "tweet_density": {
-    "unique_user_count": 680,
+    "unique_user_count": 2208,
     "english_mother_tongue_proportion": 75.4
   },
   "suburbs": {
@@ -131,25 +131,25 @@
       }
     },
     "ADELAIDE": {
-      "suburb_tweet_count": 24096,
+      "suburb_tweet_count": 24511,
       "income": {
         "low_income_proportion": 44,
         "high_income_proportion": 8,
-        "tweet_positive_count": 11289,
-        "tweet_negative_count": 1258,
-        "tweet_neutral_count": 11549
+        "tweet_positive_count": 11492,
+        "tweet_negative_count": 1269,
+        "tweet_neutral_count": 11750
       },
       "education": {
         "complete_yr_12_proportion": 72.5,
         "post_school_proportion": 66.7,
         "youth_in_study_or_work_proportion": 85.4,
-        "vulgar_tweet_count": 166
+        "vulgar_tweet_count": 168
       },
       "migration": {
         "not_english_at_home": 43.8,
         "born_overseas_proportion": 51,
         "population_density": 1553.6,
-        "non_english_tweet_count": 3650
+        "non_english_tweet_count": 3669
       }
     },
     "TOORAK GARDENS": {
@@ -175,11 +175,11 @@
       }
     },
     "THORNGATE": {
-      "suburb_tweet_count": 0,
+      "suburb_tweet_count": 1,
       "income": {
         "low_income_proportion": 0,
         "high_income_proportion": 0,
-        "tweet_positive_count": 0,
+        "tweet_positive_count": 1,
         "tweet_negative_count": 0,
         "tweet_neutral_count": 0
       },
@@ -395,25 +395,25 @@
       }
     },
     "YATALA": {
-      "suburb_tweet_count": 6756,
+      "suburb_tweet_count": 6996,
       "income": {
         "low_income_proportion": 0,
         "high_income_proportion": 0,
-        "tweet_positive_count": 2404,
-        "tweet_negative_count": 368,
-        "tweet_neutral_count": 3984
+        "tweet_positive_count": 2519,
+        "tweet_negative_count": 393,
+        "tweet_neutral_count": 4084
       },
       "education": {
         "complete_yr_12_proportion": 0,
         "post_school_proportion": 0,
         "youth_in_study_or_work_proportion": 0,
-        "vulgar_tweet_count": 39
+        "vulgar_tweet_count": 40
       },
       "migration": {
         "not_english_at_home": 0,
         "born_overseas_proportion": 0,
         "population_density": 0,
-        "non_english_tweet_count": 926
+        "non_english_tweet_count": 930
       }
     },
     "GLEN OSMOND": {
@@ -725,13 +725,13 @@
       }
     },
     "NOARLUNGA": {
-      "suburb_tweet_count": 3469,
+      "suburb_tweet_count": 3525,
       "income": {
         "low_income_proportion": 0,
         "high_income_proportion": 0,
-        "tweet_positive_count": 1172,
-        "tweet_negative_count": 326,
-        "tweet_neutral_count": 1971
+        "tweet_positive_count": 1199,
+        "tweet_negative_count": 328,
+        "tweet_neutral_count": 1998
       },
       "education": {
         "complete_yr_12_proportion": 0,
@@ -743,7 +743,7 @@
         "not_english_at_home": 0,
         "born_overseas_proportion": 0,
         "population_density": 0,
-        "non_english_tweet_count": 396
+        "non_english_tweet_count": 399
       }
     },
     "TUSMORE": {
@@ -2419,13 +2419,13 @@
       }
     },
     "DRY CREEK": {
-      "suburb_tweet_count": 15,
+      "suburb_tweet_count": 17,
       "income": {
         "low_income_proportion": 0,
         "high_income_proportion": 0,
         "tweet_positive_count": 0,
         "tweet_negative_count": 1,
-        "tweet_neutral_count": 14
+        "tweet_neutral_count": 16
       },
       "education": {
         "complete_yr_12_proportion": 0,
@@ -2437,7 +2437,7 @@
         "not_english_at_home": 0,
         "born_overseas_proportion": 0,
         "population_density": 0,
-        "non_english_tweet_count": 0
+        "non_english_tweet_count": 1
       }
     },
     "EASTWOOD": {
@@ -2683,5 +2683,5 @@
       }
     }
   },
-  "db_timestamp": "1589645000"
+  "db_timestamp": "1589778000"
 }
