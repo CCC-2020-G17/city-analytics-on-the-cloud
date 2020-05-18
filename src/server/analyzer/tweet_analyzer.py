@@ -252,27 +252,27 @@ def _setup_analysis_logger():
 
 
 def _load_timestamp_record():
-    with open('timestamp_record.json', 'r') as f:
-        record = json.load(f)
-        start_ts = record["tweets_with_geo"]
-        end_ts = str(int(start_ts) + 100)
-    return start_ts, end_ts
+    end_time = int(time.time())
+    start_time = end_time - 1000
+    return start_time, end_time
 
-
-def _update_timestamp_record():
-    with open('timestamp_record.json', 'r') as f:
-        record = json.load(f)
-        start_ts = record["tweets_with_geo"]
-        end_ts = int(start_ts) + 100
-    with open('timestamp_record.json', 'w')  as f:
-        record["tweets_with_geo"] = end_ts
-        json.dump(record, f, indent=1)
+# def _update_timestamp_record():
+#     with open('timestamp_record.json', 'r') as f:
+#         record = json.load(f)
+#         start_ts = record["tweets_with_geo"]
+#         end_ts = int(start_ts) + 1000
+#     with open('timestamp_record.json', 'w')  as f:
+#         record["tweets_with_geo"] = end_ts
+#         json.dump(record, f, indent=1)
 
 
 def get_twitter_auth(section='DEFAULT', verbose=False):
-    #set up twitter authentication
-    # Return: tweepy.OAuthHandler object
-
+    '''
+    Setup Twitter authentication
+    :param section:
+    :param verbose:
+    :return:  tweepy.OAuthHandler
+    '''
     config = ConfigParser()
     key_file = '{}/config/twitter.key.cfg'.format(os.path.pardir)
     if verbose:
@@ -293,40 +293,36 @@ def analyze_cities():
     cities = ["Melbourne", "Sydney", "Brisbane", "Adelaide", "Perth (WA)"]
     for city in cities:
         city = city.split(" ")[0]
-        print(city)
-        # TODO: Solve extended form. (By other offline functions. Formalize all data.)
         data_loader = db_connecter.dataLoader(city)
         analysis_result_saver = db_connecter.analysisResultSaver(city)
         tweet_analyzer = tweetAnalyzer(city)
         city_period_data = data_loader.load_period_tweet_data(start_ts, end_ts)
-        print(city_period_data)
         analysis_result = tweet_analyzer.analyze(city_period_data)
-        # TODO: May combine static result here and update.
         analysis_result_saver.update_analysis(analysis_result)
-    _update_timestamp_record()
 
 
 if __name__ == '__main__':
-    # _setup_analysis_logger()
-    # while True:
-    #     try:
-    #         analysis_process = Process(target=analyze_cities)
-    #         analysis_process.start()
-    #         analysis_process.join(timeout=100)
-    #         analysis_process.terminate()
-    #         if analysis_process.exitcode is None:
-    #             logger.info('Process timeouts.')
-    #     except Exception as e:
-    #         logger.exception(e)
+    _setup_analysis_logger()
+    while True:
+        try:
+            analysis_process = Process(target=analyze_cities)
+            analysis_process.start()
+            analysis_process.join(timeout=100)
+            analysis_process.terminate()
+            if analysis_process.exitcode is None:
+                logger.info('Process timeouts.')
+            time.sleep(900)
+        except Exception as e:
+            logger.exception(e)
 
-    city = 'Perth'
-    # TODO: Solve extended form. (By other offline functions. Formalize all data.)
-    data_loader = db_connecter.dataLoader(city)
-    analysis_result_saver = db_connecter.analysisResultSaver(city)
-    tweet_analyzer = tweetAnalyzer(city)
-    city_data = data_loader.load_tweet_data()
-    print(city_data)
-    analysis_result = tweet_analyzer.analyze(city_data)
-    analysis_result_saver.save_analysis(analysis_result)
+    # The code below is for analyzing all data
+    # cities = ["Melbourne", "Sydney", "Brisbane", "Adelaide", "Perth"]
+    # for city in cities:
+    #     data_loader = db_connecter.dataLoader(city)
+    #     analysis_result_saver = db_connecter.analysisResultSaver(city)
+    #     tweet_analyzer = tweetAnalyzer(city)
+    #     city_data = data_loader.load_tweet_data()
+    #     analysis_result = tweet_analyzer.analyze(city_data)
+    #     analysis_result_saver.save_analysis(analysis_result)
 
 
