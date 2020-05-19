@@ -2,12 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="95f51a25-8570-460a-8a9a-cab9eeb45407" name="Default Changelist" comment="Add 'Adding and resetting static result to database' functionality">
-      <change beforePath="$PROJECT_DIR$/.idea/city-analytics-on-the-cloud.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/city-analytics-on-the-cloud.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/config/twitter.key.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/config/twitter.key.cfg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/server/harvesters/tweet_harvester_hist.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/harvesters/tweet_harvester_hist.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/harvesters/tweet_harvester_stream.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/harvesters/tweet_harvester_stream.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -19,11 +14,24 @@
     <SUITE FILE_PATH="coverage/city_analytics_on_the_cloud$tweet_harvester_stream.coverage" NAME="tweet_harvester_stream Coverage Results" MODIFIED="1589873289791" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/server/harvesters" />
     <SUITE FILE_PATH="coverage/city_analytics_on_the_cloud$db_connecter.coverage" NAME="db_connecter Coverage Results" MODIFIED="1588496858920" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/server/analyzer" />
     <SUITE FILE_PATH="coverage/city_analytics_on_the_cloud$tweet_analyzer.coverage" NAME="tweet_analyzer Coverage Results" MODIFIED="1589507987573" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/server/analyzer" />
-    <SUITE FILE_PATH="coverage/city_analytics_on_the_cloud$tweet_harvester_hist.coverage" NAME="tweet_harvester_hist Coverage Results" MODIFIED="1589876376563" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/server/harvesters" />
+    <SUITE FILE_PATH="coverage/city_analytics_on_the_cloud$tweet_harvester_hist.coverage" NAME="tweet_harvester_hist Coverage Results" MODIFIED="1589876960834" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/server/harvesters" />
     <SUITE FILE_PATH="coverage/city_analytics_on_the_cloud$static_analysis_generator.coverage" NAME="static_analysis_generator Coverage Results" MODIFIED="1589509009766" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/server/analyzer" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
+    <leaf>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/server/harvesters/tweet_harvester_hist.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="255">
+              <caret line="91" column="49" lean-forward="true" selection-start-line="91" selection-start-column="49" selection-end-line="91" selection-end-column="49" />
+              <folding>
+                <element signature="e#0#13#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
@@ -271,6 +279,7 @@
       <workItem from="1589507148332" duration="2086000" />
       <workItem from="1589863201484" duration="12471000" />
       <workItem from="1589876206715" duration="295000" />
+      <workItem from="1589876922885" duration="52000" />
     </task>
     <task id="LOCAL-00001" summary="Add 'Adding and resetting static result to database' functionality">
       <created>1588388939993</created>
@@ -325,7 +334,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="49740000" />
+    <option name="totallyTimeSpent" value="49792000" />
   </component>
   <component name="TodoView" selected-index="3">
     <todo-panel id="selected-file">
@@ -338,8 +347,9 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1280" height="712" extended-state="0" />
+    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.27382874" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.27786753" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -353,7 +363,7 @@
       <window_info anchor="bottom" id="Version Control" order="8" weight="0.32580644" />
       <window_info anchor="bottom" id="Database Changes" order="9" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
-      <window_info anchor="bottom" id="Terminal" order="11" visible="true" weight="0.16129032" />
+      <window_info anchor="bottom" id="Terminal" order="11" weight="0.16129032" />
       <window_info anchor="bottom" id="Python Console" order="12" weight="0.32903227" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -503,8 +513,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/server/harvesters/tweet_harvester_hist.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-123">
-          <caret line="75" column="45" lean-forward="true" selection-start-line="75" selection-start-column="45" selection-end-line="75" selection-end-column="45" />
+        <state relative-caret-position="255">
+          <caret line="91" column="49" lean-forward="true" selection-start-line="91" selection-start-column="49" selection-end-line="91" selection-end-column="49" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
           </folding>

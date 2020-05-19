@@ -84,7 +84,7 @@ def get_historical_twitters(place_id, since_time, until_time):
 
 
 if __name__ == '__main__':
-    api_access = 'DEFAULT'
+    api_access = 'SECTION1'
     save_to_db = 'tweets_mixed'
     geo_only = False
     place_id = '3f14ce28dc7c4566'
