@@ -1,16 +1,17 @@
 from couchDB.db_util import cdb
 from tweepy import Stream
 from tweepy.streaming import StreamListener
-from tweepy import API
+from configparser import ConfigParser
 from tweepy import OAuthHandler
 import time
 import json
-from configparser import ConfigParser
+import os
+import sys
 
 
 def _couchdb_get_url(section='DEFAULT', verbose=False):
     config = ConfigParser()
-    url_file = 'config/server.url.cfg'
+    url_file = '{}/config/server.url.cfg'.format(os.path.pardir)
     if verbose:
         print('url_file %s' % url_file)
     config.read(url_file)
@@ -23,7 +24,7 @@ def _twitter_get_auth(section='DEFAULT', verbose=False):
     # Return: tweepy.OAuthHandler object
 
     config = ConfigParser()
-    key_file = 'config/twitter.key.cfg'
+    key_file = '{}/config/twitter.key.cfg'.format(os.path.pardir)
     if verbose:
         print('key_file %s' % key_file)
     config.read(key_file)
@@ -37,6 +38,18 @@ def _twitter_get_auth(section='DEFAULT', verbose=False):
     return auth
 
 
+def _get_city_bound(city):
+    city_bound_file = '{}/config/city_bound.json'.format(os.path.pardir)
+    with open(city_bound_file,'r') as f:
+        city_bound = json.load(f)
+        try:
+            locations = city_bound[city]["bound"]
+        except Exception as e:
+            print(e)
+        pass
+    return locations
+
+
 class MyListener(StreamListener):
 
     def on_data(self, raw_data):
@@ -46,10 +59,10 @@ class MyListener(StreamListener):
         try:
             if geo_only:
                 if raw_data['geo'] is not None:
-                # with open('melb_geo_streaming.json', 'a') as f:
-                #     json.dump(raw_data, f, indent=2)
                     db.twput(raw_data)
             else:
+                # with open('streaming.json', 'a') as f:
+                #     json.dump(raw_data, f, indent=2)
                 db.twput(raw_data)
             return True
 
@@ -69,33 +82,50 @@ class MyListener(StreamListener):
         return True  # Don't kill the stream
 
 
-def get_streaming_twitters():
+def get_streaming_twitters(locations=[114.46, -38.28, 152.7, -11.79]):
     auth = _twitter_get_auth(api_access)
     twitter_stream = Stream(auth, MyListener())
     # use filter to collect twitter information based on Australia field
     while True:
         try:
-            twitter_stream.filter(locations=[114.46, -38.28, 152.7, -11.79])
+            twitter_stream.filter(locations=locations)
         except Exception as e:
             print('Exception:', e)
         pass
 
 
 if __name__ == '__main__':
-    api_access = 'SECTION2'
+    api_access = 'DEFAULT'
     save_to_db = 'tweets_mixed'
     geo_only = False
-    get_streaming_twitters()
+
+    """
+    USAGE:      python .py <options>
+    EXAMPLES:   (1) python tweet_harvester_stream.py
+                    - harvest real time tweets in the whole Australia
+                (2) python tweet_harvester_stream.py Melbourne
+                    - harvest real time tweets in the Melbourne by default api
+                (3) python tweet_harvester_stream.py Melbourne SECTION1 
+                    - harvest real time tweets in the Melbourne by 'SECTION1' api
+    NOTE:       The first argument should be "Adelaide", "Brisbane", "Melbourne", "Perth" or "Sydney".
+                The second argument should be "SECTION1", "SECTION2", "SECTION3"， "SECTION4" or "SECTION5".    
+    """
+
+    try:
+        if len(sys.argv) == 1:
+            get_streaming_twitters()
+        elif len(sys.argv) == 2:
+            city = sys.argv[1]
+            location = _get_city_bound(city)
+            get_streaming_twitters(locations=location)
+        else:
+            city = sys.argv[1]
+            api_access = sys.argv[2]
+            location = _get_city_bound(city)
+            get_streaming_twitters(locations=location)
+    except Exception as e:
+        print(e)
+        print("Please check your command! ")
 
 
-
-# with open('./tweet_havester_config.json','r') as f:
-#     dict = json.load(f)
-#     for city in dict:
-#         try:
-#             get_streaming_twitters(dict[city]["bound"])
-#         except Exception as e:
-#             print(e)
-#         pass
-# f.close()
 
