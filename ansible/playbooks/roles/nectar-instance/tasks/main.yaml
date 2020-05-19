@@ -38,13 +38,6 @@
   loop_control:
     index_var: index
 
-# Add hosts to Ansible in-memory inventory if groups['servers'] is not defined
-# - name: Add host
-#   add_host:
-#     hostname: '{{ item.ip }}'
-#     groups: '{{ item.group }}'
-#   loop: '{{ inventoryInfo }}'
-
 - name: Ensure hosts info is in inventory/inventory.ini
   lineinfile:
     path: inventory/inventory.ini
