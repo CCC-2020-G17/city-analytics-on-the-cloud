@@ -1,5 +1,3 @@
-# deploy services to the manager node
-
 - name: deploy tweet stream
   become: yes
   docker_swarm_service:

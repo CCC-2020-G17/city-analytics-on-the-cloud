@@ -27,8 +27,17 @@
   when: ansible_host == master_ip_address
   tags: swarm-delete
 
-- name: delete swarm
+- name: Leave swarm for a worker
   become: yes
-  shell: docker swarm leave --force
+  docker_swarm:
+    state: absent
+  when: ansible_host != master_ip_address
   tags: swarm-delete
 
+- name: Leave swarm for a worker
+  become: yes
+  docker_swarm:
+    state: absent
+    force: true
+  when: ansible_host == master_ip_address
+  tags: swarm-delete

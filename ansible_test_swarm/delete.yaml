@@ -1,4 +1,8 @@
-- hosts: Nodes
+- hosts: slaveNode
+  gather_facts: true
+  roles:
+    - role: docker-swarm-delete
+- hosts: masterNode
   gather_facts: true
   roles:
     - role: docker-swarm-delete
