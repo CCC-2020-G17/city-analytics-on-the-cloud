@@ -1,0 +1,11 @@
+- name: Set a bind mount
+  become: yes
+  docker_swarm_service:
+    name: tweet_analyzer
+    image: shanrb119/tweet_analyzer:2.0
+    mode: global
+    mounts:
+      - source: /home/ubuntu/config
+        target: /config
+        type: bind
+  tags: swarm

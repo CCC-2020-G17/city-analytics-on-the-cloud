@@ -1,0 +1,4 @@
+- hosts: Nodes
+  gather_facts: true
+  roles:
+    - role: docker-swarm-delete

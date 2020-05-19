@@ -1,0 +1,16 @@
+- name: initial docker manager
+  hosts: masterNode
+  gather_facts: true
+  roles:
+    - role: docker-swarm-init
+
+- name: add workers
+  hosts: slaveNode
+  roles:
+    - role: docker-swarm-addworker
+
+- name: deploy analyzer to 
+  hosts: masterNode
+  gather_facts: true
+  roles:
+    - role: docker-swarm-service-analyzer
