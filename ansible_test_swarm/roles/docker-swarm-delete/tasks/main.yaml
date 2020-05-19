@@ -1,7 +1,7 @@
 - name: Set master ip address
   set_fact: 
     master_ip_address: "{{ groups['masterNode'] | map('extract', hostvars, ['ansible_host']) | join(',') }}"
-  tags: swarm
+  tags: swarm-delete
 
 - name: Remove service
   become: yes
@@ -9,10 +9,10 @@
     name: myservice
     state: absent
   when: ansible_host == master_ip_address
-  tags: swarm
+  tags: swarm-delete
 
 - name: delete swarm
   become: yes
   shell: docker swarm leave --force
-  tags: swarm
+  tags: swarm-delete
 

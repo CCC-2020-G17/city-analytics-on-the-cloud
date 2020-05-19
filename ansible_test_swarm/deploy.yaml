@@ -9,8 +9,14 @@
   roles:
     - role: docker-swarm-addworker
 
-- name: deploy analyzer to 
+- name: pull images
+  hosts: Nodes
+  gather_facts: true
+  roles:
+    - role: docker-pull-images
+
+- name: deploy services 
   hosts: masterNode
   gather_facts: true
   roles:
-    - role: docker-swarm-service-analyzer
+    - role: docker-swarm-service
