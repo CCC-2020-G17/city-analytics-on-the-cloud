@@ -51,6 +51,16 @@
     owner: "{{ ansible_user }}"
     group: "{{ ansible_user }}"
 
+- name: "Copy proxy.envto {{ app_dir }}/"
+  tags: app
+  become: yes
+  template:
+    force: yes
+    src: proxy.env.j2
+    dest: "{{ app_dir }}/proxy.env"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+
 # - name: Run app docker-compose
 #   tags: app
 #   become: yes
@@ -62,6 +72,13 @@
 #     recreate: always
 #     restarted: yes
 #     build: yes
+
+- name: Install swarm dependency
+  tags: 'app'
+  become: yes
+  pip:
+    name: ['jsondiff']
+    state: latest
 
 - name: Deploy stack from a compose file
   tags: 

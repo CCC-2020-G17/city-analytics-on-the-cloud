@@ -7,12 +7,12 @@ services:
             mode: global
         container_name: restful_api_server
         restart: always
-        environment:
-            - APP_NAME=MyFlaskApp
         expose:
             - 3000
         volumes:
             - {{config_dir}}:/app/config
+        environment:
+            - APP_NAME=MyFlaskApp
 
     nginx:
         image: mgsweet/server_nginx:latest
@@ -36,6 +36,8 @@ services:
         restart: always
         volumes:
             - {{config_dir}}:/config
+        env_file:
+            - proxy.env
     
     tweet_hist:
         deploy:
@@ -47,6 +49,8 @@ services:
         restart: always
         volumes:
             - {{config_dir}}:/config
+        env_file:
+            - proxy.env
 
     tweet_analyzer:
         deploy:
@@ -58,5 +62,7 @@ services:
         restart: always
         volumes:
             - {{config_dir}}:/config
+        env_file:
+            - proxy.env
 
     

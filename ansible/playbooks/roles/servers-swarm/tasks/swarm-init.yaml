@@ -1,3 +1,10 @@
+- name: Create a docker network
+  become: yes
+  docker_network:
+    name: app_network
+    driver: overlay
+    force: yes
+
 - name: Set all ip addresses
   set_fact: 
     all_ip_addresses: "{{ (groups['Nodes'] | map('extract', hostvars, ['ansible_host']) | join(',')).split(',')}}"
