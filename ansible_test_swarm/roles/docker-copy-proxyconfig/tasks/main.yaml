@@ -1,0 +1,17 @@
+- name: "Create docker config directory /root/.docker"
+  become: yes
+  file:
+    path: "/root/.docker"
+    recurse: yes
+    state: directory
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+
+- name: Copy docker conf, http-proxy.conf to host
+  become: yes
+  template:
+    src: config.json.j2
+    dest: "/root/.docker/config.json"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+  tags: swarm-service

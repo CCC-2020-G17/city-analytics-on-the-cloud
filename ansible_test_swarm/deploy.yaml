@@ -9,10 +9,12 @@
   roles:
     - role: docker-swarm-addworker
 
-- name: pull images
+
+- name: pull images and copy proxy config.json
   hosts: Nodes
   gather_facts: true
   roles:
+    - role: docker-copy-proxyconfig
     - role: docker-pull-images
 
 - name: deploy services 
