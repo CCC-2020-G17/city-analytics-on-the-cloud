@@ -64,6 +64,7 @@ def get_historical_twitters(place_id, since_time, until_time):
     # places = api.geo_search(query="AU", granularity="country")
     # place_id = places[0].id
     tweets = tweepy.Cursor(api.search, q="place:%s" % place_id, since=since_time, until=until_time).items()
+    print("Start getting historical tweets ...")
     while True:
         try:
             tweet = tweets.next()
@@ -80,6 +81,7 @@ def get_historical_twitters(place_id, since_time, until_time):
             time.sleep(60 * 15)
             continue
         except StopIteration:
+            print("Finished!")
             break
 
 

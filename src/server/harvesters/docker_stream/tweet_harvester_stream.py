@@ -86,6 +86,7 @@ def get_streaming_twitters(locations=[114.46, -38.28, 152.7, -11.79]):
     auth = _twitter_get_auth(api_access)
     twitter_stream = Stream(auth, MyListener())
     # use filter to collect twitter information based on Australia field
+    print("Start getting real time tweets ...")
     while True:
         try:
             twitter_stream.filter(locations=locations)
