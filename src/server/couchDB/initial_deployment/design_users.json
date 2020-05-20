@@ -1,0 +1,10 @@
+{
+    "_id": "_design/users",
+    "views": {
+      "get_uid": {
+        "map": "function (doc) {\n  emit(doc.user.id, 1);\n}",
+        "reduce": "_count"
+      }
+    },
+    "language": "javascript"
+  }

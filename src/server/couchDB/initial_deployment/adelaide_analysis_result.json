@@ -1,22 +1,22 @@
 {
   "_id": "adelaide_analysis_result",
-  "_rev": "16-f08c2e396dc19acef23f0230b74d10af",
+  "_rev": "22-52161f0089d6f9a22ff2f2dd381a9a43",
   "city_name": "Adelaide",
-  "city_tweet_count": 68422,
+  "city_tweet_count": 68550,
   "covid-19": {
-    "tweet_count": 1181,
-    "followers_within_100": 60,
-    "followers_100_to_500": 109,
-    "followers_above_500": 150,
+    "tweet_count": 1252,
+    "followers_within_100": 66,
+    "followers_100_to_500": 118,
+    "followers_above_500": 186,
     "follower_not_able_to_get": 37
   },
   "young_twitter_preference": {
-    "night_tweets_count": 9892,
-    "tweet_with_geo_count": 37767,
+    "night_tweets_count": 10915,
+    "tweet_with_geo_count": 37790,
     "young_people_proportion": 27.799999999999997
   },
   "tweet_density": {
-    "unique_user_count": 2208,
+    "unique_user_count": 2281,
     "english_mother_tongue_proportion": 75.4
   },
   "suburbs": {
@@ -131,13 +131,13 @@
       }
     },
     "ADELAIDE": {
-      "suburb_tweet_count": 24511,
+      "suburb_tweet_count": 24524,
       "income": {
         "low_income_proportion": 44,
         "high_income_proportion": 8,
         "tweet_positive_count": 11492,
         "tweet_negative_count": 1269,
-        "tweet_neutral_count": 11750
+        "tweet_neutral_count": 11763
       },
       "education": {
         "complete_yr_12_proportion": 72.5,
@@ -395,13 +395,13 @@
       }
     },
     "YATALA": {
-      "suburb_tweet_count": 6996,
+      "suburb_tweet_count": 7000,
       "income": {
         "low_income_proportion": 0,
         "high_income_proportion": 0,
         "tweet_positive_count": 2519,
         "tweet_negative_count": 393,
-        "tweet_neutral_count": 4084
+        "tweet_neutral_count": 4088
       },
       "education": {
         "complete_yr_12_proportion": 0,
@@ -725,11 +725,11 @@
       }
     },
     "NOARLUNGA": {
-      "suburb_tweet_count": 3525,
+      "suburb_tweet_count": 3527,
       "income": {
         "low_income_proportion": 0,
         "high_income_proportion": 0,
-        "tweet_positive_count": 1199,
+        "tweet_positive_count": 1201,
         "tweet_negative_count": 328,
         "tweet_neutral_count": 1998
       },
@@ -2683,5 +2683,5 @@
       }
     }
   },
-  "db_timestamp": "1589778000"
+  "db_timestamp": "1589857800"
 }

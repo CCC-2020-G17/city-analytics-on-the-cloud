@@ -1,18 +1,17 @@
 {
   "_id": "_design/cities",
-  "_rev": "27-6112e73e91a29a1ab956101ea877a656",
   "views": {
-    "get_city_notAU": {
+    "get_timestamp": {
       "reduce": "_count",
-      "map": "function (doc) {\n  if(doc.place.country_code !== 'AU'){\n    emit([doc.user.id,doc.place.country],1);\n  }\n}"
-    },
-    "by_city": {
-      "map": "function (doc) {\n  if(doc.place.place_type == \"city\"){\n    emit(doc.place.name, 1);\n  }\n}\n\n  ",
-      "reduce": "_count"
+      "map": "function (doc) {\n  if(doc.place === null){\n    emit([doc.db_timestamp,\"Missing\"], 1);\n  }else{\n    emit([doc.db_timestamp,doc.place.name], 1);\n  }\n}"
     },
     "by_ts_city": {
       "reduce": "_count",
       "map": "function (doc) {\n  if(doc.place === null){\n    emit([doc.db_timestamp,\"Missing\"], 1);\n  }else{\n    emit([doc.db_timestamp,doc.place.name], 1);\n  }\n}"
+    },
+    "by_city": {
+      "reduce": "_count",
+      "map": "function (doc) {\n  if(doc.place.place_type == \"city\"){\n    emit(doc.place.name, 1);\n  }\n}"
     }
   },
   "language": "javascript"

@@ -1,22 +1,22 @@
 {
   "_id": "sydney_analysis_result",
-  "_rev": "18-b739e0aee4b34440a4ba202bb6fc1c27",
+  "_rev": "24-e0434d951e0a3178b77f742c14011a09",
   "city_name": "Sydney",
-  "city_tweet_count": 352689,
+  "city_tweet_count": 353374,
   "covid-19": {
-    "tweet_count": 5716,
-    "followers_within_100": 273,
-    "followers_100_to_500": 493,
-    "followers_above_500": 806,
+    "tweet_count": 5787,
+    "followers_within_100": 279,
+    "followers_100_to_500": 502,
+    "followers_above_500": 842,
     "follower_not_able_to_get": 121
   },
   "young_twitter_preference": {
-    "night_tweets_count": 42281,
-    "tweet_with_geo_count": 187023,
+    "night_tweets_count": 43258,
+    "tweet_with_geo_count": 187228,
     "young_people_proportion": 29.5
   },
   "tweet_density": {
-    "unique_user_count": 9806,
+    "unique_user_count": 10092,
     "english_mother_tongue_proportion": 58.4
   },
   "suburbs": {
@@ -43,13 +43,13 @@
       }
     },
     "MARRICKVILLE": {
-      "suburb_tweet_count": 1848,
+      "suburb_tweet_count": 1856,
       "income": {
         "low_income_proportion": 32.1,
         "high_income_proportion": 10.9,
         "tweet_positive_count": 746,
         "tweet_negative_count": 159,
-        "tweet_neutral_count": 943
+        "tweet_neutral_count": 951
       },
       "education": {
         "complete_yr_12_proportion": 64.7,
@@ -87,13 +87,13 @@
       }
     },
     "CHIPPENDALE": {
-      "suburb_tweet_count": 1323,
+      "suburb_tweet_count": 1325,
       "income": {
         "low_income_proportion": 32.7,
         "high_income_proportion": 12.399999999999999,
-        "tweet_positive_count": 552,
+        "tweet_positive_count": 553,
         "tweet_negative_count": 73,
-        "tweet_neutral_count": 698
+        "tweet_neutral_count": 699
       },
       "education": {
         "complete_yr_12_proportion": 73.4,
@@ -131,13 +131,13 @@
       }
     },
     "HAYMARKET": {
-      "suburb_tweet_count": 2583,
+      "suburb_tweet_count": 2592,
       "income": {
         "low_income_proportion": 34.8,
         "high_income_proportion": 12.5,
-        "tweet_positive_count": 1091,
+        "tweet_positive_count": 1097,
         "tweet_negative_count": 116,
-        "tweet_neutral_count": 1376
+        "tweet_neutral_count": 1379
       },
       "education": {
         "complete_yr_12_proportion": 74.5,
@@ -461,13 +461,13 @@
       }
     },
     "SURRY HILLS": {
-      "suburb_tweet_count": 5208,
+      "suburb_tweet_count": 5216,
       "income": {
         "low_income_proportion": 22.200000000000003,
         "high_income_proportion": 20.9,
         "tweet_positive_count": 2250,
         "tweet_negative_count": 263,
-        "tweet_neutral_count": 2695
+        "tweet_neutral_count": 2703
       },
       "education": {
         "complete_yr_12_proportion": 72.3,
@@ -527,13 +527,13 @@
       }
     },
     "DAWES POINT": {
-      "suburb_tweet_count": 189,
+      "suburb_tweet_count": 193,
       "income": {
         "low_income_proportion": 0,
         "high_income_proportion": 0,
         "tweet_positive_count": 71,
         "tweet_negative_count": 5,
-        "tweet_neutral_count": 113
+        "tweet_neutral_count": 117
       },
       "education": {
         "complete_yr_12_proportion": 0,
@@ -593,11 +593,11 @@
       }
     },
     "THE ROCKS": {
-      "suburb_tweet_count": 1550,
+      "suburb_tweet_count": 1562,
       "income": {
         "low_income_proportion": 34.8,
         "high_income_proportion": 12.5,
-        "tweet_positive_count": 646,
+        "tweet_positive_count": 658,
         "tweet_negative_count": 67,
         "tweet_neutral_count": 837
       },
@@ -611,17 +611,17 @@
         "not_english_at_home": 60.6,
         "born_overseas_proportion": 67.9,
         "population_density": 6902.7,
-        "non_english_tweet_count": 101
+        "non_english_tweet_count": 109
       }
     },
     "SYDNEY": {
-      "suburb_tweet_count": 42509,
+      "suburb_tweet_count": 42554,
       "income": {
         "low_income_proportion": 34.8,
         "high_income_proportion": 12.5,
-        "tweet_positive_count": 19067,
-        "tweet_negative_count": 2860,
-        "tweet_neutral_count": 20582
+        "tweet_positive_count": 19081,
+        "tweet_negative_count": 2862,
+        "tweet_neutral_count": 20611
       },
       "education": {
         "complete_yr_12_proportion": 74.5,
@@ -633,7 +633,7 @@
         "not_english_at_home": 60.6,
         "born_overseas_proportion": 67.9,
         "population_density": 6902.7,
-        "non_english_tweet_count": 2936
+        "non_english_tweet_count": 2944
       }
     },
     "KINGSFORD": {
@@ -791,13 +791,13 @@
       }
     },
     "WATERLOO": {
-      "suburb_tweet_count": 1879,
+      "suburb_tweet_count": 1881,
       "income": {
         "low_income_proportion": 32.6,
         "high_income_proportion": 12.9,
         "tweet_positive_count": 297,
         "tweet_negative_count": 31,
-        "tweet_neutral_count": 1551
+        "tweet_neutral_count": 1553
       },
       "education": {
         "complete_yr_12_proportion": 72.7,
@@ -901,13 +901,13 @@
       }
     },
     "PETERSHAM": {
-      "suburb_tweet_count": 432,
+      "suburb_tweet_count": 436,
       "income": {
         "low_income_proportion": 23.3,
         "high_income_proportion": 16.1,
         "tweet_positive_count": 191,
         "tweet_negative_count": 25,
-        "tweet_neutral_count": 216
+        "tweet_neutral_count": 220
       },
       "education": {
         "complete_yr_12_proportion": 70.2,
@@ -945,13 +945,13 @@
       }
     },
     "DRUMMOYNE": {
-      "suburb_tweet_count": 173,
+      "suburb_tweet_count": 174,
       "income": {
         "low_income_proportion": 0,
         "high_income_proportion": 0,
         "tweet_positive_count": 66,
         "tweet_negative_count": 13,
-        "tweet_neutral_count": 94
+        "tweet_neutral_count": 95
       },
       "education": {
         "complete_yr_12_proportion": 0,
@@ -967,13 +967,13 @@
       }
     },
     "ALEXANDRIA": {
-      "suburb_tweet_count": 1795,
+      "suburb_tweet_count": 1799,
       "income": {
         "low_income_proportion": 15.3,
         "high_income_proportion": 22.3,
         "tweet_positive_count": 907,
         "tweet_negative_count": 96,
-        "tweet_neutral_count": 792
+        "tweet_neutral_count": 796
       },
       "education": {
         "complete_yr_12_proportion": 78,
@@ -1055,13 +1055,13 @@
       }
     },
     "WOOLLAHRA": {
-      "suburb_tweet_count": 231,
+      "suburb_tweet_count": 234,
       "income": {
         "low_income_proportion": 0,
         "high_income_proportion": 0,
         "tweet_positive_count": 91,
         "tweet_negative_count": 10,
-        "tweet_neutral_count": 130
+        "tweet_neutral_count": 133
       },
       "education": {
         "complete_yr_12_proportion": 0,
@@ -1121,13 +1121,13 @@
       }
     },
     "DARLINGHURST": {
-      "suburb_tweet_count": 5171,
+      "suburb_tweet_count": 5181,
       "income": {
         "low_income_proportion": 15.9,
         "high_income_proportion": 23.299999999999997,
-        "tweet_positive_count": 2180,
-        "tweet_negative_count": 297,
-        "tweet_neutral_count": 2694
+        "tweet_positive_count": 2184,
+        "tweet_negative_count": 298,
+        "tweet_neutral_count": 2699
       },
       "education": {
         "complete_yr_12_proportion": 71.8,
@@ -1139,7 +1139,7 @@
         "not_english_at_home": 21.1,
         "born_overseas_proportion": 38.7,
         "population_density": 14286.4,
-        "non_english_tweet_count": 433
+        "non_english_tweet_count": 434
       }
     },
     "ABBOTSFORD": {
@@ -1385,11 +1385,11 @@
       }
     },
     "RANDWICK": {
-      "suburb_tweet_count": 1146,
+      "suburb_tweet_count": 1150,
       "income": {
         "low_income_proportion": 0,
         "high_income_proportion": 0,
-        "tweet_positive_count": 342,
+        "tweet_positive_count": 346,
         "tweet_negative_count": 47,
         "tweet_neutral_count": 757
       },
@@ -1517,13 +1517,13 @@
       }
     },
     "POTTS POINT": {
-      "suburb_tweet_count": 978,
+      "suburb_tweet_count": 979,
       "income": {
         "low_income_proportion": 14.3,
         "high_income_proportion": 20.7,
         "tweet_positive_count": 448,
         "tweet_negative_count": 65,
-        "tweet_neutral_count": 465
+        "tweet_neutral_count": 466
       },
       "education": {
         "complete_yr_12_proportion": 64.7,
@@ -1583,13 +1583,13 @@
       }
     },
     "ROCKDALE": {
-      "suburb_tweet_count": 105,
+      "suburb_tweet_count": 109,
       "income": {
         "low_income_proportion": 0,
         "high_income_proportion": 0,
         "tweet_positive_count": 45,
         "tweet_negative_count": 8,
-        "tweet_neutral_count": 52
+        "tweet_neutral_count": 56
       },
       "education": {
         "complete_yr_12_proportion": 0,
@@ -1601,7 +1601,7 @@
         "not_english_at_home": 0,
         "born_overseas_proportion": 0,
         "population_density": 0,
-        "non_english_tweet_count": 12
+        "non_english_tweet_count": 16
       }
     },
     "TEMPE": {
@@ -1627,13 +1627,13 @@
       }
     },
     "ST PETERS": {
-      "suburb_tweet_count": 1231,
+      "suburb_tweet_count": 1232,
       "income": {
         "low_income_proportion": 27.599999999999998,
         "high_income_proportion": 12.8,
         "tweet_positive_count": 604,
         "tweet_negative_count": 42,
-        "tweet_neutral_count": 585
+        "tweet_neutral_count": 586
       },
       "education": {
         "complete_yr_12_proportion": 67,
@@ -1957,13 +1957,13 @@
       }
     },
     "PADDINGTON": {
-      "suburb_tweet_count": 1746,
+      "suburb_tweet_count": 1750,
       "income": {
         "low_income_proportion": 0,
         "high_income_proportion": 0,
         "tweet_positive_count": 816,
         "tweet_negative_count": 69,
-        "tweet_neutral_count": 861
+        "tweet_neutral_count": 865
       },
       "education": {
         "complete_yr_12_proportion": 0,
@@ -2001,13 +2001,13 @@
       }
     },
     "LITTLE BAY": {
-      "suburb_tweet_count": 155,
+      "suburb_tweet_count": 159,
       "income": {
         "low_income_proportion": 0,
         "high_income_proportion": 0,
         "tweet_positive_count": 75,
         "tweet_negative_count": 8,
-        "tweet_neutral_count": 72
+        "tweet_neutral_count": 76
       },
       "education": {
         "complete_yr_12_proportion": 0,
@@ -2111,5 +2111,5 @@
       }
     }
   },
-  "db_timestamp": "1589777900"
+  "db_timestamp": "1589857800"
 }
