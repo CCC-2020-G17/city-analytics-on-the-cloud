@@ -13,33 +13,33 @@
     owner: "{{ ansible_user }}"
     group: "{{ ansible_user }}"
 
-- name: "Create {{nginx_dir}} directory"
-  tags: app
-  become: yes
-  file:
-    path: "{{ nginx_dir }}"
-    recurse: yes
-    state: directory
-    owner: "{{ ansible_user }}"
-    group: "{{ ansible_user }}"
+# - name: "Create {{nginx_dir}} directory"
+#   tags: app
+#   become: yes
+#   file:
+#     path: "{{ nginx_dir }}"
+#     recurse: yes
+#     state: directory
+#     owner: "{{ ansible_user }}"
+#     group: "{{ ansible_user }}"
 
-- name: "Copy nginx.conf to {{ nginx_dir }}/"
-  tags: app
-  become: yes
-  template:
-    src: nginx.conf.j2
-    dest: "{{ nginx_dir }}/nginx.conf"
-    owner: "{{ ansible_user }}"
-    group: "{{ ansible_user }}"
+# - name: "Copy nginx.conf to {{ nginx_dir }}/"
+#   tags: app
+#   become: yes
+#   template:
+#     src: nginx.conf.j2
+#     dest: "{{ nginx_dir }}/nginx.conf"
+#     owner: "{{ ansible_user }}"
+#     group: "{{ ansible_user }}"
 
-- name: "Copy nginx_Dockerfile to {{ nginx_dir }}/"
-  tags: app
-  become: yes
-  copy:
-    src: nginx_Dockerfile
-    dest: "{{ nginx_dir }}/Dockerfile"
-    owner: "{{ ansible_user }}"
-    group: "{{ ansible_user }}"
+# - name: "Copy nginx_Dockerfile to {{ nginx_dir }}/"
+#   tags: app
+#   become: yes
+#   copy:
+#     src: nginx_Dockerfile
+#     dest: "{{ nginx_dir }}/Dockerfile"
+#     owner: "{{ ansible_user }}"
+#     group: "{{ ansible_user }}"
 
 - name: "Copy docker-compose.yaml to {{app_dir}}"
   tags: app
@@ -51,16 +51,29 @@
     owner: "{{ ansible_user }}"
     group: "{{ ansible_user }}"
 
-- name: Run app docker-compose
-  tags: app
+# - name: Run app docker-compose
+#   tags: app
+#   become: yes
+#   docker_compose:
+#     project_src: "{{ app_dir }}"
+#     pull: yes
+#     remove_orphans: yes
+#     state: absent
+#     recreate: always
+#     restarted: yes
+#     build: yes
+
+- name: Deploy stack from a compose file
+  tags: 
+    - app
+    - test
   become: yes
-  docker_compose:
-    project_src: "{{ app_dir }}"
-    pull: yes
-    remove_orphans: yes
+  docker_stack:
     state: present
-    recreate: always
-    restarted: yes
-    build: yes
+    prune: yes
+    name: app
+    compose:
+      - "{{ app_dir }}/docker-compose.yaml"
+  run_once: yes
 
 
