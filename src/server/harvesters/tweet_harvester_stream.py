@@ -33,11 +33,8 @@ def _twitter_get_auth(section='DEFAULT', verbose=False):
     ACCESS_TOKEN = config.get(section, 'ACCESS_TOKEN')
     ACCESS_TOKEN_SECRET = config.get(section, 'ACCESS_TOKEN_SECRET')
 
-    try:
-        auth = OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
-        auth.set_access_token(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
-    except Exception as e:
-        print(e)
+    auth = OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
+    auth.set_access_token(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
     return auth
 
 
@@ -89,6 +86,7 @@ def get_streaming_twitters(locations=[114.46, -38.28, 152.7, -11.79]):
     auth = _twitter_get_auth(api_access)
     twitter_stream = Stream(auth, MyListener())
     # use filter to collect twitter information based on Australia field
+    print("Start getting real time tweets ...")
     while True:
         try:
             twitter_stream.filter(locations=locations)

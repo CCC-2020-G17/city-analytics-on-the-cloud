@@ -36,12 +36,9 @@ def _get_twitter_auth(section='DEFAULT', verbose=False):
     ACCESS_TOKEN = config.get(section, 'ACCESS_TOKEN')
     ACCESS_TOKEN_SECRET = config.get(section, 'ACCESS_TOKEN_SECRET')
 
-    try:
-        auth = OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
-        auth.set_access_token(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
-        return auth
-    except Exception as e:
-        print(e)
+    auth = OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
+    auth.set_access_token(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
+    return auth
 
 
 def _get_place_id(city):
@@ -67,6 +64,7 @@ def get_historical_twitters(place_id, since_time, until_time):
     # places = api.geo_search(query="AU", granularity="country")
     # place_id = places[0].id
     tweets = tweepy.Cursor(api.search, q="place:%s" % place_id, since=since_time, until=until_time).items()
+    print("Start getting historical tweets ...")
     while True:
         try:
             tweet = tweets.next()
@@ -83,6 +81,7 @@ def get_historical_twitters(place_id, since_time, until_time):
             time.sleep(60 * 15)
             continue
         except StopIteration:
+            print("Finished!")
             break
 
 
