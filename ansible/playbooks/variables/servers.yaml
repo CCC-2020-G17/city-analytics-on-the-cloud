@@ -3,6 +3,9 @@ volumes:
   - device: /dev/vdb
     mountpoint: /data
 
+# swarm need to use absolute path 
+root_dir: /root
+    
 # servers proxy server address
 proxy_address: http://wwwproxy.unimelb.edu.au:8000/
 no_proxy_address: localhost,127.0.0.1,localaddress,172.16.0.0/12,.melbourne.rc.nectar.org.au,.storage.u nimelb.edu.au,.cloud.unimelb.edu.au
@@ -16,11 +19,15 @@ github_password: adminG17ServerBotadmin
 
 # Github repo address
 repo_address: "https://{{ github_account }}:{{ github_password }}@github.com/CCC-2020-G17/city-analytics-on-the-cloud.git"
-repo_local_path: ~/github_repo
+repo_local_path: "{{root_dir}}/github_repo"
 repo_depth: 1
 
+# Config
+config_dir: "{{root_dir}}/config"
+github_config_dir: "{{repo_local_path}}/src/server/config"
+
 # app
-app_dir: ~/app
+app_dir: "{{root_dir}}/app"
 nginx_dir: "{{app_dir}}/nginx"
 frontend_dir: "{{repo_local_path}}/src/client/dist"
 # Currently keepalived is not usable because we got no access to the float ip
@@ -35,7 +42,7 @@ keepalived_max_priority: 100
 # keepalived_state, keepalived_priority
 
 # couchDB
-couchDB_dir: ~/couchDB
+couchDB_dir: "{{root_dir}}/couchDB"
 couchDB_data_dir: /data/couchdb/data
 couchDB_user: cccg17
 couchDB_password: cccg17
@@ -45,5 +52,6 @@ couchDB_init_deploy_dir: "{{repo_local_path}}/src/server/couchDB/initial_deploym
 couchDB_cluster_setting_interval: 10
 # cluster_size, master_ip_address is used
 
-# Config
-config_dir: ~/config
+# Swarm
+swarm_port: 2377
+swarm_manager_num: 3

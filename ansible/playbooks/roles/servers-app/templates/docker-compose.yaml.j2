@@ -13,7 +13,7 @@ services:
             - {{config_dir}}:/app/config
 
     nginx:
-        build: ./nginx
+        image: mgsweet/server_nginx:latest
         container_name: nginx
         privileged: true
         restart: always
@@ -22,11 +22,28 @@ services:
         volumes:
             - {{frontend_dir}}:/dist
 
-    # keepalived:
-    #     build: ./keepalived
-    #     depends_on:
-    #         - nginx
-    #     network_mode: "host"
-    #     cap_drop:
-    #         - NET_ADMIN
-    #     privileged: true
+    tweet_stream:
+        image: shanrb119/tweet_stream:latest
+        container_name: tweet_stream
+        privileged: true
+        restart: always
+        volumes:
+            - {{config_dir}}:/config
+    
+    tweet_hist:
+        image: shanrb119/tweet_hist:latest
+        container_name: tweet_hist
+        privileged: true
+        restart: always
+        volumes:
+            - {{config_dir}}:/config
+
+    tweet_analyzer:
+        image: shanrb119/tweet_analyzer:latest
+        container_name: tweet_analyzer
+        privileged: true
+        restart: always
+        volumes:
+            - {{config_dir}}:/config
+
+    

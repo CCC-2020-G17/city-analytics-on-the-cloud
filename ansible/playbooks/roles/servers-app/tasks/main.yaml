@@ -32,7 +32,6 @@
     owner: "{{ ansible_user }}"
     group: "{{ ansible_user }}"
 
-
 - name: "Copy nginx_Dockerfile to {{ nginx_dir }}/"
   tags: app
   become: yes
@@ -42,105 +41,11 @@
     owner: "{{ ansible_user }}"
     group: "{{ ansible_user }}"
 
-
-### KeepAlived ###
-# We don't get an access to use the floating network setting in Research cloud. Use the code below once we can.
-
-# - name: Set master ip address
-#   tags: 
-#     - app
-#     - test
-#   set_fact: 
-#     master_ip_address: "{{ groups['masterNode'] | map('extract', hostvars, ['ansible_host']) | join(',') }}"
-
-# - name: Set other ip addresses
-#   tags: 
-#     - app
-#     - test
-#   set_fact: 
-#     other_ip_addresses: "{{ (groups['Nodes'] | map('extract', hostvars, ['ansible_host']) | join(',')).split(',') | difference([ansible_host]) }}"
-
-# - name: Get the size of cluster
-#   tags:
-#     - app
-#     - test
-#   set_fact:
-#     cluster_size: "{{ groups['Nodes'] | length }}"  
-
-# - name: Set keepAlived state
-#   tags:
-#     - app
-#     - test
-#   set_fact:
-#     keepalived_state: "{{ 'BACKUP' if ansible_host != master_ip_address else 'MASTER'}}"
-
-# - name: Set default keepAlived priority
-#   tags:
-#     - app
-#     - test
-#   set_fact:
-#     keepalived_priority: "{{ keepalived_priority|default({}) | combine( {item: keepalived_max_priority} ) }}"
-#   with_items: "{{ all_ip_addresses }}"
-
-# - name: Set keepAlived priority
-#   tags:
-#     - app
-#     - test
-#   set_fact:
-#     keepalived_priority: "{{keepalived_priority |  combine( {all_ip_addresses[item]: keepalived_max_priority - item} ) }}"
-#   when: all_ip_addresses[item] != master_ip_address
-#   loop: "{{range(1, (cluster_size | int))|list}}"
-
-# - name: Print and check keepalived_state & keepalived_priority
-#   debug:
-#     msg: " {{keepalived_state}} {{keepalived_priority}}"
-#   tags:
-#     - test
-
-# - name: "Create {{ app_dir }}/keepalived directory"
-#   tags: app
-#   become: yes
-#   file:
-#     path: "{{ app_dir }}/keepalived"
-#     recurse: yes
-#     state: directory
-#     owner: "{{ ansible_user }}"
-#     group: "{{ ansible_user }}"
-
-# - name: "Copy Dockerfile to {{ app_dir }}/keepalived"
-#   tags: 
-#     - app
-#   become: yes
-#   copy:
-#     src: Dockerfile
-#     dest: "{{ app_dir }}/keepalived/Dockerfile"
-#     owner: "{{ ansible_user }}"
-#     group: "{{ ansible_user }}"
-
-# - name: "Copy nginx_check.sh to {{ app_dir }}/keepalived"
-#   tags: 
-#     - app
-#   become: yes
-#   copy:
-#     src: nginx_check.sh
-#     dest: "{{ app_dir }}/keepalived/nginx_check.sh"
-#     owner: "{{ ansible_user }}"
-#     group: "{{ ansible_user }}"
-
-# - name: "Copy keepalived.conf to {{ app_dir }}/keepalived"
-#   tags: 
-#     - app
-#   become: yes
-#   template:
-#     src: keepalived.conf.j2
-#     dest: "{{ app_dir }}/keepalived/keepalived.conf"
-#     owner: "{{ ansible_user }}"
-#     group: "{{ ansible_user }}"
-
 - name: "Copy docker-compose.yaml to {{app_dir}}"
   tags: app
   become: yes
   template:
+    force: yes
     src: docker-compose.yaml.j2
     dest: "{{ app_dir }}/docker-compose.yaml"
     owner: "{{ ansible_user }}"
@@ -157,4 +62,5 @@
     recreate: always
     restarted: yes
     build: yes
+
 

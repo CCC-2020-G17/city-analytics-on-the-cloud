@@ -1,0 +1,17 @@
+# init -  pull images - service
+- name: Initialize Swarm Cluster
+  tags: 
+    - swarm
+    - swarm-init
+  include: swarm-init.yaml
+
+# - name: Deploy services into the swarm
+#   tags: 
+#     - swarm
+#     - swarm-services-deploy
+#   include: swarm-services-deploy.yaml
+
+# Run if tag swarm-delete is provided
+- name: Delete Swarm
+  tags: [never, swarm-delete]
+  include: swarm-delete.yaml

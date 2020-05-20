@@ -1,0 +1,68 @@
+# deploy services to the manager node
+# - name: Deploy restful api server
+#   become: yes
+#   docker_swarm_service:
+#     name: restful_api_server
+#     image: mgsweet/server_restful_api_server:latest
+#     mode: global
+#     mounts:
+#       - source: "{{config_dir}}"
+#         target: /app/config
+#         type: bind
+#     publish:
+#       - published_port: 3000
+#         target_port: 3000
+#         mode: host
+#   run_once: yes
+
+# - name: Deploy NginX
+#   become: yes
+#   docker_swarm_service:
+#     name: nginx
+#     image: mgsweet/server_nginx:latest
+#     mode: global
+#     mounts:
+#       - source: "{{frontend_dir}}"
+#         target: /dist
+#         type: bind
+#     publish:
+#       - published_port: 80
+#         target_port: 80
+#   run_once: yes
+
+
+- name: Deploy tweet stream
+  become: yes
+  docker_swarm_service:
+    name: tweet_stream
+    image: shanrb119/tweet_stream:latest
+    mode: global
+    mounts:
+      - source: "{{config_dir}}"
+        target: /config
+        type: bind
+  run_once: yes
+
+- name: Deploy tweet hist
+  become: yes
+  docker_swarm_service:
+    name: tweet_hist
+    image: shanrb119/tweet_hist:latest
+    mode: global
+    mounts:
+      - source: "{{config_dir}}"
+        target: /config
+        type: bind
+  run_once: yes
+
+- name: Deploy analyzer
+  become: yes
+  docker_swarm_service:
+    name: tweet_analyzer
+    image: shanrb119/tweet_analyzer:latest
+    mode: global
+    mounts:
+      - source: "{{config_dir}}"
+        target: /config
+        type: bind
+  run_once: yes

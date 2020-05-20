@@ -57,7 +57,8 @@
     group: "{{ ansible_user }}"
 
 - name: Copy docker conf, http-proxy.conf to host
-  tags: 'docker'
+  tags: 
+    - 'docker'
   become: yes
   template:
     src: http-proxy.conf.j2
@@ -66,13 +67,15 @@
     group: "{{ ansible_user }}"
 
 - name: Force systemd to reread docker configs
-  tags: 'docker'
+  tags: 
+    - 'docker'
   become: yes
   systemd:
     daemon_reload: yes
 
 - name: Restart docker
-  tags: 'docker'
+  tags: 
+    - 'docker'
   become: yes
   systemd:
     name: docker
