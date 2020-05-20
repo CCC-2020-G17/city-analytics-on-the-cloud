@@ -36,9 +36,12 @@ def _get_twitter_auth(section='DEFAULT', verbose=False):
     ACCESS_TOKEN = config.get(section, 'ACCESS_TOKEN')
     ACCESS_TOKEN_SECRET = config.get(section, 'ACCESS_TOKEN_SECRET')
 
-    auth = OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
-    auth.set_access_token(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
-    return auth
+    try:
+        auth = OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
+        auth.set_access_token(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
+        return auth
+    except Exception as e:
+        print(e)
 
 
 def _get_place_id(city):

@@ -33,8 +33,11 @@ def _twitter_get_auth(section='DEFAULT', verbose=False):
     ACCESS_TOKEN = config.get(section, 'ACCESS_TOKEN')
     ACCESS_TOKEN_SECRET = config.get(section, 'ACCESS_TOKEN_SECRET')
 
-    auth = OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
-    auth.set_access_token(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
+    try:
+        auth = OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
+        auth.set_access_token(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
+    except Exception as e:
+        print(e)
     return auth
 
 
