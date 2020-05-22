@@ -20,9 +20,6 @@ export default {
         'title',
         'options',
     ],
-    mounted() {
-      console.log(this.data);
-    },
 }
 </script>
 

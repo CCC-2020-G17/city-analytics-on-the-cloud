@@ -51,8 +51,8 @@ export default {
             ],
             typeOptions: [
                 {value: null, text: 'Please select a scenario', disabled: true},
-                {value: 'income', text: 'Scenario1 -- Income level and Tweets sentiments'},
-                {value: 'education', text: 'Scenario2 -- Vigar Tweets and Education'},
+                {value: 'income', text: 'Scenario1 -- Income level and Tweet sentiment'},
+                {value: 'education', text: 'Scenario2 -- Vulgar Tweets and Education'},
                 {value: 'migration', text: 'Scenario3 -- Tweeting language and Migration'},
             ],
             //  bar chart
@@ -71,16 +71,21 @@ export default {
     computed: {
         barChartData() {
             let { barLabel, labelB, labelA, theme, barDataA, barDataB } = this;
-            
+            let yID = 'y1';
+            if(this.type == 'income') {
+                yID = 'y2';
+            }
             let temp = {
                 labels: barLabel,
                 datasets: [
                     {
+                        yAxisID: 'y1',
                         label: labelA,
                         backgroundColor: theme,
                         data: barDataA
                     },
                     {
+                        yAxisID: yID,
                         label: labelB,
                         backgroundColor: this.gradient('#F1F0E9', this.theme, 7)[2],
                         data: barDataB
@@ -103,7 +108,7 @@ export default {
                         this.tips = 'The color shown on the map represents the income level of that region'; 
                         break;
                     case 'education':
-                        this.tips = 'The color shown on the map represents the frequency of vigar expression occurence';
+                        this.tips = 'The color shown on the map represents the frequency of vulgar expression occurence';
                         break;
                     case 'migration':
                         this.tips = 'The color shown on the map represents the ratio of non-english twitter';
@@ -239,6 +244,7 @@ export default {
              
                 switch(type) {
                     case 'education': 
+                        this.$emit('setAx', false);
                         this.theme = '#00FF00';
                         colors = this.gradient(basic, this.theme, 7);
                         let { education } = result;
@@ -273,6 +279,7 @@ export default {
                             color = colors[6]  
                         break;
                     case 'income':
+                        this.$emit('setAx', true);
                         this.theme = '#007BFF';
                         colors = this.gradient(basic, this.theme, 7);
                         let { income } = result;
@@ -287,29 +294,30 @@ export default {
                         ratio = tweet_positive_count / tweet_negative_count; 
                        
                         if(!total) total = 0;
-                        this.labelB = 'the ratio of #positive tweets to #negative tweets';  
+                        this.labelB = 'The ratio of #positive tweets to #negative tweets';  
                         this.labelA = 'The proportion of high income people';
                         if(!this.barLabel.includes(name) && total && ratio) {
                             this.barDataA.push(total);
                             this.barLabel.push(name);
                             this.barDataB.push(ratio);
                         }
-                        if (total > 0)
+                        if (total >= 0)
                             color = colors[0]
-                        if (total > 5)
+                        if (total >= 0)
                             color = colors[1]
-                        if (total > 10)
+                        if (total >= 1)
                             color = colors[2]
-                        if (total > 20)
+                        if (total > 10)
                             color = colors[3]
-                        if (total > 30)
+                        if (total > 15)
                             color = colors[4]
-                        if (total > 40)
+                        if (total > 20)
                             color = colors[5]
-                        if (total > 50)
+                        if (total > 30)
                             color = colors[6]
                         break;
                     case 'migration':
+                        this.$emit('setAx', false);
                         this.theme = '#FF9900'
                         colors = this.gradient(basic, this.theme, 7);
                         let { migration } = result;
@@ -327,7 +335,7 @@ export default {
                             this.barLabel.push(name);
                             this.barDataB.push(not_english_at_home);
                         }  
-                        if (total > 0.5)
+                        if (total >= 0.5)
                             color = colors[0]
                         if (total > 1)
                             color = colors[1]

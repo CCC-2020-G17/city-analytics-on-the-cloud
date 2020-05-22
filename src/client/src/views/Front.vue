@@ -114,30 +114,38 @@ export default {
   mounted() {
     axios.get(cityAPI).then((res) => {
         const data = res.data;
-        console.log(data)
         let levelA, levelB, levelC;
         levelA = [];
         levelB = [];
         levelC = [];
+
         let temp = data['adelaide']['covid-19'];
         levelA.push(temp['followers_within_100']);
         levelB.push(temp['followers_100_to_500']);
         levelC.push(temp['followers_above_500']);
+
         temp = data['melbourne']['covid-19'];
         levelA.push(temp['followers_within_100']);
         levelB.push(temp['followers_100_to_500']);
         levelC.push(temp['followers_above_500']);
+
         temp = data['brisbane']['covid-19'];
         levelA.push(temp['followers_within_100']);
         levelB.push(temp['followers_100_to_500']);
         levelC.push(temp['followers_above_500']);
+
         temp = data['sydney']['covid-19'];
+        levelA.push(temp['followers_within_100']);
+        levelB.push(temp['followers_100_to_500']);
+        levelC.push(temp['followers_above_500']);
+
+        temp = data['perth']['covid-19'];
         levelA.push(temp['followers_within_100']);
         levelB.push(temp['followers_100_to_500']);
         levelC.push(temp['followers_above_500']);
         
         this.covData = {
-            labels: ['Adelaide', 'Melbourne', 'Brisbane', 'Sydney'],
+            labels: ['Adelaide', 'Melbourne', 'Brisbane', 'Sydney', 'Perth'],
             datasets: [
                 {
                     label: 'Posters who have #followers less than 100',
@@ -160,29 +168,39 @@ export default {
         levelA = [];
         levelB = [];
         levelC = [];
+
         let total_twitter = data['adelaide']['city_tweet_count'] || 1;
         temp = data['adelaide']['young_twitter_preference'];
         levelA.push(temp['night_tweets_count'] / total_twitter * 100);
         levelB.push(temp['tweet_with_geo_count'] / total_twitter * 100);
         levelC.push(temp['young_people_proportion']);
+
         total_twitter = data['melbourne']['city_tweet_count'] || 1;
         temp = data['melbourne']['young_twitter_preference'];
         levelA.push(temp['night_tweets_count'] / total_twitter * 100);
         levelB.push(temp['tweet_with_geo_count'] / total_twitter * 100);
         levelC.push(temp['young_people_proportion']);
+
         total_twitter = data['brisbane']['city_tweet_count'] || 1;
         temp = data['brisbane']['young_twitter_preference'];
         levelA.push(temp['night_tweets_count'] / total_twitter * 100);
         levelB.push(temp['tweet_with_geo_count'] / total_twitter * 100);
         levelC.push(temp['young_people_proportion']);
+
         total_twitter = data['sydney']['city_tweet_count'] || 1;
         temp = data['sydney']['young_twitter_preference'];
         levelA.push(temp['night_tweets_count'] / total_twitter * 100);
         levelB.push(temp['tweet_with_geo_count'] / total_twitter * 100);
         levelC.push(temp['young_people_proportion']);
-        console.log(levelC);
+
+        total_twitter = data['perth']['city_tweet_count'] || 1;
+        temp = data['perth']['young_twitter_preference'];
+        levelA.push(temp['night_tweets_count'] / total_twitter * 100);
+        levelB.push(temp['tweet_with_geo_count'] / total_twitter * 100);
+        levelC.push(temp['young_people_proportion']);
+
         this.youngData = {
-            labels: ['Adelaide', 'Melbourne', 'Brisbane', 'Sydney'],
+            labels: ['Adelaide', 'Melbourne', 'Brisbane', 'Sydney', 'Perth'],
             datasets: [
                 {
                     label: 'Proportion of tweets posted at night',
@@ -224,9 +242,14 @@ export default {
         temp = data['sydney']['tweet_density'];
         levelA.push(total_twitter / temp['unique_user_count']);
         levelB.push(temp['english_mother_tongue_proportion']);
+
+        total_twitter = data['perth']['city_tweet_count'] || 1;
+        temp = data['perth']['tweet_density'];
+        levelA.push(total_twitter / temp['unique_user_count']);
+        levelB.push(temp['english_mother_tongue_proportion']);
         
         this.denData = {
-            labels: ['Adelaide', 'Melbourne', 'Brisbane', 'Sydney'],
+            labels: ['Adelaide', 'Melbourne', 'Brisbane', 'Sydney', 'Perth'],
             datasets: [
                 {
                     label: 'Tweets per user',
