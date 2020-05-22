@@ -71,21 +71,21 @@ export default {
     computed: {
         barChartData() {
             let { barLabel, labelB, labelA, theme, barDataA, barDataB } = this;
-            let yID = 'y1';
-            if(this.type == 'income') {
-                yID = 'y2';
-            }
+            //  let yID = 'y1';
+            //  if(this.type == 'income') {
+            //    yID = 'y2';
+            //}
             let temp = {
                 labels: barLabel,
                 datasets: [
                     {
-                        yAxisID: 'y1',
+                        //  yAxisID: 'y1',
                         label: labelA,
                         backgroundColor: theme,
                         data: barDataA
                     },
                     {
-                        yAxisID: yID,
+                        //  yAxisID: yID,
                         label: labelB,
                         backgroundColor: this.gradient('#F1F0E9', this.theme, 7)[2],
                         data: barDataB
@@ -244,7 +244,7 @@ export default {
              
                 switch(type) {
                     case 'education': 
-                        this.$emit('setAx', false);
+                        //  this.$emit('setAx', false);
                         this.theme = '#00FF00';
                         colors = this.gradient(basic, this.theme, 7);
                         let { education } = result;
@@ -279,7 +279,7 @@ export default {
                             color = colors[6]  
                         break;
                     case 'income':
-                        this.$emit('setAx', true);
+                        //  this.$emit('setAx', true);
                         this.theme = '#007BFF';
                         colors = this.gradient(basic, this.theme, 7);
                         let { income } = result;
@@ -317,7 +317,7 @@ export default {
                             color = colors[6]
                         break;
                     case 'migration':
-                        this.$emit('setAx', false);
+                        //  this.$emit('setAx', false);
                         this.theme = '#FF9900'
                         colors = this.gradient(basic, this.theme, 7);
                         let { migration } = result;
