@@ -1,6 +1,5 @@
 {
     "_id": "_design/insert_ts",
-    "_rev": "4-d4776eaa1643af1856cf700e6f124382",
     "updates": {
       "insert_ts": "function(doc, req){doc[\"db_timestamp\"] = (Date.now().toString()).substring(0,8)+'00';return [doc, \"OK, initial timestamp inserted!\"]}"
     }

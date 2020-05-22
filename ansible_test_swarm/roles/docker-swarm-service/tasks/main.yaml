@@ -1,0 +1,35 @@
+- name: deploy tweet stream
+  become: yes
+  docker_swarm_service:
+    name: tweet_stream
+    image: shanrb119/tweet_stream:latest
+    mode: global
+    mounts:
+      - source: /home/ubuntu/config
+        target: /config
+        type: bind
+  tags: swarm-service
+
+- name: deploy tweet hist
+  become: yes
+  docker_swarm_service:
+    name: tweet_hist
+    image: shanrb119/tweet_hist:latest
+    mode: global
+    mounts:
+      - source: /home/ubuntu/config
+        target: /config
+        type: bind
+  tags: swarm-service
+
+- name: deploy analyzer
+  become: yes
+  docker_swarm_service:
+    name: tweet_analyzer
+    image: shanrb119/tweet_analyzer:latest
+    mode: global
+    mounts:
+      - source: /home/ubuntu/config
+        target: /config
+        type: bind
+  tags: swarm-service

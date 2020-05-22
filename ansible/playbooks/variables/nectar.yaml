@@ -43,6 +43,21 @@ security_groups:
         port_range_min: 80
         port_range_max: 80
         remote_ip_prefix: 0.0.0.0/0
+  - name: swarm-required
+    description: "Security group for swarm"
+    rules:
+      - protocol: tcp
+        port_range_min: 2377
+        port_range_max: 2377
+        remote_ip_prefix: 0.0.0.0/0
+      - protocol: tcp
+        port_range_min: 4789
+        port_range_max: 4789
+        remote_ip_prefix: 0.0.0.0/0
+      - protocol: tcp
+        port_range_min: 5000
+        port_range_max: 5000
+        remote_ip_prefix: 0.0.0.0/0
   - name: couchdb-required
     description: "Security group for CouchDB HTTP communication"
     rules:

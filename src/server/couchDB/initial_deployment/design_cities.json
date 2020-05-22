@@ -1,6 +1,5 @@
 {
   "_id": "_design/cities",
-  "_rev": "27-6112e73e91a29a1ab956101ea877a656",
   "views": {
     "get_city_notAU": {
       "reduce": "_count",

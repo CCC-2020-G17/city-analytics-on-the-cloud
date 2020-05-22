@@ -1,0 +1,43 @@
+- name: Set master ip address
+  set_fact: 
+    master_ip_address: "{{ groups['masterNode'] | map('extract', hostvars, ['ansible_host']) | join(',') }}"
+  tags: swarm-delete
+
+- name: Remove tweet stream
+  become: yes
+  docker_swarm_service:
+    name: tweet_stream
+    state: absent
+  when: ansible_host == master_ip_address
+  tags: swarm-delete
+
+- name: Remove tweet hist
+  become: yes
+  docker_swarm_service:
+    name: tweet_hist
+    state: absent
+  when: ansible_host == master_ip_address
+  tags: swarm-delete
+
+- name: Remove tweet analyzer
+  become: yes
+  docker_swarm_service:
+    name: tweet_analyzer
+    state: absent
+  when: ansible_host == master_ip_address
+  tags: swarm-delete
+
+- name: Leave swarm for a worker
+  become: yes
+  docker_swarm:
+    state: absent
+  when: ansible_host != master_ip_address
+  tags: swarm-delete
+
+- name: Leave swarm for a worker
+  become: yes
+  docker_swarm:
+    state: absent
+    force: true
+  when: ansible_host == master_ip_address
+  tags: swarm-delete

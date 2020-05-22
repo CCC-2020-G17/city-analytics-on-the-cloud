@@ -8,8 +8,9 @@
     - role: servers-proxy
     - role: servers-environment
     - role: servers-volume
+    - role: servers-git
     - role: servers-config
     - role: servers-docker
-    - role: servers-git
-    - role: servers-app
     - role: servers-couchdb
+    - role: servers-swarm
+    - role: servers-app

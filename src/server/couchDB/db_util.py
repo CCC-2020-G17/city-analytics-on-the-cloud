@@ -1,3 +1,7 @@
+""" Descriptions    : couchdb utilities to save and fetch data from couchDB
+    Project         : COMP90024 Group Project g17
+    Author          : Rongbing Shan
+"""
 import couchdb
 import time
 
@@ -101,6 +105,14 @@ class cdb:
             print(f'...update data {key}')
 
     def getByKey(self, key):
+        """get a document by its key
+
+        Arguments:
+            key {[string]} -- [document key]
+
+        Returns:
+            [json] -- [document]
+        """
         try:
             return self.db[key]
         except couchdb.http.ResourceNotFound:
@@ -108,6 +120,15 @@ class cdb:
             return None
 
     def getAll(self, include_docs=True,skipnum=0):
+        """get all documents in a database
+
+        Keyword Arguments:
+            include_docs {bool} -- if documents are included (default: {True})
+            skipnum {int} -- number of documents to skip (default: {0})
+
+        Returns:
+            list -- list of documents
+        """
         data = []
         if include_docs:
             for item in self.db.view('_all_docs',include_docs=True,skip=skipnum):
@@ -161,6 +182,18 @@ class cdb:
         return data
 
     def getResult(self,city,suburb=None,scenario=None):
+        """get result from database analysis_results
+
+        Arguments:
+            city {string} -- city name to filter
+
+        Keyword Arguments:
+            suburb {string} -- suburb to filter (default: {None})
+            scenario {string} -- analysis scenario to take (default: {None})
+
+        Returns:
+            list -- list of documents
+        """
         # Quick changes on scenarios
         CITY_SCENARIOS = ('covid-19','crime')
         SUBUR_SCENARIOS = ('income','education','migration')
@@ -226,41 +259,7 @@ class cdb:
         for suburb in self.db[key]["suburbs"]:
             suburbs.append(suburb)
         return suburbs
-
-
-    """
-    def getkeys(self):
-        keys = [id in self.db]
-        return keys
-
-    def getview(self, viewname, key=None, include_docs=False, skip=0, reduce=True,group_level=1):
-        return self.db.view(viewname, reduce=True,group_level=1)
-
-    def info(self, target):
-        print(self.db.info(target))
-    """
     
 if __name__ == '__main__':
-    """
-    dbname = 'tweets_with_geo'
-    db = cdb('http://admin:admin1234@172.26.130.149:5984',dbname=dbname)
+    pass
 
-    db.showcurrentDB()
-
-    for data in db.getByCity('Adelaide'):
-        print(data)
-        break;
-    
-    for data in db.getByBlock(start_ts='1588256300',end_ts='1588256300',cityname='Sydney'):
-        print(data)
-        break;
-    """
-
-    couchserver = couchdb.Server('http://admin:admin1234@172.26.130.149:5984')
-    db = couchserver['tweets_with_geo']
-
-    for item in db.view('cities/get_city_notAU',reduce=False,include_docs=True):
-        data = item['doc']
-        #print(data)
-        db.delete(data)
-  

@@ -1,0 +1,14 @@
+- name:  Print the ip of nodes
+  debug: 
+    msg: "ip: {{ansible_host}} - {{ hostvars['instance_1']['master_ip_address'] }}"
+  tags: swarm-init
+
+
+- name: Add nodes
+  become: yes
+  docker_swarm:
+    state: join
+    advertise_addr: "{{ansible_host}}"
+    join_token: "{{ hostvars['instance_1']['manager_token']['stdout'] }}"
+    remote_addrs: "{{ hostvars['instance_1']['master_ip_address'] }}:2377"
+  tags: swarm-init

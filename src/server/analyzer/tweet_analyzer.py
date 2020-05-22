@@ -6,13 +6,15 @@ import tweepy
 import time
 import datetime
 from multiprocessing import Process
-from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 from configparser import ConfigParser
 from shapely.geometry import Point
 from shapely.geometry.polygon import Polygon
 from better_profanity import profanity
+from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 from analyzer import db_connecter
 
+
+process_time_interval = 1000
 
 
 class tweetAnalyzer():
@@ -48,9 +50,6 @@ class tweetAnalyzer():
         Load result structure for suburb level analysis
         :return:
         """
-        # suburb_json_file = '{}/suburbs/{}_suburbs.json'.format(os.path.pardir, self.city)
-        # with open(suburb_json_file) as f:
-        #     suburb_info_json = json.load(f)
         for feature in self.suburb_info_json['features']:
             suburb = feature['properties']['name']
             self.analysis_result['suburbs'][suburb] = json.loads(self.config.get('SECOND-LAYER', 'SUBURB'))
@@ -64,9 +63,6 @@ class tweetAnalyzer():
                              value of key 'polygons' is a list of polygons.
         """
         polygon_dict = {'suburbs': [], 'polygons': []}
-        # suburb_json_file = '{}/suburbs/{}_suburbs.json'.format(os.path.pardir, self.city)
-        # with open(suburb_json_file) as f:
-        #     suburb_info_json = json.load(f)
         for feature in self.suburb_info_json['features']:
             lat_lon_list = feature['geometry']['coordinates'][0][0]
             polygon = Polygon(lat_lon_list)
@@ -120,13 +116,6 @@ class tweetAnalyzer():
                 self.covid_user_ids.append(tweet_json['user']['id'])
             # if tweet_json['lang'] == 'en':
             #     self.analysis_result['covid-19']['english_count'] += 1
-            # if tweet_json['lang'] == 'zh-cn' or tweet_json['lang'] == 'zh-tw' or tweet_json['lang'] == 'zh':
-            #     self.analysis_result['covid-19']['chinese_count'] += 1
-            # if tweet_json['lang'] == 'es':
-            #     self.analysis_result['covid-19']['spanish_count'] += 1
-            # if tweet_json['lang'] != 'en' and tweet_json['lang'] != 'zh-cn' \
-            #         and tweet_json['lang'] != 'zh-tw' and tweet_json['lang'] != 'es':
-            #     self.analysis_result['covid-19']['others_count'] += 1
 
     def process_crime(self, tweet_json):
         """
@@ -252,27 +241,27 @@ def _setup_analysis_logger():
 
 
 def _load_timestamp_record():
-    with open('timestamp_record.json', 'r') as f:
-        record = json.load(f)
-        start_ts = record["tweets_with_geo"]
-        end_ts = str(int(start_ts) + 100)
-    return start_ts, end_ts
+    end_time = int(time.time())
+    start_time = end_time - process_time_interval
+    return start_time, end_time
 
-
-def _update_timestamp_record():
-    with open('timestamp_record.json', 'r') as f:
-        record = json.load(f)
-        start_ts = record["tweets_with_geo"]
-        end_ts = int(start_ts) + 100
-    with open('timestamp_record.json', 'w')  as f:
-        record["tweets_with_geo"] = end_ts
-        json.dump(record, f, indent=1)
+# def _update_timestamp_record():
+#     with open('timestamp_record.json', 'r') as f:
+#         record = json.load(f)
+#         start_ts = record["tweets_with_geo"]
+#         end_ts = int(start_ts) + 1000
+#     with open('timestamp_record.json', 'w')  as f:
+#         record["tweets_with_geo"] = end_ts
+#         json.dump(record, f, indent=1)
 
 
 def get_twitter_auth(section='DEFAULT', verbose=False):
-    #set up twitter authentication
-    # Return: tweepy.OAuthHandler object
-
+    '''
+    Setup Twitter authentication
+    :param section:
+    :param verbose:
+    :return:  tweepy.OAuthHandler
+    '''
     config = ConfigParser()
     key_file = '{}/config/twitter.key.cfg'.format(os.path.pardir)
     if verbose:
@@ -289,44 +278,44 @@ def get_twitter_auth(section='DEFAULT', verbose=False):
 
 def analyze_cities():
     start_ts, end_ts = _load_timestamp_record()
-    logger.info('The analysis about to make is on data with timestamp {} to {}'.format(start_ts, end_ts))
+    logger.info('The analysis about to make is on data with timestamp from {} to {}'.format(start_ts, end_ts))
     cities = ["Melbourne", "Sydney", "Brisbane", "Adelaide", "Perth (WA)"]
     for city in cities:
         city = city.split(" ")[0]
-        print(city)
-        # TODO: Solve extended form. (By other offline functions. Formalize all data.)
         data_loader = db_connecter.dataLoader(city)
         analysis_result_saver = db_connecter.analysisResultSaver(city)
         tweet_analyzer = tweetAnalyzer(city)
         city_period_data = data_loader.load_period_tweet_data(start_ts, end_ts)
-        print(city_period_data)
         analysis_result = tweet_analyzer.analyze(city_period_data)
-        # TODO: May combine static result here and update.
         analysis_result_saver.update_analysis(analysis_result)
-    _update_timestamp_record()
 
 
 if __name__ == '__main__':
-    # _setup_analysis_logger()
-    # while True:
-    #     try:
-    #         analysis_process = Process(target=analyze_cities)
-    #         analysis_process.start()
-    #         analysis_process.join(timeout=100)
-    #         analysis_process.terminate()
-    #         if analysis_process.exitcode is None:
-    #             logger.info('Process timeouts.')
-    #     except Exception as e:
-    #         logger.exception(e)
+    _setup_analysis_logger()
+    while True:
+        try:
+            process_start_time = time.time()
+            analysis_process = Process(target=analyze_cities)
+            analysis_process.start()
+            analysis_process.join(timeout=100)
+            analysis_process.terminate()
+            if analysis_process.exitcode is None:
+                logger.info('Process timeouts.')
+            process_end_time = time.time()
+            time_sleep = process_time_interval - (process_end_time - process_start_time)
+            logger.info('Sleep for {} seconds...'.format(int(time_sleep)))
+            time.sleep(time_sleep)
+        except Exception as e:
+            logger.exception(e)
 
-    city = 'Perth'
-    # TODO: Solve extended form. (By other offline functions. Formalize all data.)
-    data_loader = db_connecter.dataLoader(city)
-    analysis_result_saver = db_connecter.analysisResultSaver(city)
-    tweet_analyzer = tweetAnalyzer(city)
-    city_data = data_loader.load_tweet_data()
-    print(city_data)
-    analysis_result = tweet_analyzer.analyze(city_data)
-    analysis_result_saver.save_analysis(analysis_result)
+    # The code below is for analyzing all data
+    # cities = ["Melbourne", "Sydney", "Brisbane", "Adelaide", "Perth"]
+    # for city in cities:
+    #     data_loader = db_connecter.dataLoader(city)
+    #     analysis_result_saver = db_connecter.analysisResultSaver(city)
+    #     tweet_analyzer = tweetAnalyzer(city)
+    #     city_data = data_loader.load_tweet_data()
+    #     analysis_result = tweet_analyzer.analyze(city_data)
+    #     analysis_result_saver.save_analysis(analysis_result)
 
 

@@ -3,17 +3,21 @@ version: "3.7"
 services:
     restful_api_server:
         image: mgsweet/server_restful_api_server:latest
+        deploy:
+            mode: global
         container_name: restful_api_server
         restart: always
-        environment:
-            - APP_NAME=MyFlaskApp
         expose:
             - 3000
         volumes:
             - {{config_dir}}:/app/config
+        environment:
+            - APP_NAME=MyFlaskApp
 
     nginx:
-        build: ./nginx
+        image: mgsweet/server_nginx:latest
+        deploy:
+            mode: global
         container_name: nginx
         privileged: true
         restart: always
@@ -22,11 +26,43 @@ services:
         volumes:
             - {{frontend_dir}}:/dist
 
-    # keepalived:
-    #     build: ./keepalived
-    #     depends_on:
-    #         - nginx
-    #     network_mode: "host"
-    #     cap_drop:
-    #         - NET_ADMIN
-    #     privileged: true
+    tweet_stream:
+        deploy:
+            mode: replicated
+            replicas: {{tweet_stream_replicated}}
+        image: shanrb119/tweet_stream:latest
+        container_name: tweet_stream
+        privileged: true
+        restart: always
+        volumes:
+            - {{config_dir}}:/config
+        env_file:
+            - proxy.env
+    
+    tweet_hist:
+        deploy:
+            mode: replicated
+            replicas: {{tweet_hist_replicated}}
+        image: shanrb119/tweet_hist:latest
+        container_name: tweet_hist
+        privileged: true
+        restart: always
+        volumes:
+            - {{config_dir}}:/config
+        env_file:
+            - proxy.env
+
+    tweet_analyzer:
+        deploy:
+            mode: replicated
+            replicas: {{tweet_analyzer_replicated}}
+        image: shanrb119/tweet_analyzer:latest
+        container_name: tweet_analyzer
+        privileged: true
+        restart: always
+        volumes:
+            - {{config_dir}}:/config
+        env_file:
+            - proxy.env
+
+    

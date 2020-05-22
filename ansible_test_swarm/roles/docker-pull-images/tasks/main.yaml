@@ -1,0 +1,20 @@
+- name: pull tweet stream harvester 
+  become: yes
+  docker_image:
+    name: shanrb119/tweet_stream
+    source: pull
+  tags: swarm-service
+
+- name: pull tweet hist harvester 
+  become: yes
+  docker_image:
+    name: shanrb119/tweet_hist
+    source: pull
+  tags: swarm-service
+
+- name: pull tweet analyzer
+  become: yes
+  docker_image:
+    name: shanrb119/tweet_analyzer
+    source: pull
+  tags: swarm-service

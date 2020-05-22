@@ -1,0 +1,79 @@
+- name: Create a docker network
+  become: yes
+  docker_network:
+    name: app_network
+    driver: overlay
+    force: yes
+
+- name: Set all ip addresses
+  set_fact: 
+    all_ip_addresses: "{{ (groups['Nodes'] | map('extract', hostvars, ['ansible_host']) | join(',')).split(',')}}"
+  run_once: yes
+
+- name: Set master ip address
+  set_fact: 
+    master_ip_address: "{{ groups['masterNode'] | map('extract', hostvars, ['ansible_host']) | join(',') }}"
+  run_once: yes
+
+- name: Get the size of cluster
+  set_fact:
+    cluster_size: "{{ groups['Nodes'] | length }}"  
+  run_once: yes
+
+# Only the first three host can become a manager
+- name: Initialize Docker Swarm manager
+  become: yes
+  docker_swarm:
+    state: present
+    advertise_addr: "{{ansible_host}}:{{swarm_port}}"
+  run_once: yes
+  when: ansible_host == master_ip_address
+  register: master_swarm_info
+
+- name: Information about the master swarm token
+  debug:
+    msg: 
+      - "Manager token: {{master_swarm_info.swarm_facts.JoinTokens.Manager}}"
+      - "Worker token: {{master_swarm_info.swarm_facts.JoinTokens.Worker}}"
+  run_once: yes
+
+- name: Set the JoinTokens
+  set_fact:
+    swarm_join_tokens: "{{master_swarm_info.swarm_facts.JoinTokens}}"
+  run_once: yes
+
+- name: Add manager nodes
+  become: yes
+  docker_swarm:
+    state: join
+    advertise_addr: "{{ansible_host}}"
+    join_token: "{{ swarm_join_tokens.Manager }}"
+    remote_addrs: "{{ master_ip_address }}:{{swarm_port}}"
+  register: result
+  when: ansible_host != master_ip_address and ansible_host == all_ip_addresses[item] and (item | int) < swarm_manager_num 
+  loop: "{{range(0, (cluster_size | int))|list}}"
+
+- name: Add worker nodes
+  become: yes
+  docker_swarm:
+    state: join
+    advertise_addr: "{{ansible_host}}"
+    join_token: "{{ swarm_join_tokens.Worker }}"
+    remote_addrs: "{{ master_ip_address }}:{{swarm_port}}"
+  register: result
+  when: ansible_host != master_ip_address and ansible_host == all_ip_addresses[item] and (item | int) >= swarm_manager_num 
+  loop: "{{range(0, (cluster_size | int))|list}}"  
+
+- name: Get information of Docker Swarm
+  become: yes
+  docker_swarm_info:
+    nodes: yes
+  register: master_swarm_info
+  when: ansible_host == master_ip_address
+  run_once: yes 
+
+- name: Information about the master swarm
+  debug:
+    msg: 
+      - "Nodes: {{master_swarm_info.nodes}}"
+  run_once: yes

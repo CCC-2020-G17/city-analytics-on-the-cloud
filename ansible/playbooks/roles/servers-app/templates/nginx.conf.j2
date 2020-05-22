@@ -2,10 +2,15 @@ upstream api {
     server restful_api_server:3000 weight=2 max_fails=3 fail_timeout=60;
 }
 
+upstream myServer {
+
+}
+
 server {
     listen  80;
     
     location / {
+        proxy_pass  
         root    /dist;
         index   index.html;
     }

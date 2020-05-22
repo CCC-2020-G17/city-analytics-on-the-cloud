@@ -3,6 +3,11 @@ import numbers
 from couchDB import db_util
 from configparser import ConfigParser
 
+
+tweet_db = "tweets_mixed"
+analysis_result_db = "analysis_results"
+
+
 def _couchdb_get_url(section='DEFAULT', verbose=False):
     global config
     config = ConfigParser()
@@ -25,12 +30,12 @@ class dataLoader():
         Load all data from given city
         :return:
         """
-        db = db_util.cdb(self.serverURL, "tweets_with_geo")
+        db = db_util.cdb(self.serverURL, tweet_db)
         city_key = self.city
         return  db.getByCity(city_key)
 
     def load_period_tweet_data(self, start_ts, end_ts):
-        db = db_util.cdb(self.serverURL, "tweets_with_geo")
+        db = db_util.cdb(self.serverURL, tweet_db)
         cityData = db.getByBlock(start_ts=start_ts, end_ts=end_ts, cityname=self.city)
         return cityData
 
@@ -79,7 +84,7 @@ class dataLoader():
 
     def load_analysis(self):
         if self.city:
-            db = db_util.cdb(self.serverURL, "analysis_results")
+            db = db_util.cdb(self.serverURL, analysis_result_db)
             city_key = "{}_analysis_result".format(self.city.lower())
             return db.getByKey(city_key)
         else:
@@ -91,6 +96,8 @@ class analysisResultSaver():
     def __init__(self, city=None):
         self.serverURL = _couchdb_get_url()
         self.city = city
+        self.young_twitter_key_tuples = [('young_people_proportion', 'p_15_24_yrs_pc', 'p_25_34_yrs_pc')]
+        self.tweet_density_key_tuples = [('english_mother_tongue_proportion', 'person_tot_spks_eng_only', 'person_tot_tot')]
         self.income_key_tuples = [('low_income_proportion', 'tot_p_inc_wk_p_ov_15_yrs_p_earn_nil_inc_pr100',
                                    'tot_p_inc_wk_p_ov_15_yrs_p_earn_aud1_aud499wk_pr100'),
                                   ('high_income_proportion', 'tot_p_inc_wk_p_ov_15_yrs_p_earn_aud2000_aud2999wk_pr100',
@@ -106,7 +113,7 @@ class analysisResultSaver():
         """
         Save analysis result to database. This will replace the document with the same id.
         """
-        db = db_util.cdb(self.serverURL, "analysis_results_for_test")
+        db = db_util.cdb(self.serverURL, analysis_result_db)
         analysis_city_id = "{}_analysis_result".format(self.city.lower())
         db.put(analysis_result, analysis_city_id)
 
@@ -143,7 +150,10 @@ class analysisResultSaver():
         """
         existing = dataLoader(self.city).load_analysis()
         new_result = existing
-        print(new_result)
+        for tuple in self.young_twitter_key_tuples:
+            new_result['young_twitter_preference'][tuple[0]] = 0
+        for tuple in self.tweet_density_key_tuples:
+            new_result['tweet_density'][tuple[0]] = 0
         for suburb in new_result['suburbs'].keys():
             for tuple in self.income_key_tuples:
                 new_result['suburbs'][suburb]['income'][tuple[0]] = 0
@@ -158,7 +168,6 @@ if __name__ == '__main__':
     start_ts = '1588256300'
     end_ts = '1588256400'
     print(dataLoader(city).load_period_tweet_data(start_ts, end_ts))
-    analysisResultSaver(city).reset_static_result()
 
 
 

@@ -1,22 +1,22 @@
 {
   "_id": "brisbane_analysis_result",
-  "_rev": "14-59ff85b9ccf31f6709d5ce13abef4369",
+  "_rev": "20-63a433ef8f22761a9affed1ac2b606e6",
   "city_name": "Brisbane",
-  "city_tweet_count": 103109,
+  "city_tweet_count": 103234,
   "covid-19": {
-    "tweet_count": 1846,
-    "followers_within_100": 107,
-    "followers_100_to_500": 196,
-    "followers_above_500": 248,
+    "tweet_count": 1917,
+    "followers_within_100": 113,
+    "followers_100_to_500": 205,
+    "followers_above_500": 284,
     "follower_not_able_to_get": 48
   },
   "young_twitter_preference": {
-    "night_tweets_count": 11879,
-    "tweet_with_geo_count": 50462,
+    "night_tweets_count": 12870,
+    "tweet_with_geo_count": 50513,
     "young_people_proportion": 30.2
   },
   "tweet_density": {
-    "unique_user_count": 3914,
+    "unique_user_count": 3993,
     "english_mother_tongue_proportion": 78
   },
   "suburbs": {
@@ -65,13 +65,13 @@
       }
     },
     "SOUTH BRISBANE": {
-      "suburb_tweet_count": 3835,
+      "suburb_tweet_count": 3843,
       "income": {
         "low_income_proportion": 34.5,
         "high_income_proportion": 12.5,
         "tweet_positive_count": 1855,
         "tweet_negative_count": 193,
-        "tweet_neutral_count": 1787
+        "tweet_neutral_count": 1795
       },
       "education": {
         "complete_yr_12_proportion": 74.4,
@@ -329,11 +329,11 @@
       }
     },
     "TOOWONG": {
-      "suburb_tweet_count": 240,
+      "suburb_tweet_count": 241,
       "income": {
         "low_income_proportion": 33.599999999999994,
         "high_income_proportion": 13.3,
-        "tweet_positive_count": 120,
+        "tweet_positive_count": 121,
         "tweet_negative_count": 13,
         "tweet_neutral_count": 107
       },
@@ -347,17 +347,17 @@
         "not_english_at_home": 22.7,
         "born_overseas_proportion": 32.5,
         "population_density": 2956.4,
-        "non_english_tweet_count": 19
+        "non_english_tweet_count": 20
       }
     },
     "BRISBANE CITY": {
-      "suburb_tweet_count": 12628,
+      "suburb_tweet_count": 12640,
       "income": {
         "low_income_proportion": 33.8,
         "high_income_proportion": 14.100000000000001,
-        "tweet_positive_count": 6155,
+        "tweet_positive_count": 6159,
         "tweet_negative_count": 803,
-        "tweet_neutral_count": 5670
+        "tweet_neutral_count": 5678
       },
       "education": {
         "complete_yr_12_proportion": 77.3,
@@ -945,13 +945,13 @@
       }
     },
     "HAMILTON": {
-      "suburb_tweet_count": 665,
+      "suburb_tweet_count": 666,
       "income": {
         "low_income_proportion": 21.5,
         "high_income_proportion": 18.9,
         "tweet_positive_count": 288,
         "tweet_negative_count": 56,
-        "tweet_neutral_count": 321
+        "tweet_neutral_count": 322
       },
       "education": {
         "complete_yr_12_proportion": 68.1,
@@ -1143,13 +1143,13 @@
       }
     },
     "CHAPEL HILL": {
-      "suburb_tweet_count": 763,
+      "suburb_tweet_count": 777,
       "income": {
         "low_income_proportion": 0,
         "high_income_proportion": 0,
-        "tweet_positive_count": 240,
+        "tweet_positive_count": 253,
         "tweet_negative_count": 141,
-        "tweet_neutral_count": 382
+        "tweet_neutral_count": 383
       },
       "education": {
         "complete_yr_12_proportion": 0,
@@ -1297,13 +1297,13 @@
       }
     },
     "AUCHENFLOWER": {
-      "suburb_tweet_count": 266,
+      "suburb_tweet_count": 270,
       "income": {
         "low_income_proportion": 27,
         "high_income_proportion": 16.299999999999997,
         "tweet_positive_count": 106,
         "tweet_negative_count": 21,
-        "tweet_neutral_count": 139
+        "tweet_neutral_count": 143
       },
       "education": {
         "complete_yr_12_proportion": 79,
@@ -1341,13 +1341,13 @@
       }
     },
     "THE GAP": {
-      "suburb_tweet_count": 19,
+      "suburb_tweet_count": 21,
       "income": {
         "low_income_proportion": 0,
         "high_income_proportion": 0,
         "tweet_positive_count": 13,
-        "tweet_negative_count": 2,
-        "tweet_neutral_count": 4
+        "tweet_negative_count": 3,
+        "tweet_neutral_count": 5
       },
       "education": {
         "complete_yr_12_proportion": 0,
@@ -1539,5 +1539,5 @@
       }
     }
   },
-  "db_timestamp": "1589778000"
+  "db_timestamp": "1589857800"
 }
