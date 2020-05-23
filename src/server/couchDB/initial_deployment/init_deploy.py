@@ -8,7 +8,7 @@ import json
 import argparse
 import os 
 
-
+# parse arugments
 parser = argparse.ArgumentParser(description="set up couchdb")
 parser.add_argument('-u', '--username', required=False, help='username')
 parser.add_argument('-p', '--password', required=False, help='password')
@@ -18,6 +18,7 @@ serverURL = parser.parse_args().server
 username = parser.parse_args().username
 password = parser.parse_args().password
 
+#connect to couchdb 
 url = 'http://{}:{}@{}:5984/'.format(username,password,serverURL)
 connected = False
 couchserver = couchdb.Server(url)
@@ -27,7 +28,7 @@ try:
 except ConnectionRefusedError:
     print(f'Connection refused by {url}')
 
-dbs = ['analysis_results','aurin','tweets_for_test','tweets_mixed','tweets_with_geo','twitters']
+dbs = ['analysis_results','aurin','tweets_mixed','tweets_with_geo']
 
 if connected:
     # create databases
@@ -45,7 +46,7 @@ if connected:
     dir_path = os.path.dirname(os.path.realpath(__file__))
     mapreduce_dir = os.path.join(dir_path,'design_cities.json')
     mapreduce_doc = json.load(open(mapreduce_dir,'r'))
-    map_dbs = ['tweets_for_test','tweets_mixed','tweets_with_geo','twitters']
+    map_dbs = ['tweets_mixed','tweets_with_geo']
     for db in map_dbs:
         couchdb = couchserver[db]
         try:
