@@ -10,6 +10,8 @@ volumes:
     vol_size: 50
   - vol_name: vol_50_3
     vol_size: 50
+  - vol_name: vol_50_4
+    vol_size: 50
 
 # Instance
 # Include the information of their name and 
@@ -21,6 +23,8 @@ instances:
     volumes: vol_50_2
   - name: instance_3
     volumes: vol_50_3
+  - name: instance_4
+    volumes: vol_50_4
 
 instance_image: 45225edb-66d8-4fd0-bf41-132a31a18166
 instance_key_name: g17
@@ -80,4 +84,11 @@ security_groups:
       - protocol: tcp
         port_range_min: 9100
         port_range_max: 9200
+        remote_ip_prefix: 0.0.0.0/0
+  - name: app-required
+    description: "Security group for app and personal purpose"
+    rules:
+      - protocol: tcp
+        port_range_min: 3000
+        port_range_max: 3100
         remote_ip_prefix: 0.0.0.0/0

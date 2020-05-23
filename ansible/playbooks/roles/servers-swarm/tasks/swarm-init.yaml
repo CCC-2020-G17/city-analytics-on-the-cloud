@@ -1,10 +1,3 @@
-- name: Create a docker network
-  become: yes
-  docker_network:
-    name: app_network
-    driver: overlay
-    force: yes
-
 - name: Set all ip addresses
   set_fact: 
     all_ip_addresses: "{{ (groups['Nodes'] | map('extract', hostvars, ['ansible_host']) | join(',')).split(',')}}"
@@ -13,6 +6,11 @@
 - name: Set master ip address
   set_fact: 
     master_ip_address: "{{ groups['masterNode'] | map('extract', hostvars, ['ansible_host']) | join(',') }}"
+  run_once: yes
+
+- name: Set other ip addresses
+  set_fact: 
+    other_ip_addresses: "{{ (groups['Nodes'] | map('extract', hostvars, ['ansible_host']) | join(',')).split(',') | difference([ansible_host]) }}"
   run_once: yes
 
 - name: Get the size of cluster
@@ -50,8 +48,8 @@
     join_token: "{{ swarm_join_tokens.Manager }}"
     remote_addrs: "{{ master_ip_address }}:{{swarm_port}}"
   register: result
-  when: ansible_host != master_ip_address and ansible_host == all_ip_addresses[item] and (item | int) < swarm_manager_num 
-  loop: "{{range(0, (cluster_size | int))|list}}"
+  when: ansible_host == other_ip_addresses[item] and (item | int) > ((cluster_size| int) - 1 - swarm_manager_num)
+  loop: "{{range(0, (cluster_size | int) - 1)| list}}"
 
 - name: Add worker nodes
   become: yes
@@ -61,8 +59,8 @@
     join_token: "{{ swarm_join_tokens.Worker }}"
     remote_addrs: "{{ master_ip_address }}:{{swarm_port}}"
   register: result
-  when: ansible_host != master_ip_address and ansible_host == all_ip_addresses[item] and (item | int) >= swarm_manager_num 
-  loop: "{{range(0, (cluster_size | int))|list}}"  
+  when: ansible_host == other_ip_addresses[item] and (item | int) <= ((cluster_size| int) - 1 - swarm_manager_num)
+  loop: "{{range(0, (cluster_size| int) - 1)|list}}"  
 
 - name: Get information of Docker Swarm
   become: yes

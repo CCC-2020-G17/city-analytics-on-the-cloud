@@ -4,11 +4,13 @@
   gather_facts: true
   roles:
     - role: test-delete-all
-      tags: all-delete
+      tags: [never, all-delete]
 
 - hosts: Nodes
   vars_files:
     - variables/servers.yaml
   roles:
     - role: test-clear-db
-      tags: db-rebuild
+      tags: [never, db-rebuild]
+
+      

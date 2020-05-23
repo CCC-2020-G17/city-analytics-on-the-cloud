@@ -47,7 +47,7 @@
     regexp: '^{{ item.name }}'
   loop: '{{ inventoryInfo }}'
 
-- name: Remove all hosts in memory
+- name: Refresh all hosts in memory
   meta: refresh_inventory
 
 - debug:
