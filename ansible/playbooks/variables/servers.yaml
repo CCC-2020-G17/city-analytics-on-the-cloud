@@ -46,8 +46,8 @@ app_dir: "{{root_dir}}/app"
 nginx_dir: "{{app_dir}}/nginx"
 frontend_dir: "{{repo_local_path}}/src/client/dist"
 # replicate setting
-tweet_hist_replicated: 2
-tweet_stream_replicated: 2
+tweet_hist_replicated: 1
+tweet_stream_replicated: 1
 tweet_analyzer_replicated: 1
 
 # Currently keepalived is not usable because we got no access to the float ip
