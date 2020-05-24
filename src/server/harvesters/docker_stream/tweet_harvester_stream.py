@@ -39,6 +39,7 @@ def _twitter_get_auth(section='DEFAULT', verbose=False):
 
 
 def _get_city_bound(city):
+    locations = None
     city_bound_file = '{}/config/city_bound.json'.format(os.path.pardir)
     with open(city_bound_file,'r') as f:
         city_bound = json.load(f)
@@ -96,7 +97,7 @@ def get_streaming_twitters(locations=[114.46, -38.28, 152.7, -11.79]):
 
 
 if __name__ == '__main__':
-    api_access = 'DEFAULT'
+    api_access = 'SECTION4'
     save_to_db = 'tweets_mixed'
     geo_only = False
 
@@ -114,15 +115,18 @@ if __name__ == '__main__':
 
     try:
         if len(sys.argv) == 1:
+            print("Harvest streaming tweets from Australia ...")
             get_streaming_twitters()
         elif len(sys.argv) == 2:
             city = sys.argv[1]
             location = _get_city_bound(city)
+            print("Harvest streaming tweets from {} ...".format(city))
             get_streaming_twitters(locations=location)
         else:
             city = sys.argv[1]
             api_access = sys.argv[2]
             location = _get_city_bound(city)
+            print("Harvest streaming tweets from {} with API {} ...".format(city, api_access))
             get_streaming_twitters(locations=location)
     except Exception as e:
         print(e)
