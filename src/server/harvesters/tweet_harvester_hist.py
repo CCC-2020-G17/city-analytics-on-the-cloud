@@ -86,7 +86,7 @@ def get_historical_twitters(place_id, since_time, until_time):
 
 
 if __name__ == '__main__':
-    api_access = 'SECTION1'
+    api_access = 'SECTION5'
     save_to_db = 'tweets_mixed'
     geo_only = False
     place_id = '3f14ce28dc7c4566'
@@ -100,11 +100,13 @@ if __name__ == '__main__':
     USAGE:      python .py <options>
     EXAMPLES:   (1) python tweet_harvester_hist.py
                     - harvest tweets in the whole Australia for the last seven days
-                (2) python tweet_harvester_hist.py 2020-05-19 2020-05-20
-                    - harvest tweets in the whole Australia for the certain time
-                (3) python tweet_harvester_hist.py Melbourne 2020-05-19 2020-05-20
+                (2) python tweet_harvester_hist.py Melbourne
+                    - harvest tweets in the in the Melbourne for the last seven days    
+                (3) python tweet_harvester_hist.py Melbourne SECTION1
+                    - harvest tweets in the in the Melbourne for the last seven days by api SECTION1
+                (4) python tweet_harvester_hist.py Melbourne 2020-05-19 2020-05-20
                     - harvest tweets in the Melbourne for the certain day by default api
-                (4) python tweet_harvester_hist.py Melbourne 2020-05-19 2020-05-20 SECTION1
+                (5) python tweet_harvester_hist.py Melbourne 2020-05-19 2020-05-20 SECTION1
                     - harvest tweets in the Melbourne by 'SECTION1' api
     NOTE:       The first argument should be "Adelaide", "Brisbane", "Melbourne", "Perth" or "Sydney".
                 The second argument is the since_time: "2020-05-14"
@@ -114,10 +116,18 @@ if __name__ == '__main__':
 
     try:
         if len(sys.argv) == 1:
+            print("Harvest historical tweets from Australia ...")
+            get_historical_twitters(place_id, since_time_format, until_time_format)
+        elif len(sys.argv) == 2:
+            city = sys.argv[1]
+            place_id = _get_place_id(city)
+            print("Harvest historical tweets from {}...".format(city))
             get_historical_twitters(place_id, since_time_format, until_time_format)
         elif len(sys.argv) == 3:
-            since_time_format = sys.argv[1]
-            until_time_format = sys.argv[2]
+            city = sys.argv[1]
+            place_id = _get_place_id(city)
+            api_access = sys.argv[2]
+            print("Harvest historical tweets from {} with API {} ...".format(city, api_access))
             get_historical_twitters(place_id, since_time_format, until_time_format)
         elif len(sys.argv) == 4:
             city = sys.argv[1]
