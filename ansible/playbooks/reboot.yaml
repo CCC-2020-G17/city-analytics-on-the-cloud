@@ -1,4 +1,4 @@
-- hosts: instance_1
+- hosts: Nodes
   remote_user: root
   tasks:
     - name: reboot
