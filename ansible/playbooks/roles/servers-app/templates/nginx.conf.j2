@@ -1,26 +1,18 @@
-upstream api {
-    server restful_api_server:3000 weight=2 max_fails=3 fail_timeout=60;
-}
-
 upstream myServer {
-
+    {% for ip in other_ip_addresses%}
+    server {{ip}}:80 weight=1 max_fails=3 fail_timeout=60;
+    {% endfor %}
 }
 
 server {
     listen  80;
     
     location / {
-        proxy_pass  
-        root    /dist;
-        index   index.html;
+        proxy_pass http://myServer;
+        proxy_redirect default;
     }
 
     location ~ .*\.(html|htm|gif|jpg|jpeg|bmp|png|ico|js|css)$ {
         root    /dist;
-    }
-
-    location /api/ {
-        include uwsgi_params;
-        uwsgi_pass api;
     }
 }

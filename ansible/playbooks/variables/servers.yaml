@@ -34,7 +34,7 @@ couchDB_password: cccg17
 couchDB_uuid: a192aeb9904e6590849337933b000c99
 couchDB_cookie: a192aeb9904e6590849337933b001159
 couchDB_init_deploy_dir: "{{repo_local_path}}/src/server/couchDB/initial_deployment"
-couchDB_cluster_setting_interval: 10
+couchDB_cluster_setting_interval: 3
 # cluster_size, master_ip_address is used
 
 # Swarm
@@ -49,11 +49,6 @@ frontend_dir: "{{repo_local_path}}/src/client/dist"
 tweet_hist_replicated: 2
 tweet_stream_replicated: 2
 tweet_analyzer_replicated: 1
-
-
-
-
-
 
 # Currently keepalived is not usable because we got no access to the float ip
 keepalived_router_id: cccg17

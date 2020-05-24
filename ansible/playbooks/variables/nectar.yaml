@@ -85,10 +85,3 @@ security_groups:
         port_range_min: 9100
         port_range_max: 9200
         remote_ip_prefix: 0.0.0.0/0
-  - name: app-required
-    description: "Security group for app and personal purpose"
-    rules:
-      - protocol: tcp
-        port_range_min: 3000
-        port_range_max: 3100
-        remote_ip_prefix: 0.0.0.0/0

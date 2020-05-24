@@ -1,0 +1,46 @@
+- name: "Create {{nginx_dir}} directory"
+  become: yes
+  file:
+    path: "{{ nginx_dir }}"
+    recurse: yes
+    state: directory
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+
+- name: "Copy nginx.conf to {{ nginx_dir }}/"
+  become: yes
+  template:
+    force: yes
+    src: nginx.conf.j2
+    dest: "{{ nginx_dir }}/nginx.conf"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+
+- name: "Copy nginx_Dockerfile to {{ nginx_dir }}/"
+  become: yes
+  copy:
+    force: yes
+    src: nginx_Dockerfile
+    dest: "{{ nginx_dir }}/Dockerfile"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+
+- name: "Copy nginx_docker-compose.yaml to {{ nginx_dir }}/"
+  become: yes
+  template:
+    force: yes
+    src: nginx_docker-compose.yaml.j2
+    dest: "{{ nginx_dir }}/docker-compose.yaml"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+
+- name: Run load_balanced nginx
+  become: yes
+  docker_compose:
+    pull: no
+    build: yes
+    project_src: "{{ nginx_dir }}"
+    remove_orphans: yes
+    state: present
+    recreate: always
+    restarted: yes

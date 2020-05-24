@@ -4,6 +4,9 @@ services:
     restful_api_server:
         image: mgsweet/server_restful_api_server:latest
         deploy:
+            placement:
+                constraints:
+                    - "node.hostname!=instance-1"
             mode: global
         container_name: restful_api_server
         restart: always
@@ -14,18 +17,21 @@ services:
         environment:
             - APP_NAME=MyFlaskApp
 
-    nginx:
+    nginx_app:
         image: mgsweet/server_nginx:latest
         deploy:
+            placement:
+                constraints:
+                    - "node.hostname!=instance-1"
             mode: global
-        container_name: nginx
+        container_name: nginx_app
         privileged: true
         restart: always
         ports:
             - "80:80"
         volumes:
             - {{frontend_dir}}:/dist
-
+            
     tweet_stream:
         deploy:
             mode: replicated

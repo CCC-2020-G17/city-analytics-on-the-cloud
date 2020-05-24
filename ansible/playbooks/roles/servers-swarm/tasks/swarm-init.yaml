@@ -75,3 +75,9 @@
     msg: 
       - "Nodes: {{master_swarm_info.nodes}}"
   run_once: yes
+
+- name: Install swarm dependency
+  become: yes
+  pip:
+    name: ['jsondiff']
+    state: latest

@@ -2,6 +2,25 @@
   tags: app
   set_fact: 
     all_ip_addresses: "{{ (groups['Nodes'] | map('extract', hostvars, ['ansible_host']) | join(',')).split(',')}}"
+  run_once: yes
+
+- name: Set master ip address
+  tags: app
+  set_fact: 
+    master_ip_address: "{{ groups['masterNode'] | map('extract', hostvars, ['ansible_host']) | join(',') }}"
+  run_once: yes
+
+- name: Set other ip addresses
+  tags: app
+  set_fact: 
+    other_ip_addresses: "{{ (groups['Nodes'] | map('extract', hostvars, ['ansible_host']) | join(',')).split(',') | difference([ansible_host]) }}"
+  run_once: yes
+
+- name: Get the size of cluster
+  tags: app
+  set_fact:
+    cluster_size: "{{ groups['Nodes'] | length }}"  
+  run_once: yes
 
 - name:  "Create {{ app_dir }} directory"
   tags: app
@@ -13,33 +32,11 @@
     owner: "{{ ansible_user }}"
     group: "{{ ansible_user }}"
 
-# - name: "Create {{nginx_dir}} directory"
-#   tags: app
-#   become: yes
-#   file:
-#     path: "{{ nginx_dir }}"
-#     recurse: yes
-#     state: directory
-#     owner: "{{ ansible_user }}"
-#     group: "{{ ansible_user }}"
-
-# - name: "Copy nginx.conf to {{ nginx_dir }}/"
-#   tags: app
-#   become: yes
-#   template:
-#     src: nginx.conf.j2
-#     dest: "{{ nginx_dir }}/nginx.conf"
-#     owner: "{{ ansible_user }}"
-#     group: "{{ ansible_user }}"
-
-# - name: "Copy nginx_Dockerfile to {{ nginx_dir }}/"
-#   tags: app
-#   become: yes
-#   copy:
-#     src: nginx_Dockerfile
-#     dest: "{{ nginx_dir }}/Dockerfile"
-#     owner: "{{ ansible_user }}"
-#     group: "{{ ansible_user }}"
+# Master would be the Nginx Server
+- name: Copy Nginx Server dependency to Master
+  tags: app
+  include: load_balanced_nginx.yaml
+  when: ansible_host == master_ip_address
 
 - name: "Copy docker-compose.yaml to {{app_dir}}"
   tags: app
@@ -72,13 +69,6 @@
 #     recreate: always
 #     restarted: yes
 #     build: yes
-
-- name: Install swarm dependency
-  tags: 'app'
-  become: yes
-  pip:
-    name: ['jsondiff']
-    state: latest
 
 - name: Deploy stack from a compose file
   tags: 
