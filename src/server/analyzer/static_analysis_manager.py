@@ -64,6 +64,9 @@ class staticAnalysisGenerator():
             self.add_education(suburb)
 
     def add_young_people_proportion(self):
+        """
+        Add young people proportion to static analysis result
+        """
         try:
             city_dict = self.scenario_file_young['features']['Greater {}'.format(self.city.capitalize())]
             for tuple in self.young_twitter_key_tuples:
@@ -73,6 +76,9 @@ class staticAnalysisGenerator():
             print(e)
 
     def add_english_speaker_proportion(self):
+        """
+        Add English speaker proportion to static analysis result
+        """
         try:
             city_dict = self.scenario_file_english['features']['Greater {}'.format(self.city.capitalize())]
             for tuple in self.tweet_density_key_tuples:
@@ -82,6 +88,9 @@ class staticAnalysisGenerator():
             print(e)
 
     def add_crime_index(self):
+        """
+        Add crime index to static analysis result
+        """
         with open('{}/analyzer/static_result.json'.format(os.path.pardir)) as f:
             city_crime_index = json.load(f)
         self.analysis_result['crime']['crime_index'] = city_crime_index[self.city]['crime_index']
@@ -90,12 +99,14 @@ class staticAnalysisGenerator():
         self.analysis_result['crime']['crime_index'] = 0
 
     def add_income(self, suburb):
+        """
+        Add income to static analysis result
+        """
         try:
             suburb_dict = self.scenario_file_income['suburbs'][suburb]
             for tuple in self.income_key_tuples:
                 self.analysis_result['suburbs'][suburb]['income'][tuple[0]] = suburb_dict[tuple[1]] + suburb_dict[tuple[2]]
         except:
-            # print('Exception: add_income', suburb)
             pass
 
     def reset_income(self):
@@ -105,12 +116,14 @@ class staticAnalysisGenerator():
                 self.analysis_result['suburbs'][suburb]['income'][tuple[0]] = 0
 
     def add_education(self, suburb):
+        """
+        Add education to static analysis result
+        """
         try:
             suburb_dict = self.scenario_file_education['suburbs'][suburb]
             for pair in self.education_key_pairs:
                 self.analysis_result['suburbs'][suburb]['education'][pair[0]] = suburb_dict[pair[1]]
         except:
-            # print('Exception: add_education', suburb)
             pass
 
     def reset_education(self):
@@ -120,12 +133,14 @@ class staticAnalysisGenerator():
                 self.analysis_result['suburbs'][suburb]['education'][pair[0]] = 0
 
     def add_migration(self, suburb):
+        """
+        Add migration to static analysis result
+        """
         try:
             suburb_dict = self.scenario_file_migration['suburbs'][suburb]
             for pair in self.migration_key_pairs:
                 self.analysis_result['suburbs'][suburb]['migration'][pair[0]] = suburb_dict[pair[1]]
         except:
-            # print('Exception: add_migration', suburb)
             pass
 
     def reset_migration(self):
@@ -135,6 +150,9 @@ class staticAnalysisGenerator():
                 self.analysis_result['suburbs'][suburb]['migration'][pair[0]] = 0
 
     def add_static_data_to_db(self):
+        """
+        Add static analysis result to the final result in the database
+        """
         db_connecter.analysisResultSaver(self.city).update_analysis(self.analysis_result, type='add')
 
 

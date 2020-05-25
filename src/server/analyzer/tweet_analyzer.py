@@ -48,7 +48,6 @@ class tweetAnalyzer():
     def load_suburb_structure(self):
         """
         Load result structure for suburb level analysis
-        :return:
         """
         for feature in self.suburb_info_json['features']:
             suburb = feature['properties']['name']
@@ -103,25 +102,18 @@ class tweetAnalyzer():
 
     def process_covid_19(self, tweet_json):
         """
-        Process COVID-19 scenario analysis on the tweet.
+        Process city-level COVID-19 scenario analysis on the tweet.
         """
         text = tweet_json['text']
-        # TODO: Should also include extended_tweets etc.
-        # TODO: Extract from hashtag
-        # TODO: May add COVID language dictionary
-        # if 'covid' in text.lower():
         if 'covid' in str(tweet_json).lower() or 'corona' in str(tweet_json).lower():
             self.analysis_result['covid-19']['tweet_count'] += 1
             if tweet_json['user']['id'] not in  self.covid_user_ids:
                 self.covid_user_ids.append(tweet_json['user']['id'])
-            # if tweet_json['lang'] == 'en':
-            #     self.analysis_result['covid-19']['english_count'] += 1
 
     def process_crime(self, tweet_json):
         """
-        Process CRIME scenario analysis on the tweet.
+        Process city-level CRIME scenario analysis on the tweet.
         """
-        # TODO: It's better to use full-text instead
         text = tweet_json['text']
         if profanity.contains_profanity(text):
             self.analysis_result['crime']['vulgar_tweet_count'] += 1
@@ -136,8 +128,10 @@ class tweetAnalyzer():
         if t0_utc > t1 and t0_utc < t2:
             self.analysis_result['young_twitter_preference']['night_tweets_count'] += 1
 
-
     def process_income(self, tweet_json, suburb):
+        """
+        Process suburb-level income and tweet sentiment scenario analysis on the tweet
+        """
         text = tweet_json['text']
         attitude_score = self.sentiment_analyser.polarity_scores(text)['compound']
         attitude = 'tweet_positive_count' if attitude_score > 0.25 else 'tweet_negative_count' \
@@ -146,12 +140,18 @@ class tweetAnalyzer():
             self.analysis_result['suburbs'][suburb]['income'][attitude] += 1
 
     def process_education(self, tweet_json, suburb):
+        """
+        Process suburb-level education and vulgar tweets scenario analysis on the tweet
+        """
         text = tweet_json['text']
         if profanity.contains_profanity(text):
             if suburb:
                 self.analysis_result['suburbs'][suburb]['education']['vulgar_tweet_count'] += 1
 
     def process_migration(self, tweet_json, suburb):
+        """
+        Process suburb-level migration and non-English tweets scenario analysis on the tweet
+        """
         if tweet_json['lang'] != 'en':
             if suburb:
                 self.analysis_result['suburbs'][suburb]['migration']['non_english_tweet_count'] += 1
@@ -169,10 +169,7 @@ class tweetAnalyzer():
 
     def match_suburb(self, tweet_json, polygon_dict):
         """
-        Find the suburb where the tweet was tweeted.
-        :param tweet_json:
-        :param polygon_dict:
-        :return:
+        Find the suburb where the tweet was tweeted
         """
         if self.get_city(tweet_json) == self.city:
             self.analysis_result['city_tweet_count'] += 1
@@ -193,7 +190,6 @@ class tweetAnalyzer():
     def process_covid_followers(self):
         def get_num_followers(user_id):
             influencer = self.api.get_user(user_id=user_id)
-            influencer_id = influencer.id
             number_of_followers = influencer.followers_count
             return number_of_followers
         followers_within_100 = 0
@@ -218,9 +214,15 @@ class tweetAnalyzer():
         self.analysis_result['covid-19']['follower_not_able_to_get'] = follower_not_able_to_get
 
     def process_avg_tweet_density(self):
+        """
+        Process Tweets density
+        """
         self.analysis_result['tweet_density']['unique_user_count'] = len(self.all_user_ids)
 
     def analyze(self, city_data):
+        """
+        Process Tweet Analyzing
+        """
         polygon_dict = self.create_suburb_polygon_dict()
         for tweet_json in city_data:
             suburb = self.match_suburb(tweet_json, polygon_dict)
@@ -245,22 +247,12 @@ def _load_timestamp_record():
     start_time = end_time - process_time_interval
     return start_time, end_time
 
-# def _update_timestamp_record():
-#     with open('timestamp_record.json', 'r') as f:
-#         record = json.load(f)
-#         start_ts = record["tweets_with_geo"]
-#         end_ts = int(start_ts) + 1000
-#     with open('timestamp_record.json', 'w')  as f:
-#         record["tweets_with_geo"] = end_ts
-#         json.dump(record, f, indent=1)
-
 
 def get_twitter_auth(section='DEFAULT', verbose=False):
     '''
     Setup Twitter authentication
-    :param section:
-    :param verbose:
-    :return:  tweepy.OAuthHandler
+    :param section: section in twitter key configuration file
+    :return: tweepy.OAuthHandler
     '''
     config = ConfigParser()
     key_file = '{}/config/twitter.key.cfg'.format(os.path.pardir)

@@ -28,13 +28,17 @@ class dataLoader():
     def load_tweet_data(self):
         """
         Load all data from given city
-        :return:
+        :return: JSON objects
         """
         db = db_util.cdb(self.serverURL, tweet_db)
         city_key = self.city
         return  db.getByCity(city_key)
 
     def load_period_tweet_data(self, start_ts, end_ts):
+        """
+        Load period data between given timestamps
+        :return:  JSON objects
+        """
         db = db_util.cdb(self.serverURL, tweet_db)
         cityData = db.getByBlock(start_ts=start_ts, end_ts=end_ts, cityname=self.city)
         return cityData
@@ -118,7 +122,6 @@ class analysisResultSaver():
         db.put(analysis_result, analysis_city_id)
 
     def update_helper(self, renewal, existing,  type):
-        # TODO: Add special pattern for updating night tweet proportion and tweet frequency
         if not isinstance(renewal, dict) or not isinstance(existing, dict):
             if isinstance(renewal, str) and isinstance(existing, str):
                 return existing
