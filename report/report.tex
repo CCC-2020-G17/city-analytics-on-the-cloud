@@ -49,7 +49,7 @@
 %----------------------------------------------------------------------------------------
 
 \section{System Design and Architecture}
-The architecture of our system is in well designed, which is aimed at providing both a beautiful front-end web application and a RestFul API server with high availability, high scalability and fault tolerance. The overall architecture is shown in Figure \ref{fig:systemArchitecturePsystemArchitecture}. 
+The architecture of our system is well designed. It is aimed to provide both a beautiful front-end web application and a RESTFul API server with high availability, high scalability, and fault tolerance. The overall architecture is shown in Figure \ref{fig:systemArchitecturePsystemArchitecture}. 
 
 \begin{figure}[htp]
 \centering
@@ -59,24 +59,30 @@ The architecture of our system is in well designed, which is aimed at providing 
 \end{figure}
 
 \subsection{High Availability}
-Through in-depth thinking and repeated practice, we continue to optimize our architecture to achieve a high availability with limited resources. We mainly use the following method to improve the availability of our system.
+We continue to optimize our architecture through in-depth thinking and repeated practice to achieve high availability with limited resources. We mainly use the following method to improve the availability of our system.
 
-Firstly, we run a NginX server in our first instance to provide Load balancing. For requests that need to access the dynamic data in our database, it would pass the request to the other three server averagely. In this way, we can efficiently distribute the incoming network traffic to our backend servers in the cluster. When it comes to the situation that the first instance may crash, users can still access our application using the IPs of the other three nodes. But this solution is not good enough and is contradict to high avilability. We had tried to use two NginX server with a software called Keepalived to provide a more fault-tolerant system. However, we found out that we are not allow to use floating IP in Nectar. Since we cannot set a virtual ip for our NginX servers, the only way to handle this issue is to let the other three nodes to keep the full functionality of our application. User can access our application through any IP of our instances, but only the IP of the first instance would provide load banlancing control. 
+Firstly, we run an \textit{Nginx} server in our first instance to provide Load balancing. For requests that need to access the dynamic data in our database, it would pass the request to the other three servers averagely. In this way, we can efficiently distribute the incoming network traffic to our backend servers in the cluster. When it comes to the situation where the first instance may crash, users can still access our application through the IPs of the other three nodes. However, this solution is not good enough and is contradict to high availability. We had tried to use two \textit{Nginx} server with a software called Keepalived to provide a more fault-tolerant system. However, we found out that we are not allowed to use floating IP in \textit{Nectar}. Since we cannot set a virtual IP for our \textit{Nginx} servers, the only way to handle this issue is to let the other three nodes to keep the full functionality of our application. Users can access our application through any IP of our instances, but only the IP of the first instance would provide load balancing control. 
 
-Secondly, we use docker swarm to manage part of our services. We set three swarm manager nodes in our cluster. Any instance with a ID bigger than 3 would be set to be a worker node. A single leader is elected from the three swarm manager nodes to conduct our orchestration tasks. Our manager would also run the services as worker nodes. According to \cite{pros-and-cons-of-running-all-docker-swarm-nodes-as-managers} and Swarm Admin Guide\footnote{https://docs.docker.com/engine/swarm/admin\_guide/}, the number of our manager nodes is set based on the following facts:
+Secondly, we use \textit{Docker Swarm} to manage part of our services. The containers which are in red boxes in Figure \ref{fig:systemArchitecturePsystemArchitecture} are managed by \textit{Docker Swarm}. The containers that with a replicated deploy mode setting would run in each of our machines except Instance 1. The containers with a replicated deploy mode setting would run in one of the four nodes. Actually, we have twelve \textit{Twitter} Crawlers in our cluster, each for different purposes. They would be distributed to different nodes in our cluster by \textit{Docker Swarm}. The \textit{Docker Swarm} does not manage the \textit{CouchDB} container and the Load Balancing \textit{Nginx} server. But they can restart themselves if they crush since we set the "restart" configuration in docker-compose to "always". We didn't include the \textit{CouchDB} into the \textit{Swarm} cluster because using \textit{Swarm} to manage the \textit{CouchDB} database could be counter-productive if the \textit{Swarm} manager deploys two \textit{CouchDB} together to the same node. The Load balancing \textit{Nginx} server is also not included because its port number is in conflict with the reverse proxy \textit{Nginx} server in the \textit{Docker Swarm} network. We set three \textit{Swarm} manager nodes in our cluster. Any instance with an ID bigger than three would be set to be a worker node. A single leader is elected from the three \textit{Swarm} manager nodes to conduct our orchestration tasks. Our manager would also run the services as worker nodes. According to \cite{pros-and-cons-of-running-all-docker-swarm-nodes-as-managers} and \textit{Swarm} Admin Guide\footnote{https://docs.docker.com/engine/swarm/admin\_guide/}, the number of our manager nodes is set based on the following facts:
 \begin{itemize}
-	\item More managers would resulte in a longer election for a new leader when one goes down. The swarm is in a read-only state which means that no new replica tasks can be launched and no service can be updates. No auto-recover can happen during the election.
+	\item More managers would result in a longer election for a new leader when one goes down. The \textit{Swarm} is in a read-only state which means that no new replica tasks can be launched and no service can be updates. No auto-recover can happen during the election.
 	\item More managers would require tighter management of resources to prevent manager starvation.
-	\item Less managers would increase the probability of all managers going down.
-	\item To support manager node failures, the number of the managers should be a odd number and should bigger than one. In our cluster, we can only provide four nodes. So, setting the number of managers to be three in our system is our best choice. In this way, our system can provide fault tolerance that one of our manager node can crash.
+	\item Fewer managers would increase the probability of all managers going down.
+	\item To support manager node failures, the number of managers should be an odd number and should bigger than one. In our cluster, we can only provide four nodes. So, setting the number of managers to be three in our system is our best choice. In this way, our system can provide fault tolerance that one of our manager nodes can crash.
 \end{itemize}
 
+Thirdly, we use a \textit{CouchDB} cluster with four nodes to improve our system's availability. We keep three replicas in our cluster, which means that any two nodes can be down in our system without crashing down our application. The Flask RESTFul API server, the \textit{Twitter} Crawler, and the \textit{Twitter} Analyzer of our system would only access the \textit{CouchDB} database in their localhost. In this way, errors on a single node will not affect other nodes. 
 
+In conclusion, our system is a fault-tolerant system with high availability. Our application could run well even if two nodes in our cluster crashed. Except for the first node, any node in our system can provide all the services we need to run our front-end web application and RESTFul API server themselves. The system can be easily improved to a real high availability system by adding one more Load balancing \textit{Nginx} server and using Keepalived to manage the floating IP system.
 
 \subsection{Dynamic and Static Separation}
-When the first instance is alived, we 
+We use \textit{Nginx} to separate static from dynamic traffic. For accessing the static data on our websites like HTML and image files, the \textit{Nginx} server would handle them itself. For accessing the dynamic data from the database, the reverse proxy \textit{Nginx} server passes the request to the uWSGI-Flask server through socket protocol. When using a socket, external browsers will not be able to directly access our uWSGI-Flask service, which can provide additional safety. It is faster to transfer through the socket. There are many advantages to separate static traffic. For one thing, it can help reduce the file I/O and storage consumption of our uWSGI-Flask server. \textit{Nginx} is good at handling static traffic, which can provide a quick response to our front-end application. Further more, we can reuse the RESTFul API in our front-end application to reduce workload.
 
 
+
+
+
+%%%%%%%%%%% May be useful in the future:%%%%%%%%%%%%%%%%%%
 
 % \begin{file}[2nodes8cores.slurm]
 % \begin{lstlisting}[]
@@ -84,6 +90,27 @@ When the first instance is alived, we
 % \end{lstlisting}
 % \end{file}
 
+
+% \begin{file}[docker service ls (brief)]
+% \begin{lstlisting}[]
+% NAME                         MODE                REPLICAS      
+% app_\textit{nginx}_app                global              3/3           
+% app_rESTful_api_server       global              3/3             
+% app_tweet_analyzer           replicated          1/1             
+% app_tweet_hist               replicated ˜         1/1             
+% app_tweet_hist_Adelaide      replicated          1/1             
+% app_tweet_hist_Brisbane      replicated          1/1             
+% app_tweet_hist_Melbourne     replicated          1/1             
+% app_tweet_hist_Perth         replicated          1/1             
+% app_tweet_hist_Sydney        replicated          1/1             
+% app_tweet_stream             replicated          1/1             
+% app_tweet_stream_Adelaide    replicated          1/1             
+% app_tweet_stream_Brisbane    replicated          1/1             
+% app_tweet_stream_Melbourne   replicated          1/1             
+% app_tweet_stream_Perth       replicated          1/1             
+% app_tweet_stream_Sydney      replicated          1/1 
+% \end{lstlisting}
+% \end{file}
 
 \bibliography{lib}
 \end{document}
