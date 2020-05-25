@@ -28,7 +28,7 @@ try:
 except ConnectionRefusedError:
     print(f'Connection refused by {url}')
 
-dbs = ['analysis_results','aurin','tweets_mixed','tweets_with_geo']
+dbs = ['analysis_results','aurin','tweets_mixed']
 
 if connected:
     # create databases
@@ -46,7 +46,7 @@ if connected:
     dir_path = os.path.dirname(os.path.realpath(__file__))
     mapreduce_dir = os.path.join(dir_path,'design_cities.json')
     mapreduce_doc = json.load(open(mapreduce_dir,'r'))
-    map_dbs = ['tweets_mixed','tweets_with_geo']
+    map_dbs = ['tweets_mixed']
     for db in map_dbs:
         couchdb = couchserver[db]
         try:
