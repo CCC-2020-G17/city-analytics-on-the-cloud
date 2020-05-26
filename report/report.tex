@@ -24,7 +24,10 @@
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
 \usepackage{graphicx}
+\usepackage{booktabs}
 \usepackage[parfill]{parskip}
+\usepackage{tabularx}
+\usepackage{ltablex}
 \input{structure.tex}
 
 %----------------------------------------------------------------------------------------
@@ -38,7 +41,7 @@
         \\ Aoqi Zuo \texttt{1028089}
         \\Rongbing Shan \texttt{945388}
         \\Tingli Qiu \texttt{990497}
-        \\Yawei Sun \texttt{....}}% Author name and email address
+        \\Yawei Sun \texttt{1050317}}% Author name and email address
 
 %\date{University of Melbourne --- \today} % University, school and/or department name(s) and a date
 
@@ -132,7 +135,7 @@ Meanwhile, we applied harvesters and \textit{CouchDB} on the same instance to en
 
 \begin{figure}[htp]
 \centering
-\includegraphics[width=\textwidth]{img/harvester_architecture.jpg}
+\includegraphics[width=0.9\textwidth]{img/harvester_architecture.jpg}
 \caption{the Architecture for Twitter Harvester}
 \label{fig:harvester_architecture}
 \end{figure}
@@ -168,9 +171,9 @@ Our analysis system generally follows the common pattern of data analysis: gathe
 \ref{fig:data_process_architecture}. The data processing part supported by \textit{CouchDB} then connects the Tweet harvesters, the analyzer module, and the backend together as an integrated system. Harvested tweets will be cleaned up, transformed, and saved to the database. Obtaining the data from the database by using views filtered through \textit{MapReduce}, the analyzer is able to further generate an analysis result for the given data, and save the result or update the existing result to the analysis result database. The backend fetches the result to the frontend for presenting.
 \begin{figure}[htp]
 \centering
-\includegraphics[width=\textwidth]{img/3_2_1_data_processing.jpg}
+\includegraphics[width=0.9\textwidth]{img/3_2_1_data_processing.jpg}
 \caption{the Flow Chart for Data Processing}
-\label{fig:fig:data_process_architecture}
+\label{fig:data_process_architecture}
 \end{figure}
 
 What’s more, to have a stable and reliable system, we have implemented an Incremental Update algorithm. During the development phase, as the data volume grows to 10 million levels, the performance and stability of the system starts dropping if the data is analyzed as a whole. But with an incremental update system, each time we will only extract the latest, not-yet-analyzed data from \textit{couchdb} based on timestamps, to the analyzer, and update the previous analyse results. In such a way, there will be no need to analyze billions of tweets every time, hence improving the performance and stability of the system. What’s more, with such architecture, more flexibility is brought up to the deployment phase, as we will only need to migrate the analysis results from the development environment but not all the tweets stored. With the help of limitations on twitter API, which allows collection of only the latest data (no more than 7 days), our analysis system will be able to avoid duplicated results and work properly.
@@ -183,7 +186,7 @@ In the architecture, we will collect tweets continuously from twitter API, howev
 Also, with consideration on the incremental update algorithm with our design, we will need a timestamp before inserting the twitter data into our database. Hence a field named ‘db\_timestamp’ will be inserted together with each tweet stored, as illustrated in figure \ref{fig:twitterdata}. A database named ‘tweets\_mixed’ is created to hold all twitter data crawled and extracted from tweet corpus. Then the data can go through MapReduce and be analyzed in further steps.
 \begin{figure}
 \centering
-\includegraphics{img/twitterdata.png}
+\includegraphics[width=0.7\textwidth]{img/twitterdata.png}
 \caption{the Transformation of Twitter data}
 \label{fig:twitterdata}
 \end{figure}
@@ -193,7 +196,7 @@ Also, with consideration on the incremental update algorithm with our design, we
 \textit{AURIN} data is quite different from twitter data since it is not updated very often and in our project, we will not update the data from AURIN regularly. In order to make analysis based on different suburbs, we will collect multiple data sets with suburb information from AURIN. The data formats are not quite desired as they are hard for further process, hence we will re-group the information based on suburbs and extract the suburb names as keys for other information under this suburb, as shown in figure \ref{fig:aurindata} Also, some unnecessary information in the AURIN data will be removed. The data from AURIN will be saved to database ‘aurin’, and like other data, a timestamp will be inserted. But unlike tweets, we can always update a same document for AURIN, the data won’t be discarded like with tweets, but instead, the data will be updated and a latest timestamp will be inserted.
 \begin{figure}[htp]
 \centering
-\includegraphics[width=\textwidth]{img/aurinnew.png}
+\includegraphics[width=0.7\textwidth]{img/aurindata.png}
 \caption{the Transformation of AURIN data}
 \label{fig:aurindata}
 \end{figure}
@@ -207,7 +210,7 @@ There are several problems met during the ETL process in both development and de
     \item \textbf{Timestamps update}: During the development phase, we firstly do not have a timestamp of our database system in the beginning. All the tweets collected will be processed in one time with Map Reduce. However, with the increment of data volume, the performance starts dropping quickly and we came up the idea of incremental analysis, which requires a timestamp of our own system. \textit{CouchDB} update functions in figure \ref{fig:insertts} are utilized in order to update tweets that are already saved in the database without a timestamp. With execution of the update function ‘insert\_ts’, all existing tweets in our database will be inserted with a timestamp.
 \begin{figure}
 \centering
-\includegraphics{img/insert_ts.png}
+\includegraphics[width=0.6\textwidth]{img/insert_ts.png}
 \caption{update function for inserting timestamp}
 \label{fig:insertts}
 \end{figure}
@@ -223,7 +226,7 @@ To extract the data in later stages, we have turned into MapReduce views \footno
 There will be two views created in the system to assist in the analysis process, kes of whome demonstrated in figure \ref{mapreduce}. The fist one is named \textit{‘by\_city’}, which is used to extract data by city name and count the number of tweets within the specified city. This view will be used mostly to inspect data and in calculating ratios with the total number of tweets in a city.
 \begin{figure}
 \centering
-\includegraphics{img/mapreduce.png}
+\includegraphics[width=0.5\textwidth]{img/mapreduce.png}
 \caption{function structure of MapReduce views}
 \label{fig:mapreduce}
 \end{figure}
@@ -322,14 +325,14 @@ Let’s especially mention Melbourne city. In the map, clicking on the suburb Pa
 
 \begin{figure}[htp]
 \centering
-\includegraphics[width=\textwidth]{img/Melbourne_pie_chart.png}
+\includegraphics[width=0.9\textwidth]{img/Melbourne_pie_chart.png}
 \caption{the Pie charts in Scenario 1 for the suburb Parkille}
 \label{fig:Melbourne_pie_chart}
 \end{figure}
 
 \begin{figure}[htp]
 \centering
-\includegraphics[width=\textwidth]{img/Melbourne_histogram.png}
+\includegraphics[width=0.9\textwidth]{img/Melbourne_histogram.png}
 \caption{the Relation between Income Level and Tweet Sentiment in Melbourne city}
 \label{fig:Melbourne_histogram}
 \end{figure}
@@ -342,14 +345,14 @@ This scenario is to find if there are some relationships between the education l
 
 \begin{figure}[htp]
 \centering
-\includegraphics[width=\textwidth]{img/Sydney_pie_chart.jpg}
+\includegraphics[width=0.9\textwidth]{img/Sydney_pie_chart.jpg}
 \caption{the Pie charts in Scenario 2 for the suburb Sydney}
 \label{fig:Sydney_pie_chart}
 \end{figure}
 
 \begin{figure}[htp]
 \centering
-\includegraphics[width=\textwidth]{img/Sydney_histogram.jpg}
+\includegraphics[width=0.9\textwidth]{img/Sydney_histogram.jpg}
 \caption{the Relation between Vulgar Tweets and Education Achievements in Sydney city}
 \label{fig:Sydney_histogram}
 \end{figure}
@@ -362,77 +365,126 @@ This scenario is to detect if there is some relationship between the proportion 
 
 \begin{figure}[htp]
 \centering
-\includegraphics[width=\textwidth]{img/Perth_pie_chart.jpg}
+\includegraphics[width=0.9\textwidth]{img/Perth_pie_chart.jpg}
 \caption{the Pie charts in Scenario 3 for the suburb Subiaco}
 \label{fig:Perth_pie_chart}
 \end{figure}
 
 \begin{figure}[htp]
 \centering
-\includegraphics[width=\textwidth]{img/Perth_histogram.jpg}
+\includegraphics[width=0.9\textwidth]{img/Perth_histogram.jpg}
 \caption{the Relation between Non-English Tweets and the Proportion of people who don't speak English in Perth city}
 \label{fig:Perth_histogram}
 \end{figure}
 
 \section{NeCTAR Research Cloud}
 
+\clearpage
 \section{User Guide}
+Our project is available on \textit{https://github.com/CCC-2020-G17/city-analytics-on-the-cloud}. For more details about the usage, please access \textit{README.md} in the GitHub repo.
+\subsection{Prerequisites}
+The VMs we use are provided by UniMelb Research Cloud (Nectar), which is based on OpenStack. And the Ansible playbook in ansible/playbooks mainly use OpenStack modules to create machines on the Instance Initialize Process. The following setting is based on UniMelb Research Cloud. You can change the code inside based on your cloud suppliers.
+\begin{itemize}
+	\item Gain access from cloud providers:
+	\begin{enumerate}
+		\item Login to \textit{https://dashboard.cloud.unimelb.edu.au}.
+		\item Download openrc.sh from Dashboard.
+		\begin{itemize}
+			\item Make sure the correct project is selected
+			\item Download the OpenStack RC File
+		\end{itemize}
+		\item Reset API password
+		\begin{itemize}
+			\item Dashboard -> User -> Settings -> Reset Password
+		\end{itemize}
+	    \item Replace the \textit{ansible/openrc.sh} with your own one. We suggest changing the \textit{OS\_PASSWORD} to your API password so that you don't have to input it every time.
+	    \item Generate a ssh key pair in the cloud and keep the private one on your own computer.
+	\end{enumerate}
+	\item Install Ansible.
+	\item Set the Ansible variables to your own.
+	\begin{itemize}
+		\item Open \textit{ansible/playbooks/variables/nectar.yaml}
+		\item Change the \textit{instance\_key\_name} in \textit{line 30} to the name of your ssh key.
+		\item Change any other variable based on your personal need.
+	\end{itemize}
+\end{itemize}
+\subsection{Deployment}
+If you set up the Prerequisites properly. The deployment would be very easy. We use Ansible to deploy our system. We also provide some script to simplify the command. But before running any command, if you are using the UniMelb Research Cloud, you need to connect to the Unimelb VPN.
+
+You need to first enter the \textit{./ansible} dir and give permission to our script. Run the deployment with command: \textit{./runAll.sh}.
+
+\subsection{RESTFul API Usage}
+We provide RESTFul APIs for accessing our analysis data. Since our server's IP can only be accessed within the Unimelb network, you need to connect to the Unimelb VPN before accessing our server. And they would not be accessible after the end of the 2020 semester one because the cloud resources are only available when we were taking this subject. We only provide analysis for five cities in Australia, which is Melbourne, Sydney, Brisbane, Adelaide and Perth.
+
+Replace the <city-name> below with any one of "melbourne", "sydney", "brisbane", "adelaide", "perth" to access our RESTFul API.
+\begin{itemize}
+	\item To gain map info of a specific city:
+	\begin{itemize}
+		\item http://172.26.132.125/api/v2.0/map/city/<city-name>
+	\end{itemize}
+
+	\item To gain city-level analysis of a specific city:
+	\begin{itemize}
+		\item http://172.26.132.125/api/v2.0/analysis/city/<city-name>
+	\end{itemize}
+
+	\item To gain suburbs-level analysis of a specific city:
+	\begin{itemize}
+		\item http://172.26.132.125/api/v2.0/analysis/suburbs-of-city/<city-name>
+	\end{itemize}
+
+	\item To gain all analysis include both city-level and suburbs-level of a specific city:
+	\begin{itemize}
+		\item http://172.26.132.125/api/v2.0/data/<city-name>
+	\end{itemize}
+
+	\item To gain all city-level analysis:
+	\begin{itemize}
+		\item http://172.26.132.125/api/v2.0/analysis/city-level/all
+	\end{itemize}
+
+	\item To gain all suburbs-level analysis:
+	\begin{itemize}
+		\item http://172.26.132.125/api/v2.0/analysis/suburb-level/all
+	\end{itemize}
+\end{itemize}
 
 \section{Conclusion}
 In the project, an integrated cloud-based HPC system is developed on NeCTAR Research Cloud to gather and analysis tweets in Australia with five different aspects. The system has scripted deployment capabilities using Ansible. Also, it is designed with high availability and fault tolerance capability. The analysis covered five major cities in Australia and can be drilled down to suburb levels.  A web portal is provided to end users for accessing the data through ReSTful design.
 \section{Team Members and Roles}
 Many of the techs used in the project are quite new to our team, and thus we have been facing a lot of challenges and problems. But our teammates have done great work to study and utilize these cutting edge technologies into our system. We had good communication and proper project management to finish the development followed by a success deployment right on time. Each member has been taken a role as listed below:
-\begin{table}[]
-    \centering
-    \begin{tabular}{l|p{13cm}}
-    \hline
-    Aoqi Zuo & Twitter harvester implementation, scenario designing \\
-    \hline
-    Rongbing Shan & Database administration, data processing, docker SWARM  \\
-    \hline
-    Tingli Qiu & Analyzer module implementation, scenario designing, and analysis result presentation exemplar designing \\
-    \hline
-    Yawei Sun & ... \\
-    \hline
-    Zhaofeng Qiu & ...\\
-    \hline
-    \end{tabular}
+
+\begin{tabularx}{0.95\linewidth}{%
+	>{\raggedright\arraybackslash}l
+	>{\raggedright\arraybackslash}X%
+	}
+    \toprule
+    Name & Contributions\\
+    \midrule
+    Aoqi Zuo 
+    & Twitter harvester implementation, scenario designing
+    \\
+    \midrule
+    Rongbing Shan 
+    & Database administration, data processing, Docker SWARM.
+    \\
+    \midrule
+    Tingli Qiu 
+    & Analyzer module implementation, scenario designing, and analysis result presentation exemplar designing 
+    \\
+    \midrule
+    Yawei Sun 
+    & Web Application Implementation
+    \\
+    \midrule
+    Zhaofeng Qiu 
+    & Ansible Deployment Implementation, System Architecture Design and Implementation, RESTFul API server Implementation, Docker images, Docker SWARM and CouchDB cluster setup.
+    \\
+    \bottomrule
+    \\
     \caption{Team Members and Roles}
     \label{tab:my_label}
-\end{table}
-
-
-
-
-%%%%%%%%%%% May be useful in the future:%%%%%%%%%%%%%%%%%%
-
-% \begin{file}[2nodes8cores.slurm]
-% \begin{lstlisting}[]
-% code
-% \end{lstlisting}
-% \end{file}
-
-
-% \begin{file}[docker service ls (brief)]
-% \begin{lstlisting}[]
-% NAME                         MODE                REPLICAS      
-% app_\textit{nginx}_app                global              3/3           
-% app_rESTful_api_server       global              3/3             
-% app_tweet_analyzer           replicated          1/1             
-% app_tweet_hist               replicated ˜         1/1             
-% app_tweet_hist_Adelaide      replicated          1/1             
-% app_tweet_hist_Brisbane      replicated          1/1             
-% app_tweet_hist_Melbourne     replicated          1/1             
-% app_tweet_hist_Perth         replicated          1/1             
-% app_tweet_hist_Sydney        replicated          1/1             
-% app_tweet_stream             replicated          1/1             
-% app_tweet_stream_Adelaide    replicated          1/1             
-% app_tweet_stream_Brisbane    replicated          1/1             
-% app_tweet_stream_Melbourne   replicated          1/1             
-% app_tweet_stream_Perth       replicated          1/1             
-% app_tweet_stream_Sydney      replicated          1/1 
-% \end{lstlisting}
-% \end{file}
+\end{tabularx}
 
 \bibliography{lib}
 \end{document}
