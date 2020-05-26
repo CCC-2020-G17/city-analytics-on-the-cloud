@@ -186,7 +186,7 @@ Also, with consideration on the incremental update algorithm with our design, we
 \begin{figure}
 \centering
 \includegraphics[width=0.7\textwidth]{img/twitterdata.png}
-\caption{the Transformation of Twitter data}
+\caption{The Transformation of Twitter data}
 \label{fig:twitterdata}
 \end{figure}
 
@@ -196,7 +196,7 @@ Also, with consideration on the incremental update algorithm with our design, we
 \begin{figure}[htp]
 \centering
 \includegraphics[width=0.7\textwidth]{img/aurindata.png}
-\caption{the Transformation of AURIN data}
+\caption{The Transformation of AURIN data}
 \label{fig:aurindata}
 \end{figure}
 
@@ -210,7 +210,7 @@ There are several problems met during the ETL process in both development and de
 \begin{figure}
 \centering
 \includegraphics[width=0.6\textwidth]{img/insert_ts.png}
-\caption{update function for inserting timestamp}
+\caption{Update function for inserting timestamp}
 \label{fig:insertts}
 \end{figure}
 \end{itemize}
@@ -226,7 +226,7 @@ There will be two views created in the system to assist in the analysis process,
 \begin{figure}
 \centering
 \includegraphics[width=0.5\textwidth]{img/mapreduce.png}
-\caption{function structure of MapReduce views}
+\caption{Function structure of MapReduce views}
 \label{fig:mapreduce}
 \end{figure}
 
@@ -271,8 +271,8 @@ Numbers of coordinates form the boundary of the city and its suburbs. And the sh
 
 \section{Data Visualization and Analytic Scenarios}
 The Scenarios are across five main cities in Australia, Melbourne, Sydney, Brisbane, Adelaide, and Perth. There are three city-level analysis and three suburb-level analysis.
-\subsection{City-level Scenarios}
-\subsubsection{The First City Scenario}
+\subsection{City-Level Scenarios}
+\subsubsection{The First City-Level Scenario}
 
 This scenario is the relationship between the number of tweets that mentioned coronavirus and the number of followers those tweets posters have. That is, are the users with more followers more likely to mention coronavirus in their tweets? There are reasons for us to come up with this scenario. Users with more followers usually have a greater sense of social responsibility than normal people, so they may care more about the virus, which is affecting everyone. Also, users would draw more attention from the public if they talk more about hot topics. Well, there’s always a reason that someone is the one with more followers. As a result, we can see that our assumption is correct. A large proportion of the tweets mentioned coronavirus is from twitter users who have more than 500 followers, but only a few of them were tweeted by users who have less than 100 followers. The situation in each city is basically the same. The analysis bar chart for this scenario is as Figure
 \ref{fig:Covid-19}. 
@@ -284,7 +284,7 @@ This scenario is the relationship between the number of tweets that mentioned co
 \label{fig:Covid-19}
 \end{figure}
 
-\subsubsection{The Second City Scenario} 
+\subsubsection{The Second City-Level Scenario} 
 
 This scenario is the young people's preferences when tweeting. We would like to see whether a city has more “night tweets” and “located tweets” if the city has a larger proportion of young people. By young people, I mean people aged between 15 to 35. And night tweets are the ones that were tweeted between 11 pm to 4 am. We made a guess that young people are more likely to stay up late, and young people would love to share where they are when they tweet, to show some nice food or some fancy activities, or stuff like that, so they have their location label turned on. But the result shows that there no such relationships. It might be explained by the fact that we are in a very special period, so people don’t want to share their locations because they have nowhere to go. And Twitter might not be the night social media choice for young people. Because we also have Instagram and Facebook etc. From the plot
 \ref{fig:Young_people_tweeting_preference}, we can see that Adelaide is the city with the biggest proportions of ‘located tweets’ and Perth is the city has larger ‘night tweets’ contribution.
@@ -295,7 +295,7 @@ This scenario is the young people's preferences when tweeting. We would like to 
 \label{fig:Young_people_tweeting_preference}
 \end{figure} 
 
-\subsubsection{The Third City Scenario}
+\subsubsection{The Third City-Level Scenario}
 
 This scenario is tweeting frequency versus the proportion of people who speak English as their mother tongue. I believe that most people in Australian cities do speak English at some level, but it looks like there are still many people who don’t use Twitter. I know many people whose English is good enough to tweet frequently, and do have the Twitter app on their phones, but they are not used to tweet. Therefore, we made a guess that there’s a preferred social media for each culture, and Twitter may not always be the one for cultures other than English culture. However, the result shows that cities with a lower proportion of native speakers have a relatively high tweeting density instead. For example, Melbourne has only 62\% of people whose mother tongues are English, but there are about 28 tweets per user in Melbourne. The reason might be that the more multicultural the city is, the more interesting things to tweet. Collisions between cultures always bring interesting stories. The plot 
 \ref{fig:Tweeting_and_English} demonstrates this scenario.
@@ -309,7 +309,7 @@ This scenario is tweeting frequency versus the proportion of people who speak En
 \subsection{Suburb-level Scenarios}
 Within each city, we have gone into details and made some analysis for the suburbs in that city. For this part, we add some pie charts to the map. Whenever a suburb is clicked on, some pie charts will pop up. Each pie chart shows the distribution of each level for the corresponding attributes.
 
-\subsubsection{The First Suburb Scenario}
+\subsubsection{The First Suburb-Level Scenario}
 This scenario attempts to find the relationship between the proportion of income level and the tweets sentiment polarity in some city. The reason why we have this scenario is that we want to see whether people have a greater income will post more positive tweets. The color on the map in Figure
 \ref{fig:Melbourne_pie_chart} represents the income level for the suburbs. The darker the color is, the higher the average income the suburb has. Here, the tweets sentiments polarity is represented as the ratio of the number of positive tweets to the number of the negative tweets. Therefore, the greater the ratio is, the more positive the emotion is. 
 
@@ -330,7 +330,7 @@ Let’s especially mention Melbourne city. In the map, clicking on the suburb Pa
 \label{fig:Melbourne_histogram}
 \end{figure}
 
-\subsubsection{The Second Suburb Scenario} 
+\subsubsection{The Second Suburb-Level Scenario} 
 
 This scenario is to find if there are some relationships between the education level and the proportion of tweets containing vulgar words for each suburb in some city. Let’s take the city Sydney as an example. In the map in Figure
 \ref{fig:Sydney_pie_chart}, the darker the color is, the higher vulgar tweets proportion is. Clicking the suburb Sydney, we can see there is a pie chart showing the proportion of people who have completed 12 years of education and not completed. Another pie chart shows the proportion of youth who are in study or work and who are not. These pie charts give us more details about the suburb. It’s obvious from the bar chart in Figure
@@ -350,7 +350,7 @@ This scenario is to find if there are some relationships between the education l
 \label{fig:Sydney_histogram}
 \end{figure}
 
-\subsubsection{the Third Suburb Scenario}
+\subsubsection{The Third Suburb-Level Scenario}
 
 This scenario is to detect if there is some relationship between the proportion  of non-English tweets and proportion of people who don't speak English at home in a city. For instance, in the city Perth, in the map in Figure 
 \ref{fig:Perth_pie_chart}, the darker the color is, the higher the non-English tweet proportion is. Clicking the suburb Subiaco, we can see there is a pie char showing the proportion of people who speak English at home and people who do not. Another pie chart shows the proportion of people born overseas and born in Australia. From the bar chart
