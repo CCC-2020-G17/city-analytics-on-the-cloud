@@ -4,6 +4,14 @@ A Cloud-based application that exploits a multitude of virtual machines (VMs) ac
 
 ![homepage](img/homepage.png)
 
+
+
+##   Project Demonstration Video
+
+A Video is provided for project demonstration:
+
+https://www.youtube.com/watch?v=LYTV-1LKQMo&feature=youtu.be
+
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
