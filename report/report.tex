@@ -148,7 +148,7 @@ There are some limitations of mining twitter content when using the Search APIs:
     \item The first limitation is that for per-user authentication, one can only send 180 requests per 15 minutes with the maximum of 100 tweets for each request, resulting in a total limit of 18,000 tweets per 15 minutes. In order to improve the efficiency of harvesters, they need to maintain the upper limit allowed by the APIs.
     \item The second limitation is that it will not be able to get all the tweets that match search criteria, even if they are present in the desired time slot because not all of the tweets will be indexable or made available.
     \item The third limitation is that the Search API focuses on matching the search condition (relevance) rather than all the eligible tweets (completeness) as some users and tweets will be missing during the usage of Search API
-    \cite{Standard-search}.But Streaming API is match for completeness, which will be introduced in the following subsection.
+    \footnote{https://developer.twitter.com/en/docs/tweets/search/overview/standard}. But Streaming API is match for completeness, which will be introduced in the following subsection.
 \end{itemize}
 To overcome these limitations and improve the efficiency of harvesters, we come up with several solutions:
 \begin{itemize}
@@ -158,11 +158,10 @@ To overcome these limitations and improve the efficiency of harvesters, we come 
 \end{itemize}
 
 \subsubsection{Streaming API}
-Compared to the search API, Streaming API can give developers a lower-latency access to twitter’s global stream of tweet data
-\cite{streaming-data}. Also, Streaming API has a persistent HTTP connection from client side to server side so that it’s a real-time delivery and can ensure the completeness of tweets as it can gain more tweets than the search API. For example, the Search API works in a request-reply (RR) way. However, the streaming API is different in the way the server responds. The server would send a response to the client whenever a tweet is available, therefore, a continuous stream of responses will come to the client from the server and the message will appear into the stream immediately with minimal overhead. And in this part, we specify place by the city \textit{place\_id} in tweets.
+Compared to the search API, Streaming API can give developers a lower-latency access to twitter’s global stream of tweet data \footnote{https://developer.twitter.com/en/docs/tutorials/consuming-streaming-data}. Also, Streaming API has a persistent HTTP connection from client side to server side so that it’s a real-time delivery and can ensure the completeness of tweets as it can gain more tweets than the search API. For example, the Search API works in a request-reply (RR) way. However, the streaming API is different in the way the server responds. The server would send a response to the client whenever a tweet is available, therefore, a continuous stream of responses will come to the client from the server and the message will appear into the stream immediately with minimal overhead. And in this part, we specify place by the city \textit{place\_id} in tweets.
 
 Unlike Search API, Streaming API does not limit the amount of tweets harvested per time slot and it supports collecting the complete intraday tweets
-\cite{streaming-data}. Therefore, for intraday tweet data, the Streaming API will theoretically capture more valid tweets than the Search API. Nonetheless, these tweet data are only the fraction of numerous eligible tweets.
+\footnote{https://developer.twitter.com/en/docs/tutorials/consuming-streaming-data}. Therefore, for intraday tweet data, the Streaming API will theoretically capture more valid tweets than the Search API. Nonetheless, these tweet data are only the fraction of numerous eligible tweets.
 
 \subsection{Data Processing}
 In this section, the data processing steps to support the analysis scenarios will be discussed.
@@ -223,7 +222,7 @@ To study the data at an early stage, we mainly relied on the text search functio
 
 To extract the data in later stages, we have turned into MapReduce views \footnote{https://docs.couchdb.org/en/stable/ddocs/views/intro.html} in \textit{CouchDB}. Although with the previous data processing steps, we have limited the tweet data we collected in some way, however, there are still many redundant data that is not fit for our scenarios. We kept these data in the database with consideration on further usage, but in the current stage, we would not feed such data into the analysis phase. But it will be very much complicated and resources consuming if we are going to filter out such data one by one. Also, as introduced in section 3.2.1, our analyzer system uses an incremental update method. So for each epoch, only the latest collected tweets that have not been analyzed will be extracted and passed to the analysis module. MapReduce function in \textit{couchDB} will be used to make life easier. Besides, the views created with MapReduce will also assist in the analysis process.
 
-There will be two views created in the system to assist in the analysis process, kes of whome demonstrated in figure \ref{mapreduce}. The fist one is named \textit{‘by\_city’}, which is used to extract data by city name and count the number of tweets within the specified city. This view will be used mostly to inspect data and in calculating ratios with the total number of tweets in a city.
+There will be two views created in the system to assist in the analysis process, kes of whome demonstrated in figure \ref{fig:mapreduce}. The fist one is named \textit{‘by\_city’}, which is used to extract data by city name and count the number of tweets within the specified city. This view will be used mostly to inspect data and in calculating ratios with the total number of tweets in a city.
 \begin{figure}
 \centering
 \includegraphics[width=0.5\textwidth]{img/mapreduce.png}
@@ -265,20 +264,15 @@ Our Web Application also uses these RESTFul API to access the dynamic data. By s
 
 \subsection{Web Application}
 The web application is composed of front-end and back-end. We use VueJs framework to implement data visualisation and Flask framework to provide APIs. The server will receive the requests from users’ browser and then return corresponding JSON data fetched from CouchDB. With unimelb VPN, you can access our web application with http://172.26.132.125/.
-\subsubsection{Data Visualisation}
-Our front-end web application is composed of HTML, CSS and Javascript.
 
-Many tools and plug-ins are used to make our presentation clear and easy to understand. Google Map provided by google API is selected as our base map. We also fetch the GeoJson file of city and suburb from Aurin APIs. And the socio-economic features we got are added into those GeoJson files. As a result, it is easy and fast to present the layer of city and suburb map combined with the corresponding analysis result at the top of the base map. 
-For example, the figure below shows how the Geography information is combined with analysis data.
+Our front-end web application is composed of HTML, CSS and Javascript.Many tools and plug-ins are used to make our presentation clear and easy to understand. Google Map provided by google API is selected as our base map. We also fetch the GeoJson file of city and suburb from Aurin APIs. And the socio-economic features we got are added into those GeoJson files. As a result, it is easy and fast to present the layer of city and suburb map combined with the corresponding analysis result at the top of the base map.
 
-Numbers of coordinates form the boundary of the city and its suburbs. And the shades of the color of those polygons present the distribution of varieties of socio-economic attributes. 
-
-Moreover, we use pie charts and bar charts to represent and compare data by ChartJs.
+Numbers of coordinates form the boundary of the city and its suburbs. And the shades of the color of those polygons present the distribution of varieties of socio-economic attributes. Moreover, we use pie charts and bar charts to represent and compare data by ChartJs.
 
 \section{Data Visualization and Analytic Scenarios}
 The Scenarios are across five main cities in Australia, Melbourne, Sydney, Brisbane, Adelaide, and Perth. There are three city-level analysis and three suburb-level analysis.
 \subsection{City-level Scenarios}
-\textbf{\underline{The First City Scenario}}: 
+\subsubsection{The First City Scenario}
 
 This scenario is the relationship between the number of tweets that mentioned coronavirus and the number of followers those tweets posters have. That is, are the users with more followers more likely to mention coronavirus in their tweets? There are reasons for us to come up with this scenario. Users with more followers usually have a greater sense of social responsibility than normal people, so they may care more about the virus, which is affecting everyone. Also, users would draw more attention from the public if they talk more about hot topics. Well, there’s always a reason that someone is the one with more followers. As a result, we can see that our assumption is correct. A large proportion of the tweets mentioned coronavirus is from twitter users who have more than 500 followers, but only a few of them were tweeted by users who have less than 100 followers. The situation in each city is basically the same. The analysis bar chart for this scenario is as Figure
 \ref{fig:Covid-19}. 
@@ -290,7 +284,7 @@ This scenario is the relationship between the number of tweets that mentioned co
 \label{fig:Covid-19}
 \end{figure}
 
-\textbf{\underline{the Second City Scenario}}: 
+\subsubsection{The Second City Scenario} 
 
 This scenario is the young people's preferences when tweeting. We would like to see whether a city has more “night tweets” and “located tweets” if the city has a larger proportion of young people. By young people, I mean people aged between 15 to 35. And night tweets are the ones that were tweeted between 11 pm to 4 am. We made a guess that young people are more likely to stay up late, and young people would love to share where they are when they tweet, to show some nice food or some fancy activities, or stuff like that, so they have their location label turned on. But the result shows that there no such relationships. It might be explained by the fact that we are in a very special period, so people don’t want to share their locations because they have nowhere to go. And Twitter might not be the night social media choice for young people. Because we also have Instagram and Facebook etc. From the plot
 \ref{fig:Young_people_tweeting_preference}, we can see that Adelaide is the city with the biggest proportions of ‘located tweets’ and Perth is the city has larger ‘night tweets’ contribution.
@@ -301,7 +295,7 @@ This scenario is the young people's preferences when tweeting. We would like to 
 \label{fig:Young_people_tweeting_preference}
 \end{figure} 
 
-\textbf{\underline{the Third City Scenario}}: 
+\subsubsection{The Third City Scenario}
 
 This scenario is tweeting frequency versus the proportion of people who speak English as their mother tongue. I believe that most people in Australian cities do speak English at some level, but it looks like there are still many people who don’t use Twitter. I know many people whose English is good enough to tweet frequently, and do have the Twitter app on their phones, but they are not used to tweet. Therefore, we made a guess that there’s a preferred social media for each culture, and Twitter may not always be the one for cultures other than English culture. However, the result shows that cities with a lower proportion of native speakers have a relatively high tweeting density instead. For example, Melbourne has only 62\% of people whose mother tongues are English, but there are about 28 tweets per user in Melbourne. The reason might be that the more multicultural the city is, the more interesting things to tweet. Collisions between cultures always bring interesting stories. The plot 
 \ref{fig:Tweeting_and_English} demonstrates this scenario.
@@ -315,8 +309,7 @@ This scenario is tweeting frequency versus the proportion of people who speak En
 \subsection{Suburb-level Scenarios}
 Within each city, we have gone into details and made some analysis for the suburbs in that city. For this part, we add some pie charts to the map. Whenever a suburb is clicked on, some pie charts will pop up. Each pie chart shows the distribution of each level for the corresponding attributes.
 
-\textbf{\underline{the First Suburb Scenario}}: 
-
+\subsubsection{The First Suburb Scenario}
 This scenario attempts to find the relationship between the proportion of income level and the tweets sentiment polarity in some city. The reason why we have this scenario is that we want to see whether people have a greater income will post more positive tweets. The color on the map in Figure
 \ref{fig:Melbourne_pie_chart} represents the income level for the suburbs. The darker the color is, the higher the average income the suburb has. Here, the tweets sentiments polarity is represented as the ratio of the number of positive tweets to the number of the negative tweets. Therefore, the greater the ratio is, the more positive the emotion is. 
 
@@ -337,7 +330,7 @@ Let’s especially mention Melbourne city. In the map, clicking on the suburb Pa
 \label{fig:Melbourne_histogram}
 \end{figure}
 
-\textbf{\underline{the Second Suburb Scenario}}: 
+\subsubsection{The Second Suburb Scenario} 
 
 This scenario is to find if there are some relationships between the education level and the proportion of tweets containing vulgar words for each suburb in some city. Let’s take the city Sydney as an example. In the map in Figure
 \ref{fig:Sydney_pie_chart}, the darker the color is, the higher vulgar tweets proportion is. Clicking the suburb Sydney, we can see there is a pie chart showing the proportion of people who have completed 12 years of education and not completed. Another pie chart shows the proportion of youth who are in study or work and who are not. These pie charts give us more details about the suburb. It’s obvious from the bar chart in Figure
@@ -357,7 +350,7 @@ This scenario is to find if there are some relationships between the education l
 \label{fig:Sydney_histogram}
 \end{figure}
 
-\textbf{\underline{the Third Suburb Scenario}}: 
+\subsubsection{the Third Suburb Scenario}
 
 This scenario is to detect if there is some relationship between the proportion  of non-English tweets and proportion of people who don't speak English at home in a city. For instance, in the city Perth, in the map in Figure 
 \ref{fig:Perth_pie_chart}, the darker the color is, the higher the non-English tweet proportion is. Clicking the suburb Subiaco, we can see there is a pie char showing the proportion of people who speak English at home and people who do not. Another pie chart shows the proportion of people born overseas and born in Australia. From the bar chart
@@ -377,7 +370,26 @@ This scenario is to detect if there is some relationship between the proportion 
 \label{fig:Perth_histogram}
 \end{figure}
 
-\section{NeCTAR Research Cloud}
+\clearpage
+\section{UniMelb Research Cloud}
+\subsection{Pros}
+\begin{itemize}
+	\item Using the IaaS provided by the UniMelb Research Cloud, we don't have to buy our own machines, which can reduce infrastructure costs. The cloud can provide virtually limitless scalability, which can help us scale our services based on the market. Using a cloud to deploy our system can not only save money but also save time. The consolidated disaster recovery infrastructure provided by IaaS is also essential.
+	\item The UniMelb Research Cloud is based on OpenStack, which is an open-source cloud technology. Many tools provide support for OpenStack based cloud. For example, Ansible provides modules for controlling OpenStack based cloud. It is straightforward to deploy systems through those Ansible modules.
+	\item The User Interface of the UniMelb Research Cloud is user-friendly. The system is easy to use. All the information we need to know about the instance is listed clearly on the website.
+	\item The network of UniMelb Research Cloud is fast. It cost a little time for the virtual machines to download dependency from the Internet, which can help both development and deployment.
+\end{itemize}
+
+\subsection{Cons}
+\begin{itemize}
+	\item It is hard to find the document of the UniMelb Research Cloud. The document cannot be easily opened on the web page.  
+	\item The front-end interface is missing correct error feedback. Sometimes it is tough for us to understand the error. For example, if you accidentally create a snapshot for one of your volumes, you would not be able to delete the volume. But the system would only tell you the delete is not allowed without any reasons.
+	\item No forum is provided. The only way to find a solution is to ask questions on the discussion board. If there is a forum where history Q\&A can be accessed, it will help developers a lot.
+	\item Web page loads slowly. It takes time to check the condition of the machine.
+	\item Not easy to learn. There are no official beginner tutorials for the cloud. Without watching the subject's workshop, it is tough to develop on it. An understandable document for quickstart is needed for reducing learning costs.
+	\item The proxy setting is very annoying. Not like running in a local machine, we have to configure the proxy for all the software we need. And sometimes you have to set it twice for some software like the Docker Swarm. For the container running in the docker swarm, not like running directly through docker, you need to set up the proxy one more time to help services connect to the network.
+	\item No floating IP is provided to students. Without a floating IP, we cannot develop a High Availability server. We tried to use Keepalived + Nginx to improve the availability of our system but finally found out that no floating IP is provided in our project.
+\end{itemize}
 
 \clearpage
 \section{User Guide}
@@ -450,7 +462,7 @@ Replace the <city-name> below with any one of "melbourne", "sydney", "brisbane",
 \end{itemize}
 
 \section{Conclusion}
-In the project, an integrated cloud-based HPC system is developed on NeCTAR Research Cloud to gather and analysis tweets in Australia with five different aspects. The system has scripted deployment capabilities using Ansible. Also, it is designed with high availability and fault tolerance capability. The analysis covered five major cities in Australia and can be drilled down to suburb levels.  A web portal is provided to end users for accessing the data through ReSTful design.
+In the project, an integrated cloud-based HPC system is developed on NeCTAR Research Cloud to gather and analysis tweets in Australia with six interesting scenarios. The system has scripted deployment capabilities using Ansible. Also, it is designed with high availability and fault tolerance capability. The analysis covered five major cities in Australia and can be drilled down to suburb levels.  A web portal is provided to end users for accessing the data through ReSTful design.
 \section{Team Members and Roles}
 Many of the techs used in the project are quite new to our team, and thus we have been facing a lot of challenges and problems. But our teammates have done great work to study and utilize these cutting edge technologies into our system. We had good communication and proper project management to finish the development followed by a success deployment right on time. Each member has been taken a role as listed below:
 
