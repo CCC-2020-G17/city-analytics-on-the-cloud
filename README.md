@@ -2,6 +2,8 @@
 
 A Cloud-based application that exploits a multitude of virtual machines (VMs) across the UniMelb Research Cloud (Nectar) for harvesting tweets through the Twitter APIs. The application also include a front-end interface for visualising our analysis and RESTFul API server for data accessing.
 
+![homepage](img/homepage.png)
+
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
@@ -10,7 +12,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 *The VMs we use are provided by UniMelb Research Cloud (Nectar), which is based on OpenStack. And the Ansible playbook in `ansible/playbooks` mainly use OpenStack modules to create machines on the Instance Initialize Process. The following setting is based on UniMelb Research Cloud. You can change the code inside based on your cloud suppliers.*
 
-#### Gain access to cloud providers
+#### Gain access from cloud providers
 
 To gain access to UniMelb Research Cloud:
 
@@ -23,87 +25,166 @@ To gain access to UniMelb Research Cloud:
 4. Replace the `ansible/openrc.sh` with your own one. We suggest changing the `OS_PASSWORD` to your API password so that you don't have to input it every time.
 5. Generate a ssh key pair in the cloud and put the private one to your `~/.ssh/`
 
-#### Set the variable for the Ansible Playbook
+#### Install Ansible
 
-
-
-
-
-
+It is very easy for a Mac user to install Ansible. Homebrew is your best friend.
 
 ```
-
+brew install ansible
 ```
 
-### Installing
+For other operation system, you can check how to install it from [Installing Ansible Doc](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html).
 
-A step by step series of examples that tell you how to get a development env running
+#### Set the Ansible variables to your own
 
-Say what the step will be
+1. Open `ansible/playbooks/variables/nectar.yaml` 
+2. Change the `instance_key_name` in `line 30` to the name of your ssh key.
+3. Change any other variable based on your personal need.
 
-```
-Give the example
-```
+#### Prerequisites for local test (Optional)
 
-And repeat
+This prerequisites is needed only if you want to get a development env to run our website application locally (We only provide a front-end application without analysis data accessing for local test). 
 
-```
-until finished
-```
+1. Install [Docker](https://docs.docker.com/get-docker/).
+2. If you are using Linux, you need to also install [Docker-compose](https://docs.docker.com/compose/install/).
 
-End with an example of getting some data out of the system or using it for a little demo
+If you want to test the RESTFul server without docker, you need to:
 
-## Running the tests
+1. Install [Python3](https://www.python.org/downloads/).
 
-Explain how to run the automated tests for this system
+2. Install pip
 
-### Break down into end to end tests
+3. Install the environment:
 
-Explain what these tests test and why
+   ```shell
+   cd src/server/restful_api_server
+   pip install -r requirements.txt
+   ```
 
-```
-Give an example
-```
+## Test the Application Locally (Optional)
 
-### And coding style tests
+*We only provide a front-end application without analysis data accessing for local test.*
 
-Explain what these tests test and why
+**You can test the front-end application by using docker-compose:**
 
-```
-Give an example
-```
+* Run the command in your shell:
+
+  ```shell
+  cd src/server/restful_api_server
+  docker-compose up --build
+  ```
+
+* Then open http://localhost:8080/.
+
+**Or run the RESTFul server without docker:**
+
+* Run the command:
+
+  ```shell
+  cd src/server/restful_api_server
+  export FLASK_APP=run.py
+  export FLASK_ENV=development
+  flask run
+  ```
+
+* Then open http://127.0.0.1:5000/api/
 
 ## Deployment
 
-Add additional notes about how to deploy this on a live system
+If you set up the Prerequisites properly. The deployment would be very easy. We use Ansible to deploy our system. We also provide some script to simplify the command. But before running any command, if you are using the UniMelb Research Cloud, you need to connect to the Unimelb VPN.
 
-## Built With
+You need to first enter the` ./ansible` dir and give permission to our script.
 
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
+```
+cd ansible
+chmod 777 *.sh
+```
+
+If you want to run all in once:
+
+```
+./runAll.sh
+```
+
+If you want to run some tasks with specific tasks:
+
+```
+./runWithTag.sh  <tag name>
+```
+
+If you want to reboot all the instances:
+
+```
+./reboot.sh
+```
+
+If you want to update the GitHub repo in the remote instances:
+
+```
+./gitPull.sh
+```
+
+If you want to delete all instances:
+
+```
+./testWithTag.sh all-delete
+```
+
+If you want to delete the data in the couchDB:
+
+```
+./testWithTag.sh db-rebuild
+```
+
+## RESTFul API Usage
+
+We provide RESTFul APIs for accessing our analysis data. Since our server's IP can only be accessed within the Unimelb network, you need to connect to the Unimelb VPN before accessing our server. And they would not be accessible after the end of the 2020 semester one because the cloud resources are only available when we were taking this subject. We only provide analysis for five cities in Australia, which is Melbourne, Sydney, Brisbane, Adelaide and Perth.
+
+Replace the`<city-name>` below with any one of `"melbourne", "sydney", "brisbane", "adelaide", "perth"` to access our RESTFul API.
+
+* To gain map info of a specific city:
+
+  http://172.26.132.125/api/v2.0/map/city/\<city-name\>
+
+* To gain city-level analysis of a specific city:
+
+  http://172.26.132.125/api/v2.0/analysis/city/\<city-name\>
+
+* To gain suburbs-level analysis of a specific city:
+
+  http://172.26.132.125/api/v2.0/analysis/suburbs-of-city/\<city-name\>
+
+* To gain all analysis include both city-level and suburbs-level of a specific city:
+
+  http://172.26.132.125/api/v2.0/data/\<city-name\>
+
+* To gain all city-level analysis:
+
+  http://172.26.132.125/api/v2.0/analysis/city-level/all
+
+* To gain all suburbs-level analysis:
+
+  http://172.26.132.125/api/v2.0/analysis/suburb-level/all
+
+
+
+## The architecture of the system
+
+## ![architecture](img/architecture.png)
 
 ## Contributing
 
 Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
 
-## Versioning
-
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
-
 ## Authors
 
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
-
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
+* **Aaron Yau** - [Aaron Yau](https://github.com/mgsweet)
+* **Rongbing Shan** - [AlexShan](https://github.com/ShanRB)
+* **Tingli Qiu** - [qiutingli](https://github.com/qiutingli)
+* **Yawei Sun** - [MarcoQQ](https://github.com/MarcoQQ)
+* **Aoqi Zuo** - [aoqiz](https://github.com/aoqiz)
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
-
-## Acknowledgments
-
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
 
