@@ -1,4 +1,5 @@
-# Group 17, COMP90024 Cluster and Cloud Computing, 2020 s1
+# COMP90024 Cluster and Cloud Computing, 2020 s1
+## Group 17 details
 Team Members:
 Aoqi Zuo - 1028089
 Rongbing Shan - 945388
