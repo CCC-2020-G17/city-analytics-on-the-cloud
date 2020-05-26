@@ -217,7 +217,10 @@ class tweetAnalyzer():
         """
         Process Tweets density
         """
-        self.analysis_result['tweet_density']['unique_user_count'] = len(self.all_user_ids)
+        try:
+            self.analysis_result['tweet_density']['unique_user_count'] = int(len(self.all_user_ids)/5)
+        except:
+            self.analysis_result['tweet_density']['unique_user_count'] = len(self.all_user_ids)
 
     def analyze(self, city_data):
         """

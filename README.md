@@ -1,4 +1,4 @@
-# City Analytics on the Cloud
+# City Analytics on the Cloud -- 2020 s1
 
 A Cloud-based application that exploits a multitude of virtual machines (VMs) across the UniMelb Research Cloud (Nectar) for harvesting tweets through the Twitter APIs. The application also include a front-end interface for visualising our analysis and RESTFul API server for data accessing.
 
@@ -178,13 +178,12 @@ Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c6
 
 ## Authors
 
-* **Aaron Yau** - [Aaron Yau](https://github.com/mgsweet)
-* **Rongbing Shan** - [AlexShan](https://github.com/ShanRB)
-* **Tingli Qiu** - [qiutingli](https://github.com/qiutingli)
-* **Yawei Sun** - [MarcoQQ](https://github.com/MarcoQQ)
-* **Aoqi Zuo** - [aoqiz](https://github.com/aoqiz)
+* [**Aaron Yau**](https://github.com/mgsweet) - 1101584  
+* [**Rongbing Shan**](https://github.com/ShanRB) - 945388
+* [**Tingli Qiu**](https://github.com/qiutingli) - 990497 
+* [**Yawei Sun**](https://github.com/MarcoQQ) - 1050317  
+* [**Aoqi Zuo**](https://github.com/aoqiz) - 1028089 
 
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
-
