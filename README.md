@@ -152,19 +152,19 @@ Replace the`<city-name>` below with any one of `"melbourne", "sydney", "brisbane
 
 * To gain map info of a specific city:
 
-  http://172.26.132.125/api/v2.0/map/city/\<city-name\>
+  http://172.26.132.125/api/v2.0/map/city/<city-name\>
 
 * To gain city-level analysis of a specific city:
 
-  http://172.26.132.125/api/v2.0/analysis/city/\<city-name\>
+  http://172.26.132.125/api/v2.0/analysis/city/<city-name\>
 
 * To gain suburbs-level analysis of a specific city:
 
-  http://172.26.132.125/api/v2.0/analysis/suburbs-of-city/\<city-name\>
+  http://172.26.132.125/api/v2.0/analysis/suburbs-of-city/<city-name\>
 
 * To gain all analysis include both city-level and suburbs-level of a specific city:
 
-  http://172.26.132.125/api/v2.0/data/\<city-name\>
+  http://172.26.132.125/api/v2.0/data/<city-name\>
 
 * To gain all city-level analysis:
 
