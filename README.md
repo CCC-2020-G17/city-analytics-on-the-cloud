@@ -1,4 +1,4 @@
-# City Analytics on the Cloud -- 2020 s1
+# City Analytics on the Cloud
 
 A Cloud-based application that exploits a multitude of virtual machines (VMs) across the UniMelb Research Cloud (Nectar) for harvesting tweets through the Twitter APIs. The application also include a front-end interface for visualising our analysis and RESTFul API server for data accessing.
 
