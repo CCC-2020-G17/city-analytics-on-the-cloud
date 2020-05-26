@@ -183,7 +183,7 @@ In the architecture, we will collect tweets continuously from twitter API, howev
 Also, with consideration on the incremental update algorithm with our design, we will need a timestamp before inserting the twitter data into our database. Hence a field named ‘db\_timestamp’ will be inserted together with each tweet stored, as illustrated in figure \ref{fig:twitterdata}. A database named ‘tweets\_mixed’ is created to hold all twitter data crawled and extracted from tweet corpus. Then the data can go through MapReduce and be analyzed in further steps.
 \begin{figure}
 \centering
-\includegraphics[width=10cm]{img/twitterdata.png}
+\includegraphics[width=0.7\textwidth]{img/twitterdata.png}
 \caption{The transformation of Twitter data}
 \label{fig:twitterdata}
 \end{figure}
@@ -193,7 +193,7 @@ Also, with consideration on the incremental update algorithm with our design, we
 \textit{AURIN} data is quite different from twitter data since it is not updated very often and in our project, we will not update the data from AURIN regularly. In order to make analysis based on different suburbs, we will collect multiple data sets with suburb information from AURIN. The data formats are not quite desired as they are hard for further process, hence we will re-group the information based on suburbs and extract the suburb names as keys for other information under this suburb, as shown in figure \ref{fig:aurindata} Also, some unnecessary information in the AURIN data will be removed. The data from AURIN will be saved to database ‘aurin’, and like other data, a timestamp will be inserted. But unlike tweets, we can always update a same document for AURIN, the data won’t be discarded like with tweets, but instead, the data will be updated and a latest timestamp will be inserted.
 \begin{figure}[htp]
 \centering
-\includegraphics[width=10cm]{img/aurindata.png}
+\includegraphics[width=0.7\textwidth]{img/aurindata.png}
 \caption{The transformation of AURIN data}
 \label{fig:aurindata}
 \end{figure}
@@ -207,7 +207,7 @@ There are several problems met during the ETL process in both development and de
     \item \textbf{Timestamps update}: During the development phase, we firstly do not have a timestamp of our database system in the beginning. All the tweets collected will be processed in one time with Map Reduce. However, with the increment of data volume, the performance starts dropping quickly and we came up the idea of incremental analysis, which requires a timestamp of our own system. \textit{CouchDB} update functions in figure \ref{fig:insertts} are utilized in order to update tweets that are already saved in the database without a timestamp. With execution of the update function ‘insert\_ts’, all existing tweets in our database will be inserted with a timestamp.
 \begin{figure}
 \centering
-\includegraphics[width=8cm]{img/insert_ts.png}
+\includegraphics[width=0.6\textwidth]{img/insert_ts.png}
 \caption{Update function for inserting timestamp}
 \label{fig:insertts}
 \end{figure}
@@ -220,7 +220,7 @@ To study the data at an early stage, we mainly relied on the text search functio
 
 To extract the data in later stages, we have turned into MapReduce views \footnote{https://docs.couchdb.org/en/stable/ddocs/views/intro.html} in \textit{CouchDB}. Although with the previous data processing steps, we have limited the tweet data we collected in some way, however, there are still many redundant data that is not fit for our scenarios. We kept these data in the database with consideration on further usage, but in the current stage, we would not feed such data into the analysis phase. But it will be very much complicated and resources consuming if we are going to filter out such data one by one. Also, as introduced in section 3.2.1, our analyzer system uses an incremental update method. So for each epoch, only the latest collected tweets that have not been analyzed will be extracted and passed to the analysis module. MapReduce function in \textit{couchDB} will be used to make life easier. Besides, the views created with MapReduce will also assist in the analysis process.
 
-There will be two views created in the system to assist in the analysis process, kes of whome demonstrated in figure \ref{mapreduce}. The fist one is named \textit{‘by\_city’}, which is used to extract data by city name and count the number of tweets within the specified city. This view will be used mostly to inspect data and in calculating ratios with the total number of tweets in a city.
+There will be two views created in the system to assist in the analysis process, kes of whome demonstrated in figure \ref{fig:mapreduce}. The fist one is named \textit{‘by\_city’}, which is used to extract data by city name and count the number of tweets within the specified city. This view will be used mostly to inspect data and in calculating ratios with the total number of tweets in a city.
 \begin{figure}[hbp]
 \centering
 \includegraphics{img/mapreduce.png}
