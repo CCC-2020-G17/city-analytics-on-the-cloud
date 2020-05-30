@@ -9,8 +9,8 @@ A Cloud-based application that exploits a multitude of virtual machines (VMs) ac
 ##   Project Demonstration Video
 
 A Video is provided for project demonstration:
-
-https://www.youtube.com/watch?v=LYTV-1LKQMo&feature=youtu.be
+- Brief Edition: https://www.youtube.com/watch?v=bsROwtwk4J0&t=323s
+- Full Edition: https://www.youtube.com/watch?v=LYTV-1LKQMo&feature=youtu.be
 
 ## Getting Started
 
