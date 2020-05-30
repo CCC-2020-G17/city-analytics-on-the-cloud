@@ -112,7 +112,7 @@ If you want to run all in once:
 ./runAll.sh
 ```
 
-If you want to run some tasks with specific tasks:
+If you want to run some tasks with specific tags:
 
 ```
 ./runWithTag.sh  <tag name>
